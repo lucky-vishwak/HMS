@@ -1,0 +1,50 @@
+p{
+    font-size: x-small;
+    
+    font-weight:normal;
+    color: rgb(207, 206, 206);
+    
+}
+body{
+    background-color: white;
+}
+#pol a{
+     text-decoration:none;
+       padding-bottom: 5px;
+       color: white;
+       font-size:small;
+      
+       margin-right: 20px;
+      
+     
+}
+
+footer{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 600%;
+    background-color: #483d8b;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: red;
+    color: white;
+    text-align: center;
+}
+ #pol a:hover{
+   color: blue;
+}
+
+#fo a{
+    
+    color: white;
+    font-size:2rem;
+    padding-right: 10px;
+}
+ #fo a:hover{
+         color: blue;
+ }
+ li{
+     list-style-type: none;
+ }
