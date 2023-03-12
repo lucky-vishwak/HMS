@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Bootstrap 5.0.2 cdn CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Document</title>
+
+    <!--adding style-sheet-->
+    <link rel="stylesheet" href="appointment.css">
+</head>
+
+<body>
+    <div class="row d-flex justify-content-center mt-2">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
+            <div class="card mb-3">
+                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                    <div class="col-md-12 text-center">
+                        <h3 class="mb-0 fw-bold">Appointment Form</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-6">
+                                <label for="patientname" class="form-label">Patient Name</label>
+                                <span style="color: red;">*</span>
+                                <input type="text" class="form-control" id="patientname" name="patientname">
+                                <p class="my-1" id="patientnameal"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="guardianname" class="form-label">Guardian Name</label>
+                                <span style="color: red;">*</span>
+                                <input type="text" class="form-control" id="guardianname" name="guardianname">
+                                <p class="my-1" id="guardiannameal"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="phonenumber" class="form-label">Phone Number</label>
+                                <span style="color: red;">*</span>
+                                <input type="text" class="form-control" id="phonenumber" name="phonenumber">
+                                <p class="my-1" id="phonenumberal"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="emailaddress" class="form-label">Email Address</label>
+                                <span style="color: red;">*</span>
+                                <input type="email" class="form-control" id="emailaddress" name="emailaddress">
+                                <p class="my-1" id="emailaddressal"></p>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="appointmentdate" class="form-label">Appointment Date</label>
+                                <span style="color: red;">*</span>
+                                <input type="date" class="form-control" id="appointmentdate" name="appointmentdate">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="timeslot" class="form-label">Appointment Time</label>
+                                <span style="color: red;">*</span>
+                                <select class="form-select" aria-label="Default select example" name="timeslot" id="timeslot">
+                                    <option selected="">Selet Time</option>
+                                    <option value="10AM-11AM">10AM-11AM</option>
+                                    <option value="11AM-12PM">11AM-12PM</option>
+                                    <option value="12PM-1PM">12PM-1PM</option>
+                                    <option value="1PM-2PM">1PM-2PM</option>
+                                    <option value="2PM-3PM">2PM-3PM</option>
+                                    <option value="3PM-4PM">3PM-4PM</option>
+                                    <option value="4PM-5PM">4PM-5PM</option>
+                                </select>
+                                <p class="my-1" id="timeal"></p>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="gender" class="form-label">Gender</label>
+                                <span style="color: red;">*</span>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="exampleRadios"
+                                                id="male" value="male" name="gender" checked>
+                                            <label class="form-check-label" for="exampleRadios11">
+                                                Male
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="exampleRadios"
+                                                id="female" value="female" name="gender">
+                                            <label class="form-check-label" for="exampleRadios22">
+                                                Female
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Select Reson</label>
+                                <span style="color: red;">*</span>
+                                <select class="form-select" aria-label="Default select example" id="reason" name="reason">
+                                    <option selected="">Select Reason</option>
+                                    <option value="surgeory">Surgeory</option>
+                                    <option value="dentist">Dentist Chekup</option>
+                                    <option value="bodycheckup">Body Chekup</option>
+                                    <option value="gynecologist">Gynecologist Chekup</option>
+                                    <option value="otherservices">Other Service</option>
+                                </select>
+                                <p class="my-1" id="reasonal"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Preference Doctor</label>
+                                <span class="text-muted">(optional)</span>
+                                <select class="form-select" aria-label="Default select example" id="preference" name="preference">
+                                    <option selected="">Select Doctor</option>
+                                    <option value="peter">DR.Peter</option>
+                                    <option value="mary">DR.Mary</option>
+                                    <option value="zoe">DR.Zoe</option>
+                                    <option value="lily">DR.Lily</option>
+                                    <option value="adrian">DR.Adrian</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12 d-flex justify-content-center mt-4">
+                                <h6 class="p-2"><b>Emergency Details</b></h6>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="emergencyname" class="form-label">Emergency Name</label>
+                                <span style="color: red;">*</span>
+                                <input type="text" class="form-control" id="emergencyname" name="emergencyname">
+                                <p class="my-1" id="emergencynameal"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="emergencyphone" class="form-label">Emergency Phone Number</label>
+                                <span style="color: red;">*</span>
+                                <input type="text" class="form-control" id="emergencyphone" name="emergencyphone">
+                                <p class="my-1" id="emergencyphoneal"></p>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="addnote" class="form-label">Describe Your Problem</label>
+                                <span class="text-muted">(optional)</span>
+                                <textarea class="form-control" id="problem" rows="3" name="problem"></textarea>
+                            </div>
+                        </div>
+                        <div class="text-center col-md-12">
+                            <button type="button" class="btn btn-success mt-4 px-5" onclick="vaildate()">Make Appointment</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-1"></div>
+    </div>
+
+
+
+
+
+
+
+    <!--Bootstrap 5.0.2 cdn script-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <script src="appointment.js"></script>
+</body>
+
+</html>
