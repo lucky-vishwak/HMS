@@ -1,3 +1,6 @@
+//import json
+import users from '/home/likhith.s/hms/user.json'
+console.log(users)
 var form=document.forms.form;
 var regEmail=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;  //Javascript reGex for Email Validation.
 var regPhone=/^\d{10}$/;                                        // Javascript reGex for Phone Number validation.
