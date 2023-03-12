@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link  href="register.css" rel="stylesheet"  >
+</head>
+<body>
+    <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+          <div class="col-12 col-lg-9 col-xl-7">
+            <div class="card shadow-2-strong card-registration" style="border-radius: 15px; " id="forshadow">
+              <div class="card-body p-4 p-md-5">
+                <h4 class="  pb-md-0 mb-md-5 text-center" style="color: #483d8b;">Registration Form</h4>
+                <form id="form">
+    
+                  <div class="row">
+                    <div class="col-md-6 mb-2">
+    
+                      <div class="form-outline">
+                          <label class="form-label" for="firstName">First Name</label>
+                        <input type="text" id="firstname" name="firstname" class="form-control p-2" value="" onchange="firstName()" required />
+                        
+                      </div>
+                      <div id="firstNamet" ></div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+    
+                      <div class="form-outline">
+                          <label class="form-label" for="lastName">Last Name</label>
+                        <input type="text" id="lastname"  name="lastname" class="form-control p-2" onchange="lastName()" required  />
+                    
+                      </div>
+                      <div id="lastNamet"  ></div>
+    
+                    </div>
+                  
+                    <div class="col-md-12 col-lg-12 mb-2">
+    
+                      <div class="form-outline">
+                          <label class="form-label" for="Name">Username</label>
+                        <input type="text" id="Name" name="username" class="form-control p-2" required onchange="userName()"  />
+                     
+                      </div>
+                    <div id="userNamet"></div>
+                    </div>
+                 
+              </div>
+    
+                  <div class="row">
+                    <div class="col-md-6 col-lg-6  mb-2">
+    
+                      <div class="form-outline ">
+                          <label for="birthdayDate" class="form-label" >Birthday</label>
+                        <input
+                          type="date"
+                          class="form-control p-2"
+                          id="birthdayDate"
+                          name="date"
+                         onchange="datee()"
+                          requried 
+                        />
+                    </div>
+                    <div id="datet"></div>
+                </div>
+                        <div class="col-md-6 col-lg-6  mb-2">
+                        <div class="form-outline">
+                          <label class="form-label" for="phoneNumber" >Phone Number</label>
+                        <input type="number" id="phonenumber" class="form-control p-2" name="phn" onchange="phoneNumber()" requried >
+                      
+                      </div>
+                <div id="phonenumbert"></div>
+               
+                  </div>
+    
+                    <div class="col-md-12 mb-2">
+    
+                      <h6 class="mb-2 pb-1">Gender: </h6>
+                      <div class="form-check form-check-inline">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="Gender"
+                            id="maleGender"
+                            value="male"
+                            checked
+                         
+                            
+                          />
+                          <label class="form-check-label" for="maleGender">Male</label>
+                        </div>
+    
+                      <div class="form-check form-check-inline">
+  
+                          
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="Gender"
+                          id="femaleGender"
+                          value="female"
+                       
+                        />
+                        <label class="form-check-label" for="maleGender">Female</label>
+                      </div>
+    
+                   
+    
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="Gender"
+                          id="otherGender"
+                          value="other"
+                       
+                        />
+                        <label class="form-check-label" for="otherGender">Other</label>
+                      </div>
+    
+                    </div>
+                    <div id="gendert"></div>
+                  </div>
+    
+                  <div class="row">
+                    <div class="col-md-12  mb-2">
+    
+                      <div class="form-outline">
+                          <label class="form-label" for="emailAddress">Email</label>
+                        <input type="email" id="emailAddress" class="form-control p-2" name="email" required onchange="emailAdd()"/>
+                        
+                      </div>
+                     <div id="emailt"></div>
+                    </div>
+                  </div>
+                  <div class="row">
+                  <div class="col-md-6 col-lg-6  mb-2">
+    
+                      <div class="form-outline">
+                          <label class="form-label" for="pass">Password</label>
+                        <input type="password" id="passw" class="form-control p-2" name="password"  required onchange="passwordd()"/>
+                      
+                      </div>
+              <div id="passwordt"></div>
+                    </div>
+                    <div class="col-md-6 col-lg-6  mb-2">
+    
+                      <div class="form-outline form-group">
+                          <label class="form-label" for="copass">Confirm Password</label>
+                        <input type="password" id="copass" class="form-control p-2" name="confirmPassword" required onchange="confirmPasswordd()"/>
+                        
+                    
+                      </div>
+                    <div id="confirmpasswordt"></div>
+                    </div>
+    
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12  mb-2">
+    
+                      <div class="form-outline">
+                          
+                        <label class="form-label" for="pi">Address</label>
+                        <textarea name="address" id="Address" cols="50" class="form-control" name="address" onchange="adress()"></textarea>
+                      </div>
+    
+                    </div>
+                    <div id="Addresst"></div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-6 col-lg-6  mb-2">
+        
+                          <div class="form-outline">
+                              <label class="form-label" for="ci">City</label>
+                            <input type="text" id="ci" class="form-control p-2" name="city" required onchange="cityy()"/>
+                            
+                          </div>
+        <div id="cityt"></div>
+                        </div>
+                        <div class="col-md-6 col-lg-6  mb-2">
+        
+                          <div class="form-outline">
+                              <label class="form-label" for="pi">Pincode</label>
+                            <input type="number" id="pi" class="form-control p-2" name="pincode" required onchange="pincodee()"/>
+                         
+                           
+                          </div>
+        
+                        </div>
+        <div id="pincodet"></div>
+                      </div>
+                    
+                      <div class="col-md-12 col-lg-12 mb-2">
+    
+                        <div class="form-outline">
+                            <label class="form-label" for="Name">State</label>
+                            <select class="form-select" aria-label="Default select example" class="form-control" name="state">
+                              
+                                <option name="state" value="Telangana" class="form-control">Telangana</option>
+                                <option name="state" value="Andhra Pradesh" class="form-control">Andhra Pradesh</option>
+                             
+                              </select>
+                        </div>
+      <div id="statet"></div>
+                      </div>
+    
+                  <div class=" pt-2 mb-2 text-center">
+                    <button class="btn  btn-md" type="button" style="color:white;" onclick="validate()" >Register</button>
+                  </div>
+     
+                  <p class=" pb-lg-2 mt-2 text-center" style="color: #393f81;">Already have an account? <a href="/#/login" style="color: #393f81;" >Login</a></p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+   <script src="register.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
