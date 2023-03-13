@@ -1,148 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <link rel="stylesheet" href="../Home/home.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Inner Page - Medilab Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="../assets/img/favicon.png" rel="icon">
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="../assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../assets/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Medilab
+  * Updated: Mar 10 2023 with Bootstrap v5.2.3
+  * Template URL: https://bootstrapmade.com/medilab-free-medical-bootstrap-theme/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
 </head>
+
 <body>
-    <!-- Nav bar code -->
-  <nav class="navbar navbar-expand-lg navbar-light">
-    <div class="container-fluid p-2 m-1 mx-lg-5">
-      <a class="navbar-brand" href="../Home/home.html">HMS</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item mx-lg-4 border rounded px-2">
-            <a class="nav-link active" aria-current="page" href="../Home/home.html">Home</a>
+
+  <!-- ======= Top Bar ======= -->
+  <div id="topbar" class="d-flex align-items-center fixed-top">
+    <div class="container d-flex justify-content-between">
+      <div class="contact-info d-flex align-items-center">
+        <i class="bi bi-envelope"></i> <a href="mailto:contact@example.com">contact@example.com</a>
+        <i class="bi bi-phone"></i> +1 5589 55488 55
+      </div>
+      <div class="d-none d-lg-flex social-links align-items-center">
+        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
+      </div>
+    </div>
+  </div>
+
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+
+      <h1 class="logo me-auto"><a href="index.html">Medilab</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <a href="index.html" class="logo me-auto"><img src="../assets/img/logo.png" alt="" class="img-fluid"></a>
+
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="#about">About</a></li>
+          <li class="dropdown"><a href="#"><span>More</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+                <li><a class="nav-link scrollto" href="#services">Services</a></li>
+                <li><a class="nav-link scrollto" href="#departments">Departments</a></li>
+                <li><a class="nav-link scrollto" href="#doctors">Doctors</a></li>
+            </ul>
           </li>
-          <li class="nav-item mx-lg-4 border rounded px-2">
-            <a class="nav-link" href="../contactus/contactus.html">Contactus</a>
-          </li>
-          <li class="nav-item mx-lg-4 border rounded px-2">
-            <a class="nav-link" href="#">Aboutus</a>
-          </li>
-          <form class="d-flex mx-lg-5">
-            <input class="form-control me-3" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-dark" type="submit">Search</button>
-          </form>
-          <li class="nav-item mx-lg-4 border rounded px-2">
-            <a class="nav-link mx-end" href="#">Login</a>
-          </li>
-          <li class="nav-item mx-lg-4 border rounded px-2">
-            <a class="nav-link mx-end" href="../Register/register.html">Signup</a>
-          </li>
+          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+          <li><a class="nav-link scrollto" href="../Login/login.html">Login/Signup</a></li>
         </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- About us Page -->
-
-  <div class="container border box-shadow w-50 h-75 mt-5 p-2 rounded">
-    <h1 class="text-center">Login Page</h1>
-    <div class="row m-1 p-2 mx-auto">
-        <div class="col-6">
-            <img class="w-100 h-75 rounded box-shadow" src="https://media.istockphoto.com/id/1278703639/photo/close-up-of-hand-holding-smartphone-and-screen-applications-with-unlocking-mobile-phones.jpg?b=1&s=170667a&w=0&k=20&c=nGSNoXO27gFVtXRBokYxklbCcSiLAJnRTa7EupMck94=" alt="Login Page image">
-        </div>
-        <div class="col-6" >
-            <form >
-                <div class="mb-3">
-                  <label for="username" class="form-label">Username</label>
-                  <input type="text" class="form-control" id="username" name="username" required onchange="validateUsername()">
-                  <span class="text-danger" id="user-valid"></span>
-                </div>
-                <div class="mb-3">
-                  <label for="password" class="form-label">Password</label>
-                  <input type="password" class="form-control" id="password" name="password" required onchange="validatePassword()">
-                  <span class="text-danger" id="password-valid"></span>
-                </div>
-                <div class="text-center">
-                    <button  type="button" class="btn btn-success" onclick="store()">Login</button>
-                </div>
-              </form>
-        </div>
-    </div>
-
-</div>
-
-
-
-
-
-  <!-- Footer -->
-  <!-- <footer class="d-flex flex-wrap pt-1 justify-content-between">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6 col-sm-12 " id="fo">
-
-          <a href="#"><i class="fab fa-facebook"></i></a>
-          <a href=""><i class="fab fa-twitter"></i></a>
-          <a href=""><i class="fab fa-youtube"></i></a>
-
-        </div>
-
-
-      </div>
-      <hr class="text-white">
-
-      <div class="row">
-        <div class="col-lg-6 col-sm-12">
-
-          <p>
-            © 2021, MedFactory, Inc. All rights reserved.MedFactory Medicines, the MedFactory logo are trademarks or
-            registered trademarks of MedFactory, Inc.
-            in the India and elsewhere. Other brands or product names are the trademarks of their respective owners.
-            Non-Indian transactions through MedFactory International, S.à.<br>Founder: Coming soon</p>
-        </div>
-        <div class="col-lg-6">
-
-        </div>
-
-
-      </div>
-
-      <div class="row mb-3     ">
-        <div class="col-lg-12 col-md-1 col-sm-4 col-3">
-
-        </div>
-
-        <div class="col-lg-6 col-md-7 col-sm-4 col-6 .justify-content-sm-center .justify-content-lg-start" id="pol">
-
-          <ul class="list-inline  text-center  .flex-sm-column flex-wrap" style="line-height: -10%;">
-            <li class="list-inline-item">
-              <a href="#"> Terms of Service</a>
-            </li>
-
-            <li class="list-inline-item">
-              <a href="#">Privacy Policy</a>
-            </li>
-
-
-            <li class="list-inline-item">
-              <a href="#">Store Refund Policy</a>
-            </li>
-
-
-          </ul>
-
-        </div>
-        <div class="col-lg-6 col-md-4 col-sm-7 col-7 mt-2">
-          <a href="" class="float-end"> <img src="https://cdn-icons-png.flaticon.com/512/3004/3004458.png" width="60rem"
-              alt="medicine" loading="lazy" style="margin-top: -1px;" /> </a>
-        </div>
-      </div>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+      <a href="#appointment" class="appointment-btn scrollto"><span class="d-none d-md-inline">Make an</span> Appointment</a>
 
 
     </div>
+  </header><!-- End Header -->
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs Section ======= -->
+    <section class="breadcrumbs">
+      <div class="container box-shadow w-75 h-75 mt-5 p-2 rounded">
+        <!--vishal login page-->
+        <div class=" justify-content-between align-items-center">
+          <section class="vh-100" >
+            <div class=" h-100">
+              <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-xl-10">
+                  <div class="card rounded" >
+                    <div class="row g-0">
+                      <div class="col-md-6 col-lg-5 d-none d-md-block">
+                        <img src="https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?size=338&ext=jpg&ga=GA1.2.1565668633.1678704072&semt=ais" 
+                          alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;height: 90vh;" />
+                      </div>
+                      <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                        <div class="card-body p-4 p-lg-5 text-black">
+          
+                          <form>
+          
+                            <div class="d-flex align-items-center justify-content-center mb-3 pb-1">
+                              <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
+                              <span class="h1  fw-bold mb-0 logo" style="color: #2c4964;">Medilab</span>
+                            </div>
+          
+                            <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
+          
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="form2Example17">Email address</label>
+                              <input type="email" id="form2Example17" class="form-control form-control-lg" />
+                              
+                            </div>
+          
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="form2Example27">Password</label>
+                              <input type="password" id="form2Example27" class="form-control form-control-lg" />
+                          
+                            </div>
+          
+                            <div class="pt-1 mb-4">
+                              <button class="appointment-btn btn d-block mx-auto"  type="button">Login</button>
+                            </div>
+          
+                            <a class="small text-muted d-flex justify-content-end" href="#!">Forgot password?</a>
+                            <p class="mb-5 pb-lg-2 text-center mt-2" style="color: #393f81;">Don't have an account? <a href="#!"
+                                style="color: #393f81;">Register here</a></p>
+                                
+                          </form>
+          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+    <!-- End Breadcrumbs Section -->
+
+  </main><!-- End #main -->
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h3>Medilab</h3>
+            <p>
+              A108 Adam Street <br>
+              New York, NY 535022<br>
+              United States <br><br>
+              <strong>Phone:</strong> +1 5589 55488 55<br>
+              <strong>Email:</strong> info@example.com<br>
+            </p>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4 col-md-6 footer-newsletter">
+            <h4>Join Our Newsletter</h4>
+            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
+            <form action="" method="post">
+              <input type="email" name="email"><input type="submit" value="Subscribe">
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container d-md-flex py-4">
+
+      <div class="me-md-auto text-center text-md-start">
+        <div class="copyright">
+          &copy; Copyright <strong><span>Medilab</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+          <!-- All the links in the footer should remain intact. -->
+          <!-- You can delete the links only if you purchased the pro version. -->
+          <!-- Licensing information: https://bootstrapmade.com/license/ -->
+          <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/medilab-free-medical-bootstrap-theme/ -->
+          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+      </div>
+      <div class="social-links text-center text-md-right pt-3 pt-md-0">
+        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+      </div>
+    </div>
+<<<<<<< HEAD
     </footer> -->
     <script src="login.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+=======
+  </footer><!-- End Footer -->
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="../assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="../assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+
+  <!--linking the js file-->
+  <script src="../assets/js/main.js"></script>
+
+>>>>>>> 46279c853c894584bf6008348b108e190fe44689
 </body>
+
 </html>
