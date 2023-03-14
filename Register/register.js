@@ -4,51 +4,63 @@
  var regName = /^[a-zA-Z\ ]+$/
  var regpass=/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/
  document.addEventListener("change",firstName);
- user={firstName:'',lastName:'',userName:'',phonenumber:'',email:'',password:'',confirmpassword:'',Address:'',city:'',pincode:'',state:'',gender:''}
+
+ user={firstname:'',lastname:'',username:'',phonenumber:'',email:'',password:'',confirmpassword:'',address:'',city:'',pincode:'',state:'',gender:''}
  function firstName(){
      var fName=form.firstname.value;
      if ( !fName.match(regName)) {
-        document.getElementById("firstNamet").innerHTML=`
+        document.getElementById("firstnamet").innerHTML=`
         <p class="alert alert-danger my-1 p-2">First name shouldnt contain numbers</p>`
     }
     
      else  if(fName.length<4){
-        document.getElementById("firstNamet").innerHTML=`
+        document.getElementById("firstnamet").innerHTML=`
         <p class="alert alert-danger my-1 p-2">first name should have minimum 4 characters</p>`
     } 
   
      else{
-         document.getElementById("firstNamet").innerHTML=``
-         user.firstName=fName
+         document.getElementById("firstnamet").innerHTML=``
+         user.firstname=fName
      }
  }
  function lastName(){
      var lName=form.lastname.value;
      if(lName.length<4){
-         document.getElementById("lastNamet").innerHTML=`
+         document.getElementById("lastnamet").innerHTML=`
          <p class="alert alert-danger my-1 p-2">last name should have minimum 4 characters</p>`
      }  
      else  if (!lName.match(regName)) {
-         document.getElementById("lastNamet").innerHTML=`
+         document.getElementById("lastnamet").innerHTML=`
          <p class="alert alert-danger my-1 p-2">lastname shouldnt contain numbers</p>`
      }
     
      else{
-         document.getElementById("lastNamet").innerHTML=``
-         user.lastName=lName
+         document.getElementById("lastnamet").innerHTML=``
+         user.lastname=lName
      }
  }
 
  function userName(){
      var username=form.Name.value;
+
      if(username.length<6){
-         document.getElementById("userNamet").innerHTML=
+         document.getElementById("usernamet").innerHTML=
          `<p class="alert alert-danger my-1 p-2" role="alert">username should be minimum 6 characters</p>`
      }
      else{
-         document.getElementById("userNamet").innerHTML=``
-         user.userName=username
+         document.getElementById("usernamet").innerHTML=``
+         user.username=username
      }
+     var y=localStorage.getItem("users")
+     if(y){
+     for (const i of JSON.parse(y)){
+        
+        if(i.username==user.username){
+            document.getElementById("usernamet").innerHTML= `<p class="alert alert-danger my-1 p-2" role="alert">username already exists</p>`
+               
+        }
+    }
+}
  }
 
  function phoneNumber(){
@@ -109,7 +121,7 @@
      document.getElementById(`datet`).innerHTML=``
  }
  function  adress(){
-     document.getElementById(`Addresst`).innerHTML=``
+     document.getElementById(`addresst`).innerHTML=``
  }
  function  cityy(){
      document.getElementById(`cityt`).innerHTML=``
@@ -118,22 +130,41 @@
      document.getElementById(`pincodet`).innerHTML=``
  }
  function validate(){
+    
      var x=true
      user['state']=form.state.value
      user['date']=form.date.value
      user['gender']=form.Gender.value;
      user['city']=form.city.value;
      user['pincode']=form.pincode.value
-     user['Address']=form.Address.value
-   for (const i in user) {
+     user['address']=form.Address.value
     
+   for (const i in user) {
      if(user[i]==''){
          document.getElementById(`${i}t`).innerHTML=`<p class="alert alert-danger my-1 p-2" role="alert"> ${i} is not filled</p>`
          x=false
      }
 
-   } if(x==true){
-     console.log(user)
-   }
-      
+   } 
+   if(x==true){
+    if(!localStorage.getItem("users")){
+        localStorage.setItem("users",'[]')
     }
+    var y=localStorage.getItem("users")
+    if(y){
+    for (const i of JSON.parse(y)){
+       
+       if(i.username==user.username){
+           document.getElementById("usernamet").innerHTML= `<p class="alert alert-danger my-1 p-2" role="alert">username already exists</p>`
+              
+       }
+   }
+}
+    let empobj=JSON.parse(localStorage.getItem("users"))
+    empobj.push(user)
+    console.log(empobj)
+    empobj=JSON.stringify(empobj)
+    localStorage.setItem("users",empobj)
+    location.href="../Login/login.html"
+   } 
+}

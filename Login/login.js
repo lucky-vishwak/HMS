@@ -1,20 +1,20 @@
  
- function addusers(){
-   var obj=[{username:"vishwak",password:"vishwak"},{username:"vishal",password:"vishal"},
-   {username:"sara",password:"sara"},{username:"likhith",password:"likhith"}]
-   if(!localStorage.getItem("users")){
-      localStorage.setItem("users",'[]')
-   }
-   let empobj=JSON.parse(localStorage.getItem("users"))
-   for(const ele of obj){
-      empobj.push(ele)
-   }
-   empobj=JSON.stringify(empobj)
-   localStorage.setItem("users",empobj)
-   localStorage.setItem("active",false)
- }
-addusers()
-//localStorage.clear()
+//  function addusers(){
+//    var obj=[{username:"vishwak",password:"vishwak"},{username:"vishal",password:"vishal"},
+//    {username:"sara",password:"sara"},{username:"likhith",password:"likhith"}]
+//    if(!localStorage.getItem("users")){
+//       localStorage.setItem("users",'[]')
+//    }
+//    let empobj=JSON.parse(localStorage.getItem("users"))
+//    for(const ele of obj){
+//       empobj.push(ele)
+//    }
+//    empobj=JSON.stringify(empobj)
+//    localStorage.setItem("users",empobj)
+//    localStorage.setItem("active",false)
+//  }
+// addusers()
+// //localStorage.clear()
  function clogin(){
    const username=document.getElementById("username").value
    const password=document.getElementById("password").value
