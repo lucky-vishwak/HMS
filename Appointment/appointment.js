@@ -1,18 +1,91 @@
-//Getting input elements
+var next_click=document.querySelectorAll(".next_btn");
+var prev_click=document.querySelectorAll(".prev_btn");
+var sbmt_click=document.querySelectorAll(".sbmt_btn");
+var main_page=document.querySelectorAll(".main");
+var p_bar =document.querySelectorAll(".progres_bar li");
+var written_name=document.querySelector(".written_name");
+var shown_name=document.querySelector(".shown_name");
+let formnumber=0;
+
+
+var tick_green=document.querySelector(".agree_submit span");
+tick_green.addEventListener('click',function(){
+    tick_green.classList.toggle('agree_submit_green');
+});
+
+next_click.forEach(function(btn){
+btn.addEventListener('click',function(){
+if(!validate_form()){
+return false;
+}
+formnumber++;
+update_form();
+progress_forward();
+});
+});
+
+prev_click.forEach(function(btn){
+btn.addEventListener('click',function(){
+formnumber--;
+update_form();
+progress_backward();
+});
+});
+
+sbmt_click.forEach(function(btn){
+btn.addEventListener('click',function(){
+if(!validate_form()){
+return false;
+}
+formnumber++;
+update_form();
+shown_name.innerHTML=written_name.value;
+});
+});
+
+function progress_forward(){
+p_bar[formnumber].classList.add('active');
+}
+
+function progress_backward(){
+var f_num = formnumber+1;
+p_bar[f_num].classList.remove('active');
+}
+
+
+
+function update_form(){
+main_page.forEach(function(main_pages){
+main_pages.classList.remove('active');
+});
+main_page[formnumber].classList.add('active');
+}
+
+function validate_form(){
+var validate=true;
+var all_inputs=document.querySelectorAll(".main.active input");
+all_inputs.forEach(function(inpt){
+inpt.classList.remove('warning');
+if(inpt.hasAttribute("require")){
+if(inpt.value.length=="0"){
+validate=false;
+inpt.classList.add('warning');
+}
+}
+});
+return validate;
+}
+
+
+//Validation
 var patientname=document.getElementById("patientname")
 var guardianname=document.getElementById("guardianname")
 var phonenumber=document.getElementById("phonenumber")
 var emailaddress=document.getElementById("emailaddress")
-var appointmentdate=document.getElementById("appointmentdate")
-var timeslot=document.getElementById("timeslot")
-var gender=document.getElementById("gender")
-var reason=document.getElementById("reason")
-var preference=document.getElementById("preference")
-var emergencyname=document.getElementById("emergencyname")
-var emergencyphone=document.getElementById("emergencyphone")
-var problem=document.getElementById("problem")
 
-//appointment required object
+
+
+//user details
 var appointmentobj={"patientname":"","guardianname":"","phonenumber":"","emailaddress":"","appointmentdate":"",
                     "timeslot":"","gender":"","reason":"","emergencyname":"","emergencyphone":""}
 
@@ -38,18 +111,19 @@ function check_number(numb){
     }
 }
 
-//Applying events for inputs
 
-//Name checking
+//checking name
 patientname.addEventListener("change",()=>{
     const namemsg=document.getElementById("patientnameal");
     if(check_name(patientname.value)){
         namemsg.innerHTML=
-        `<p class="alert alert-danger py-0">* Name Content Only Characters</p>`
+        `<p style="color:red">* name content only characters</p>`
+        patientname.classList.add('warning');
         appointmentobj["patientname"]=""
     }
     else{
         namemsg.innerHTML=``
+        patientname.classList.remove('warning');
         appointmentobj["patientname"]=patientname.value
     }
 })
@@ -57,24 +131,14 @@ guardianname.addEventListener("change",()=>{
     const namemsg=document.getElementById("guardiannameal")
     if(check_name(guardianname.value)){
         namemsg.innerHTML=
-        `<p class="alert alert-danger py-0">* Name Content Only Characters</p>`   
+        `<p style="color:red">* name content only characters</p>`   
+        guardianname.classList.add('warning');
         appointmentobj["guardianname"]=""
     }
     else{
         namemsg.innerHTML=``
+        guardianname.classList.remove('warning');
         appointmentobj["guardianname"]=guardianname.value
-    }
-})
-emergencyname.addEventListener("change",()=>{
-    const namemsg=document.getElementById("emergencynameal")
-    if(check_name(emergencyname.value)){
-        namemsg.innerHTML=
-        `<p class="alert alert-danger py-0">* Name Content Only Characters</p>`  
-        appointmentobj["emergencyname"]=""
-    }
-    else{
-        namemsg.innerHTML=``
-        appointmentobj["emergencyname"]=emergencyname.value
     }
 })
 
@@ -83,24 +147,14 @@ phonenumber.addEventListener("change",()=>{
     const numbmsg=document.getElementById("phonenumberal")
     if(check_number(phonenumber.value)){
         numbmsg.innerHTML=
-        `<p class="alert alert-danger py-0">* Enter Valid Number</p>`
+        `<p style="color:red">* enter valid number</p>`
+        phonenumber.classList.add('warning');
         appointmentobj["phonenumber"]=""
     }
     else{
         numbmsg.innerHTML=``
+        phonenumber.classList.remove('warning');
         appointmentobj["phonenumber"]=phonenumber.value
-    }
-})
-emergencyphone.addEventListener("change",()=>{
-    const numbmsg=document.getElementById("emergencyphoneal")
-    if(check_number(emergencyphone.value)){
-        numbmsg.innerHTML=
-        `<p class="alert alert-danger py-0">* Enter Valid Number</p>`
-        appointmentobj["emergencyphone"]=""
-    }
-    else{
-        numbmsg.innerHTML=``
-        appointmentobj["emergencyphone"]=emergencyphone.value
     }
 })
 
@@ -111,64 +165,37 @@ emailaddress.addEventListener("change",()=>{
     const emailmsg=document.getElementById("emailaddressal")
     if(!email.match(reg)){
         emailmsg.innerHTML=
-        `<p class="alert alert-danger py-0">* Enter Valid Email</p>`
+        `<p style="color:red">* enter valid email</p>`
+        emailaddress.classList.add('warning');
         appointmentobj["emailaddress"]=""
     }
     else{
         emailmsg.innerHTML=``
+        emailaddress.classList.remove('warning');
         appointmentobj["emailaddress"]=email
     }
 })
 
-//event for getting date
-appointmentdate.addEventListener("change",()=>{
-    appointmentobj["appointmentdate"]=appointmentdate.value
-})
 
-//event for getting time
-timeslot.addEventListener("change",()=>{
-    const timemsg=document.getElementById("timeal")
-    if(timeslot.value=="Selet Time"){
-        timemsg.innerHTML=
-        `<p class="alert alert-danger py-0">* Select Time Slot</p>`
-        appointmentobj["timeslot"]=""
-    }
-    else{
-        timemsg.innerHTML=``
-        appointmentobj["timeslot"]=timeslot.value
-    }
-})
+let date=document.getElementById("appointmentdate")
+var today = new Date();
+date.value = today.toISOString().substr(0, 10);
 
-//event for getting the reason
-reason.addEventListener("change",()=>{
-    const reasonmsg=document.getElementById("reasonal")
-    if(reason.value=="Select Reason"){
-        reasonmsg.innerHTML=
-        `<p class="alert alert-danger py-0">* Select Reason</p>`
-        appointmentobj["reason"]=""
-    }
-    else{
-        reasonmsg.innerHTML=``
-        appointmentobj["reason"]=reason.value
-    }
-})
 
-//validation function
-function vaildate(){
-    const male=document.getElementById("male")
-    if(male.checked){
-        appointmentobj["gender"]="male"
-    }
-    else{
-        console.log("female")
-        appointmentobj["gender"]="female"
-    }
-    for(const item in appointmentobj){
-        if(appointmentobj[item]==""){
-            window.alert("please fill all requried fields")
-            return
-        }
-    }
-    window.alert(appointmentobj)
-    console.log(appointmentobj)
-}
+// function store(){
+//     var email=document.getElementById("username").value
+//     var password=document.getElementById("password").value 
+//        if(email=='' || password==''){
+//          window.alert('enter details')
+//        }
+    
+//     else{
+//     window.localStorage.setItem("username",email);
+//     window.localStorage.setItem("password",password);
+//     console.log(window.localStorage.getItem(username),window.localStorage.getItem(password))
+//     window.location="http://127.0.0.1:5500/User/User-profile/user-profile.html";
+//     console.log("hi");
+//     console.log("hii");
+//     document.getElementById("pname").innerHTML="hi"+window.localStorage.getItem("username");
+//     console.log(document.getElementById("pname").innerHTML);
+//  }

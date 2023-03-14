@@ -6,164 +6,159 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
-
-    <!--Bootstrap 5.0.2 cdn CSS-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-        
-    <!--adding style-sheet-->
     <link rel="stylesheet" href="appointment.css">
 </head>
 
 <body>
-    <div class="row d-flex justify-content-center mt-2">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-10">
-            <div class="card mb-3">
-                <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
-                    <div class="col-md-12 text-center">
-                        <h3 class="mb-0 fw-bold">Appointment Form</h3>
-                    </div>
+    <div class="container">
+        <div class="card">
+            <div class="form">
+                <div class="left-side" style="background-image: url('https://img.freepik.com/free-vector/vector-3d-doctor_1441-6.jpg?w=740&t=st=1678729577~exp=1678730177~hmac=f36b81d6fa481d85fc7e52089f7fdd07a9e19a8d0d188e241ff7a59e2b9a5e5f') !important;">
+                    <ul class="progres_bar" >
+                        <li>Personal Deatils</li>
+                        <li>Appointment Deatils</li>
+                        <li>Emergency Contact Details</li>
+                        <li>Payments</li>
+                    </ul>
                 </div>
-                <div class="card-body">
-                    <form>
-                        <div class="row g-3 align-items-center">
-                            <div class="col-md-6">
-                                <label for="patientname" class="form-label">Patient Name</label>
-                                <span style="color: red;">*</span>
-                                <input type="text" class="form-control" id="patientname" name="patientname">
-                                <p class="my-1" id="patientnameal"></p>
+                <div class="right-side ">
+                    <div class="main active">
+                        <div class="manage">
+                            <h3>Appointment Form</h3>
+                        </div>
+                        <div class="input_div">
+                            <div class="input_text"> <input class="written_name" type="text" id="patientname" name="patientname" require required>
+                                <label>Patient Name</label> </div>
+                        </div>
+                        <span id="patientnameal"></span>
+                        <div class="input_div">
+                            <div class="input_text"> <input type="text" id="guardianname" name="guardianname" require required> 
+                            <label>Guardian Name</label> </div>
+                        </div>
+                        <span id="guardiannameal"></span>
+                        <div class="input_div">
+                            <div class="input_text"> <input type="text" id="emailaddress" name="emailaddress" require required> 
+                                <label>Email</label> </div>
+                        </div>
+                        <span id="emailaddressal"></span>
+                        <div class="input_div">
+                            <div class="input_text"> <input type="number" id="phonenumber" name="phonenumber" require required> 
+                                <label>Phone</label> </div>
+                        </div>
+                        <span id="phonenumberal"></span>
+
+                        <div class="button step_1"> <button class="next_btn">Next</button> </div>
+                    </div>
+                    <div class="main">
+                        <div class="manage">
+                            <h3>Book an Appointment</h3>
+            
+                        </div>
+                        <div class="input_div">
+                            <label for="appointmentdate">Date</label>
+                            <div class="input_text">
+                                <input type="date" name="appointmentdate" id="appointmentdate"  require required >
                             </div>
-                            <div class="col-md-6">
-                                <label for="guardianname" class="form-label">Guardian Name</label>
-                                <span style="color: red;">*</span>
-                                <input type="text" class="form-control" id="guardianname" name="guardianname">
-                                <p class="my-1" id="guardiannameal"></p>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="phonenumber" class="form-label">Phone Number</label>
-                                <span style="color: red;">*</span>
-                                <input type="text" class="form-control" id="phonenumber" name="phonenumber">
-                                <p class="my-1" id="phonenumberal"></p>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="emailaddress" class="form-label">Email Address</label>
-                                <span style="color: red;">*</span>
-                                <input type="email" class="form-control" id="emailaddress" name="emailaddress">
-                                <p class="my-1" id="emailaddressal"></p>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="appointmentdate" class="form-label">Appointment Date</label>
-                                <span style="color: red;">*</span>
-                                <input type="date" class="form-control" id="appointmentdate" name="appointmentdate">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="timeslot" class="form-label">Appointment Time</label>
-                                <span style="color: red;">*</span>
-                                <select class="form-select" aria-label="Default select example" name="timeslot" id="timeslot">
-                                    <option selected="">Selet Time</option>
-                                    <option value="10AM-11AM">10AM-11AM</option>
-                                    <option value="11AM-12PM">11AM-12PM</option>
-                                    <option value="12PM-1PM">12PM-1PM</option>
-                                    <option value="1PM-2PM">1PM-2PM</option>
-                                    <option value="2PM-3PM">2PM-3PM</option>
-                                    <option value="3PM-4PM">3PM-4PM</option>
-                                    <option value="4PM-5PM">4PM-5PM</option>
-                                </select>
-                                <p class="my-1" id="timeal"></p>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="gender" class="form-label">Gender</label>
-                                <span style="color: red;">*</span>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="exampleRadios"
-                                                id="male" value="male" name="gender" checked>
-                                            <label class="form-check-label" for="exampleRadios11">
-                                                Male
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="exampleRadios"
-                                                id="female" value="female" name="gender">
-                                            <label class="form-check-label" for="exampleRadios22">
-                                                Female
-                                            </label>
-                                        </div>
-                                    </div>
+                        </div>
+                            <div class="input_div"><div class="input_text"> <select name="timeslot" id="timeslot">
+                                <option selected="">Select Time</option>
+                                <option value="10AM-11AM">10AM-11AM</option>
+                                <option value="11AM-12PM">11AM-12PM</option>
+                                <option value="12PM-1PM">12PM-1PM</option>
+                                <option value="1PM-2PM">1PM-2PM</option>
+                                <option value="2PM-3PM">2PM-3PM</option>
+                                <option value="3PM-4PM">3PM-4PM</option>
+                                <option value="4PM-5PM">4PM-5PM</option>
+                            </select> </div></div>
+                            <div class="input_div">
+                                <div class="input_text">
+                                    <select id="reason" name="reason">
+                                        <option selected="">Select Reason</option>
+                                        <option value="surgeory">Surgeory</option>
+                                        <option value="dentist">Dentist Chekup</option>
+                                        <option value="bodycheckup">Body Chekup</option>
+                                        <option value="gynecologist">Gynecologist Chekup</option>
+                                        <option value="otherservices">Other Service</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Select Reson</label>
-                                <span style="color: red;">*</span>
-                                <select class="form-select" aria-label="Default select example" id="reason" name="reason">
-                                    <option selected="">Select Reason</option>
-                                    <option value="surgeory">Surgeory</option>
-                                    <option value="dentist">Dentist Chekup</option>
-                                    <option value="bodycheckup">Body Chekup</option>
-                                    <option value="gynecologist">Gynecologist Chekup</option>
-                                    <option value="otherservices">Other Service</option>
-                                </select>
-                                <p class="my-1" id="reasonal"></p>
+
+                            <div class="input_div">
+                                <div class="input_text">
+                                    <select  id="preference" name="preference">
+                                        <option selected="">Select Doctor</option>
+                                        <option value="DR.Peter">DR.Peter</option>
+                                        <option value="DR.Mary">DR.Mary</option>
+                                        <option value="DR.Zoe">DR.Zoe</option>
+                                        <option value="DR.Lily">DR.Lily</option>
+                                        <option value="DR.Adrian">DR.Adrian</option>
+                                    </select>
+                                </div>
+
                             </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Preference Doctor</label>
-                                <span class="text-muted">(optional)</span>
-                                <select class="form-select" aria-label="Default select example" id="preference" name="preference">
-                                    <option selected="">Select Doctor</option>
-                                    <option value="peter">DR.Peter</option>
-                                    <option value="mary">DR.Mary</option>
-                                    <option value="zoe">DR.Zoe</option>
-                                    <option value="lily">DR.Lily</option>
-                                    <option value="adrian">DR.Adrian</option>
-                                </select>
-                            </div>
-                            <div class="col-md-12 d-flex justify-content-center mt-4">
-                                <h6 class="p-2"><b>Emergency Details</b></h6>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="emergencyname" class="form-label">Emergency Name</label>
-                                <span style="color: red;">*</span>
-                                <input type="text" class="form-control" id="emergencyname" name="emergencyname">
-                                <p class="my-1" id="emergencynameal"></p>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="emergencyphone" class="form-label">Emergency Phone Number</label>
-                                <span style="color: red;">*</span>
-                                <input type="text" class="form-control" id="emergencyphone" name="emergencyphone">
-                                <p class="my-1" id="emergencyphoneal"></p>
-                            </div>
-                            <div class="col-md-12">
-                                <label for="addnote" class="form-label">Describe Your Problem</label>
-                                <span class="text-muted">(optional)</span>
-                                <textarea class="form-control" id="problem" rows="3" name="problem"></textarea>
-                            </div>
+                            
+                        <div class="button step_2 m_top"> <button class="prev_btn">Previous</button> <button
+                                class="next_btn">Next</button> </div>
                         </div>
-                        <div class="text-center col-md-12">
-                            <button type="button" class="btn btn-success mt-4 px-5" onclick="vaildate()">Make Appointment</button>
+                    <div class="main ">
+                        <div class="manage">
+                            <h3>Emergency Details</h3>
                         </div>
-                    </form>
+                        <div class="input_div">
+                            <div class="input_text"> <input type="text" require required id="emergencyname" name="emergencyname"> <label for="emergencyname" >Emergency Name</label> </div>
+                        </div>
+                        <div class="input_div">
+                            <div class="input_text"> <input type="text" require required id="emergencyphone" name="emergencyphone"> <label for="emergencyphone" >Emergency Phone number</label> </div>
+                        </div>
+                        <div class="input_div">
+                            <label for="addnote" >Describe Your Problem </label>
+                            <div class="input_text"> <textarea id="problem" rows="3" name="problem" require required></textarea>
+                                </div>
+                        </div>
+                        <div class="button step_2 step_3"> <button class="prev_btn">Previous</button> <button
+                                class="next_btn">Next</button> </div>
+                    </div>
+                    <div class="main ">
+                        <div class="manage">
+                            <h3>Manage your freelance buisness with us</h3>
+                            <p>Take less than 10 minutes to fill out the information needed to register ypour buisness.
+                            </p>
+                        </div>
+                        <div class="input_div">
+                            <div class="input_text"> <input type="text" require required> <label>Name of
+                                    Director</label> </div>
+                            <div class="input_text"> <input type="number" require required> <label>Shareholding
+                                    %</label> </div>
+                        </div>
+                        <div class="input_div">
+                            <div class="input_text"> <input type="number" require required> <label>Phone Number</label>
+                            </div>
+                            <div class="input_text"> <input type="text" require required> <label>Email Id</label> </div>
+                        </div>
+                        <div class="agree_submit"> <span><i class="fa fa-check"></i></span>
+                            <p>I hereby declare that information provided in the online registration form is true to the
+                                best of my knowledge and I accept motes,terms,disclaimer and policies by clicking
+                                "Submit Form" button.</p>
+                        </div>
+                        <div class="button step_2 step_4"> <button class="prev_btn">Previous</button> <button
+                                class="sbmt_btn">Submit</button> </div>
+                    </div>
+                    <div class="main ">
+                        <div class="manage">
+                            <h3>Congratulations <span class="shown_name"></span></h3>
+                            <p>Your buisness account have been successfully registered.</p>
+                        </div> <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                        </svg>
+                        <div class="h4_txt">
+                            <h4>For further querries you can contact us on 011-123456789</h4>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-1"></div>
     </div>
-
-
-
-
-
-
-
-    <!--Bootstrap 5.0.2 cdn script-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
 
     <script src="appointment.js"></script>
 </body>
