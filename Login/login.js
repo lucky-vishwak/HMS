@@ -1,19 +1,20 @@
- 
- function addusers(){
-   var obj=[{username:"vishwak",password:"vishwak"},{username:"vishal",password:"vishal"},
-   {username:"sara",password:"sara"},{username:"likhith",password:"likhith"}]
+
+function addusers(){
+   // var obj=[{username:"vishwak",password:"vishwak"},{username:"vishal",password:"vishal"},
+   // {username:"sara",password:"sara"},{username:"likhith",password:"likhith"}]
    if(!localStorage.getItem("users")){
       localStorage.setItem("users",'[]')
    }
    let empobj=JSON.parse(localStorage.getItem("users"))
-   for(const ele of obj){
-      empobj.push(ele)
-   }
+   // for(const ele of obj){
+   //    empobj.push(ele)
+   // }
    empobj=JSON.stringify(empobj)
    localStorage.setItem("users",empobj)
    localStorage.setItem("active",false)
+   localStorage.setItem("active_user",'{}')
  }
-addusers()
+//addusers()
 //localStorage.clear()
  function clogin(){
    const username=document.getElementById("username").value
@@ -22,11 +23,13 @@ addusers()
    for(const ele of empobj){
       if(username==ele.username){
          if(password==ele.password){
-            window.alert("login successfull")
+            let for_active=JSON.stringify(ele)
+            localStorage.setItem("active_user",for_active)
+            console.log(localStorage.getItem("active_user"))
             let act=!JSON.parse(localStorage.getItem("active"))
             act=JSON.stringify(act)
             localStorage.setItem("active",act)
-            window.location.href="../Home/home.html"
+            window.location.href="../User/User-profile/user-profile.html"
             return
          }
          else{

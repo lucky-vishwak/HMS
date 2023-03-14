@@ -1,7 +1,7 @@
 var login_btn=document.getElementById("login")
 var logout_btn=document.getElementById("logout")
 if(JSON.parse(localStorage.getItem("active"))){
-login_btn.innerHTML=``
+    login_btn.innerHTML=``
 }
 else{
     logout_btn.innerHTML=``
