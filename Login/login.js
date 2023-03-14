@@ -43,4 +43,3 @@
     console.log(document.getElementById("pname").innerHTML);
  }
 }
-
