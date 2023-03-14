@@ -1,4 +1,3 @@
- 
  function validateUsername(){
     // checking whether username is there are not in db
     let validateUsername=true
