@@ -5,16 +5,16 @@
    if(!localStorage.getItem("users")){
       localStorage.setItem("users",'[]')
    }
-   console.log(obj)
    let empobj=JSON.parse(localStorage.getItem("users"))
    for(const ele of obj){
       empobj.push(ele)
    }
    empobj=JSON.stringify(empobj)
    localStorage.setItem("users",empobj)
+   localStorage.setItem("active",false)
  }
-// addusers()
-// localStorage.clear()
+addusers()
+//localStorage.clear()
  function clogin(){
    const username=document.getElementById("username").value
    const password=document.getElementById("password").value
@@ -23,6 +23,10 @@
       if(username==ele.username){
          if(password==ele.password){
             window.alert("login successfull")
+            let act=!JSON.parse(localStorage.getItem("active"))
+            act=JSON.stringify(act)
+            localStorage.setItem("active",act)
+            window.location.href="../Home/home.html"
             return
          }
          else{
@@ -79,3 +83,13 @@
  }
 }
 
+
+function appoint(){
+   console.log(JSON.parse(localStorage.getItem("active")))
+   if(!JSON.parse(localStorage.getItem("active"))){
+       window.location.href="../Login/login.html"
+   }
+   else{
+       window.location.href="../Appointment/appointment.html"
+   }
+}
