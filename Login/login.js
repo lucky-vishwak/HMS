@@ -1,3 +1,38 @@
+ 
+ function addusers(){
+   var obj=[{username:"vishwak",password:"vishwak"},{username:"vishal",password:"vishal"},
+   {username:"sara",password:"sara"},{username:"likhith",password:"likhith"}]
+   if(!localStorage.getItem("users")){
+      localStorage.setItem("users",'[]')
+   }
+   console.log(obj)
+   let empobj=JSON.parse(localStorage.getItem("users"))
+   for(const ele of obj){
+      empobj.push(ele)
+   }
+   empobj=JSON.stringify(empobj)
+   localStorage.setItem("users",empobj)
+ }
+// addusers()
+// localStorage.clear()
+ function clogin(){
+   const username=document.getElementById("username").value
+   const password=document.getElementById("password").value
+   const empobj=JSON.parse(localStorage.getItem("users"))
+   for(const ele of empobj){
+      if(username==ele.username){
+         if(password==ele.password){
+            window.alert("login successfull")
+            return
+         }
+         else{
+            window.alert("wrong password")
+            return
+         }
+      }
+   }
+   window.alert("user is not present")
+}
  function validateUsername(){
     // checking whether username is there are not in db
     let validateUsername=true
