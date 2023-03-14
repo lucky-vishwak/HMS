@@ -8,6 +8,9 @@ p{
 body{
     background-color: white;
 }
+.navbar{
+    background-color: #483d8b;
+}
 #pol a{
      text-decoration:none;
        padding-bottom: 5px;
@@ -28,7 +31,6 @@ footer{
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: red;
     color: white;
     text-align: center;
 }
