@@ -11,7 +11,7 @@
 //    }
 //    empobj=JSON.stringify(empobj)
 //    localStorage.setItem("users",empobj)
-//    localStorage.setItem("active",false)
+//    localStrage.setItem("active",false)
 //  }
 // addusers()
 // //localStorage.clear()
@@ -76,8 +76,6 @@
     window.localStorage.setItem("password",password);
     console.log(window.localStorage.getItem(username),window.localStorage.getItem(password))
     window.location="http://127.0.0.1:5500/User/User-profile/user-profile.html";
-    console.log("hi");
-    console.log("hii");
     document.getElementById("pname").innerHTML="hi"+window.localStorage.getItem("username");
     console.log(document.getElementById("pname").innerHTML);
  }
