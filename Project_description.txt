@@ -1,0 +1,99 @@
+Fetaures to be Implemented:
+	Patient Side Implementation:
+		Register Page for Patient
+		Login Page for Patient
+		Booking appointment portal
+		Checking appointment details
+		Payment gateway
+		Checking Hospital reports
+		Giving review and Feedback to doctors
+		Withdrawl of appointment
+		Desired Doctor selection
+	Management Side Implementation:
+		Appointmenet Scheduling
+		Assigning Doctors to Patients
+		Handling Patient and Doctor details
+		Generating bills
+		Doctors details and their availability
+		Mailing reports to patient
+	Doctor Side Implementation:
+		Uploading perscrpitions
+		Availability of patient details
+		Specailization details
+Extra Features:
+	emergency slots for every doctor
+	search bar contents only avaliable doctor names
+	Medication alerts for the Patients and details for Medication timings
+	
+
+Possibilites:
+	Doctor search in main page
+	Re-meeting of doctor 
+	Data visualization using Chartjs
+	Chatting with doctor regarding doubts in medication
+
+Modules can be used:
+	nodemon
+	multer
+	cloudinary
+	dotenv
+	socket.io
+	mongobd
+	expressjs
+	bcryptjs
+	jsonwebtoken
+	multer-storage-cloudinary
+	express-async-handler
+
+
+
+--------------------------------------------------------------------------
+Registration Page Contents:
+	Username
+	Password
+	Confirm Password
+	Contact details like Email ,Phone number
+	Address details
+	Verification of user with mobile number
+	After successful registration Welcome email to the users with appointment details
+
+After Registering redirecting to Login Page / Home Page
+
+Login Page Contents:
+	Identifying which user they are
+	Username 
+	Password
+	Login button
+	
+After Login to the Account Default display user details apart from that Appointment part and View that history of Appointments
+
+
+Appointment Page Contents:
+	Patient Name on behalf any family member details
+	Details regarding appointment
+	Date 
+	Time 
+	Doctors informations and reviews
+	Particular Doctor selection
+	Paying Appointment Charges(Payment Gateway)
+	gurdin
+	
+Status of the Appointment
+	Displaying past Appointments
+	Beside Appointment view button to more info about appointment
+
+
+
+Empty slots for general physician 
+User profile lo appointment history and edit user details
+priotising based on emergency
+ratting for doctors
+
+recipeting filter based on doctors
+doctors availability details
+	
+	
+	
+	
+
+	

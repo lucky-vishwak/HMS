@@ -1,0 +1,163 @@
+.main .body {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: column;
+    flex-flow: column;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    min-width: 0;
+}
+.py-3 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+}
+.d-flex {
+    display: flex !important;
+}
+html * {
+    box-sizing: border-box;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+user agent stylesheet
+div {
+    display: block;
+}
+#ihealth-layout {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+[class="theme-tradewind"] {
+    --primary-color: #6aab9c;
+    --secondary-color: #f7b36b;
+    --chart-color1: #6aab9c;
+    --chart-color2: #f7b36b;
+    --chart-color3: #97B0AA;
+    --chart-color4: #4D6E94;
+    --chart-color5: #81A1CA;
+    --chart-color6: #ED5782;
+    --primary-gradient: linear-gradient(45deg, #608bc2, #65a0a9);
+}
+body {
+    -moz-transition: ease 0.1s;
+    -o-transition: ease 0.1s;
+    -webkit-transition: ease 0.1s;
+    transition: ease 0.1s;
+    background-color: var(--body-color);
+    color: var(--text-color);
+    font-weight: 400;
+    font-family: "Open Sans",sans-serif;
+    font-size: 14px;
+}
+body {
+    margin: 0;
+    font-family: var(--bs-body-font-family);
+    font-size: var(--bs-body-font-size);
+    font-weight: var(--bs-body-font-weight);
+    line-height: var(--bs-body-line-height);
+    color: var(--bs-body-color);
+    text-align: var(--bs-body-text-align);
+    background-color: var(--bs-body-bg);
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+:root {
+    --dark-color: #323A45;
+    --color-fff: #FFFFFF;
+    --color-100: #F0F0F0;
+    --color-200: #EEEEEE;
+    --color-300: #E0E0E0;
+    --color-400: #BDBDBD;
+    --color-500: #555555;
+    --color-600: #757575;
+    --color-700: #616161;
+    --color-800: #424242;
+    --color-900: #212121;
+    --color-000: #000000;
+    --border-color: #f0f0f0;
+    --card-color: #ffffff;
+    --body-color: #f9fbfd;
+    --white-color: #ffffff;
+    --sidebar-color: #fcfcfc;
+    --text-color: #212529;
+    --hc-font-color: #555555;
+    --hc-bg-color: #f0f0f0;
+    --primary-color: #6aab9c;
+    --secondary-color: #f7b36b;
+    --chart-color1: #6aab9c;
+    --chart-color2: #f7b36b;
+    --chart-color3: #97B0AA;
+    --chart-color4: #4D6E94;
+    --chart-color5: #81A1CA;
+}
+:root {
+    --bs-blue: #0d6efd;
+    --bs-indigo: #6610f2;
+    --bs-purple: #6f42c1;
+    --bs-pink: #d63384;
+    --bs-red: #dc3545;
+    --bs-orange: #fd7e14;
+    --bs-yellow: #ffc107;
+    --bs-green: #198754;
+    --bs-teal: #20c997;
+    --bs-cyan: #0dcaf0;
+    --bs-white: #fff;
+    --bs-gray: #6c757d;
+    --bs-gray-dark: #343a40;
+    --bs-gray-100: #f8f9fa;
+    --bs-gray-200: #e9ecef;
+    --bs-gray-300: #dee2e6;
+    --bs-gray-400: #ced4da;
+    --bs-gray-500: #adb5bd;
+    --bs-gray-600: #6c757d;
+    --bs-gray-700: #495057;
+    --bs-gray-800: #343a40;
+    --bs-gray-900: #212529;
+    --bs-primary: #0d6efd;
+    --bs-secondary: #6c757d;
+    --bs-success: #198754;
+    --bs-info: #0dcaf0;
+    --bs-warning: #ffc107;
+    --bs-danger: #dc3545;
+    --bs-light: #f8f9fa;
+    --bs-dark: #212529;
+    --bs-primary-rgb: 13,110,253;
+    --bs-secondary-rgb: 108,117,125;
+    --bs-success-rgb: 25,135,84;
+    --bs-info-rgb: 13,202,240;
+    --bs-warning-rgb: 255,193,7;
+    --bs-danger-rgb: 220,53,69;
+    --bs-light-rgb: 248,249,250;
+    --bs-dark-rgb: 33,37,41;
+    --bs-white-rgb: 255,255,255;
+    --bs-black-rgb: 0,0,0;
+    --bs-body-color-rgb: 33,37,41;
+    --bs-body-bg-rgb: 255,255,255;
+    --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --bs-gradient: linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0));
+    --bs-body-font-family: var(--bs-font-sans-serif);
+    --bs-body-font-size: 1rem;
+    --bs-body-font-weight: 400;
+    --bs-body-line-height: 1.5;
+    --bs-body-color: #212529;
+
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
