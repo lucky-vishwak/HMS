@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Aarogya</title>
   <link rel="stylesheet" href="user-profile.css">
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
@@ -14,7 +14,7 @@
   <!-- MDB -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet" />
 
-  <link href="../../assets/img/favicon.png" rel="icon">
+  <link href="../../assets/icons/heart-beat.png" rel="icon">
   <link href="../../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
   <!-- Google Fonts -->
   <link
@@ -32,6 +32,49 @@
 
   <!-- Template Main CSS File -->
   <link href="../../assets/css/style.css" rel="stylesheet">
+
+  <!-- Back gorund color gradient -->
+  <style>
+    .background-radial-gradient {
+      background-color: hsl(218, 41%, 15%);
+      background-image: radial-gradient(650px circle at 0% 0%,
+          hsl(218, 41%, 35%) 15%,
+          hsl(218, 41%, 30%) 35%,
+          hsl(218, 41%, 20%) 75%,
+          hsl(218, 41%, 19%) 80%,
+          transparent 100%),
+        radial-gradient(1250px circle at 100% 100%,
+          hsl(218, 41%, 45%) 15%,
+          hsl(218, 41%, 30%) 35%,
+          hsl(218, 41%, 20%) 75%,
+          hsl(218, 41%, 19%) 80%,
+          transparent 100%);
+    }
+
+    #radius-shape-1 {
+      height: 220px;
+      width: 220px;
+      top: -60px;
+      left: -130px;
+      background: radial-gradient(#44006b, #ad1fff);
+      overflow: hidden;
+    }
+
+    #radius-shape-2 {
+      border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+      bottom: -60px;
+      right: -110px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(#44006b, #ad1fff);
+      overflow: hidden;
+    }
+
+    .bg-glass {
+      background-color: hsla(0, 0%, 100%, 0.9) !important;
+      backdrop-filter: saturate(200%) blur(25px);
+    }
+  </style>
 
 </head>
 
@@ -52,8 +95,10 @@
   </div>
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center px-1">
-
-      <h1 class="logo me-auto"><a href="../../Home/home.html">Medilab</a></h1>
+      <a href="" class="logo d-flex align-items-center">
+        <img src="../../assets/icons/heart-beat.png" alt="" width="75%">
+      </a>
+      <h1 class="logo me-auto"><a href="../../Home/home.html">Aarogya</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
       <nav id="navbar" class="navbar order-last order-lg-0" style="box-shadow: none !important;">
@@ -86,11 +131,9 @@
 
     </div>
   </header>
-  <section style="background-color: #eee;">
+  <section class="background-radial-gradient overflow-hidden mt-5">
     <div class="container py-5">
       <!-- nav bar of home page -->
-
-
       <div class="row">
         <div class="col-lg-4">
           <div class="card mb-4">
@@ -179,10 +222,6 @@
           &copy; Copyright <strong><span>Medilab</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
-          <!-- All the links in the footer should remain intact. -->
-          <!-- You can delete the links only if you purchased the pro version. -->
-          <!-- Licensing information: https://bootstrapmade.com/license/ -->
-          <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/medilab-free-medical-bootstrap-theme/ -->
           Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
         </div>
       </div>

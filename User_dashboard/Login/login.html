@@ -5,13 +5,13 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Inner Page - Medilab Bootstrap Template</title>
+  <title>Aarogya</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="../assets/img/favicon.png" rel="icon">
-  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="../assets/icons/heart-beat.png" rel="icon">
+  <!-- <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon"> -->
 
   <!-- Google Fonts -->
   <link
@@ -38,6 +38,47 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  <style>
+    .background-radial-gradient {
+      background-color: hsl(218, 41%, 15%);
+      background-image: radial-gradient(650px circle at 0% 0%,
+          hsl(218, 41%, 35%) 15%,
+          hsl(218, 41%, 30%) 35%,
+          hsl(218, 41%, 20%) 75%,
+          hsl(218, 41%, 19%) 80%,
+          transparent 100%),
+        radial-gradient(1250px circle at 100% 100%,
+          hsl(218, 41%, 45%) 15%,
+          hsl(218, 41%, 30%) 35%,
+          hsl(218, 41%, 20%) 75%,
+          hsl(218, 41%, 19%) 80%,
+          transparent 100%);
+    }
+
+    #radius-shape-1 {
+      height: 220px;
+      width: 220px;
+      top: -60px;
+      left: -130px;
+      background: radial-gradient(#44006b, #ad1fff);
+      overflow: hidden;
+    }
+
+    #radius-shape-2 {
+      border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+      bottom: -60px;
+      right: -110px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(#44006b, #ad1fff);
+      overflow: hidden;
+    }
+
+    .bg-glass {
+      background-color: hsla(0, 0%, 100%, 0.9) !important;
+      backdrop-filter: saturate(200%) blur(25px);
+    }
+  </style>
 </head>
 
 <body>
@@ -61,7 +102,10 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="../Home/home.html">Medilab</a></h1>
+      <a href="../Home/home.html" class="logo d-flex align-items-center">
+        <img src="../assets/icons/heart-beat.png" alt="" width="75%">
+      </a>
+      <h1 class="logo me-auto"><a href="../Home/home.html">Aarogya</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <a href="index.html" class="logo me-auto"><img src="../assets/img/logo.png" alt="" class="img-fluid"></a>
 
@@ -92,10 +136,10 @@
 
     <!-- ======= Breadcrumbs Section ======= -->
     <section class="breadcrumbs pt-0">
-      <div class="container box-shadow w-75 h-75 p-2 rounded">
+      <div class="">
 
         <!--Login Page-->
-        <div class=" justify-content-between align-items-center">
+        <!-- <div class=" justify-content-between align-items-center">
           <section class="vh-100">
             <div class=" h-100">
               <div class="row d-flex justify-content-center align-items-center h-100">
@@ -125,7 +169,7 @@
                             </div>
 
                             <div class="form-outline mb-4">
-                              <label class="form-label" for="form2Example27">Password</label>
+                              <label class="" for="form2Example27"><p>Password</p></label>
                               <input type="password" id="password" class="form-control form-control-lg" />
 
                             </div>
@@ -149,7 +193,80 @@
               </div>
             </div>
           </section>
-        </div>
+        </div> -->
+        <!-- Section: Design Block -->
+        <section class="background-radial-gradient overflow-hidden">
+          <div class="container px-4 py-5 px-md-5 text-center text-lg-start">
+            <div class="row gx-lg-5 align-items-center mb-5">
+              <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+                <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+                <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+
+                <div class="card bg-glass">
+                  <h5 class="mt-5 display-6 mx-auto fw-bold ls-tight" style="color: hsl(220, 100%, 50%)">
+                    Login
+                    <span style="color: hsl(218, 81%, 75%)">Form</span>
+                  </h5>
+                  <div class="card-body px-4 py-5 px-md-5">
+                    <form>
+
+                      <!-- Email input -->
+                      <div class="form-outline mb-4">
+                        <label class="form-label" for="form3Example3">Email address</label>
+                        <input type="email" id="username" class="form-control" />
+                      </div>
+
+                      <!-- Password input -->
+                      <div class="form-outline mb-4">
+                        <label class="form-label" for="form3Example4">Password</label>
+                        <input type="password" id="password" class="form-control" />
+                      </div>
+
+                      <!-- Submit button -->
+                      <button type="submit" class="btn appointment-btn d-block mx-auto btn-block mb-4" onclick="clogin()">
+                        Login
+                      </button>
+
+                      <!-- Register buttons -->
+                      <div class="text-center">
+                        <p><span><a class="" href="../Register/register.html">sign up</a></span> or sign up with:</p>
+                        <button type="button" class="btn appointment-btn btn-floating mx-1">
+                          <i class="fab fa-facebook-f"></i>
+                        </button>
+
+                        <button type="button" class="btn appointment-btn btn-floating mx-1">
+                          <i class="fab fa-google"></i>
+                        </button>
+
+                        <button type="button" class="btn appointment-btn btn-floating mx-1">
+                          <i class="fab fa-twitter"></i>
+                        </button>
+
+                        <button type="button" class="btn appointment-btn btn-floating mx-1">
+                          <i class="fab fa-github"></i>
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
+                <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
+                  The best offer <br />
+                  <span style="color: hsl(218, 81%, 75%)">for your business</span>
+                </h1>
+                <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                  Temporibus, expedita iusto veniam atque, magni tempora mollitia
+                  dolorum consequatur nulla, neque debitis eos reprehenderit quasi
+                  ab ipsum nisi dolorem modi. Quos?
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Section: Design Block -->
       </div>
     </section>
     <!-- End Breadcrumbs Section -->
@@ -207,7 +324,7 @@
       </div>
     </div>
 
-    
+
     </div>
 
     <div class="container d-md-flex py-4">
