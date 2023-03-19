@@ -1,8 +1,9 @@
 function search(){
-    var s=document.getElementById('x').value.toUpperCase()
-    var car=document.getElementsByClassName('card')
+   // var s=document.getElementById('x').value.toUpperCase()
+  var x=$('.card').length
+  var s=$('#x').val().toUpperCase()
     p=0
-    for (const i of car) {
+    for (const i of $('.card')) {
         var val=i.innerText.toUpperCase()
         if(val.indexOf(s)>-1){
            
@@ -14,10 +15,14 @@ function search(){
         }
 
     }
-    if(p==car.length){
-        document.getElementById('sorry').innerHTML=`<h1>No one found</h1>`
+    if(p==x){
+      
+      //document.getElementById('sorry').innerHTML=`<h1>No one found</h1>`
+        $("h1").text(`No one found`)
     }
-    
+    else{
+      $("h1").text(``)
+    }
 }
 
 $(document).ready(function(){

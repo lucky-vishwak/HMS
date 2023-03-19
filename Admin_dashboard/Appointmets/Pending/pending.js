@@ -45,7 +45,7 @@ function user(){
           
             tr.appendChild(td2)
             const td3=document.createElement('td')
-            td3.innerHTML=`sanjana`
+            td3.innerHTML=`vishwak`
               tr.appendChild(td3)
               const td4=document.createElement('td')
               td4.innerHTML=`dentist`
@@ -70,7 +70,7 @@ function doctor(){
           
             tr.appendChild(td2)
             const td3=document.createElement('td')
-            td3.innerHTML=`sanjana`
+            td3.innerHTML=`vishal`
               tr.appendChild(td3)
               const td4=document.createElement('td')
               td4.innerHTML=`dentist`
