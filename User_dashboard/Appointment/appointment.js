@@ -1,270 +1,254 @@
-// var next_click=document.querySelectorAll(".next_btn");
-// var prev_click=document.querySelectorAll(".prev_btn");
-// var sbmt_click=document.querySelectorAll(".sbmt_btn");
-// var main_page=document.querySelectorAll(".main");
-// var p_bar =document.querySelectorAll(".progres_bar li");
-// var written_name=document.querySelector(".written_name");
-// var shown_name=document.querySelector(".shown_name");
-// let formnumber=0;
-
-// var tick_green=document.querySelector(".agree_submit span");
-// tick_green.addEventListener('click',function(){
-//     tick_green.classList.toggle('agree_submit_green');
-// });
-
-// next_click.forEach(function(btn){
-// btn.addEventListener('click',function(){
-// if(!validate_form()){
-// return false;
-// }
-// formnumber++;
-// update_form();
-// progress_forward();
-// });
-// });
-
-// prev_click.forEach(function(btn){
-// btn.addEventListener('click',function(){
-// formnumber--;
-// update_form();
-// progress_backward();
-// });
-// });
-
-// sbmt_click.forEach(function(btn){
-// btn.addEventListener('click',function(){
-// if(!validate_form()){
-// return false;
-// }
-// formnumber++;
-// update_form();
-// shown_name.innerHTML=written_name.value;
-// });
-// });
-
-// function progress_forward(){
-// p_bar[formnumber].classList.add('active');
-// }
-
-// function progress_backward(){
-// var f_num = formnumber+1;
-// p_bar[f_num].classList.remove('active');
-// }
+//Validation
+var patientname=document.getElementById("patientname")
+var guardianname=document.getElementById("guardianname")
+var phonenumber=document.getElementById("phonenumber")
+var emailaddress=document.getElementById("emailaddress")
+var appointmentdate=document.getElementById("appointmentdate")
+var timeslot=document.getElementById("timeslot")
+var reason=document.getElementById("reason")
+var preference=document.getElementById("preference")
+var emergencyname=document.getElementById("emergencyname")
+var emergencyphone=document.getElementById("emergencyphone")
+var problem=document.getElementById("problem")
 
 
+//user details
+var appointmentobj={"patientname":"","guardianname":"","phonenumber":"","emailaddress":"","appointmentdate":"",
+                    "timeslot":"","gender":"","reason":"","emergencyname":"","emergencyphone":""}
 
-// function update_form(){
-// main_page.forEach(function(main_pages){
-// main_pages.classList.remove('active');
-// });
-// main_page[formnumber].classList.add('active');
-// }
-
-// function validate_form(){
-// var validate=true;
-// var all_inputs=document.querySelectorAll(".main.active input");
-// all_inputs.forEach(function(inpt){
-// inpt.classList.remove('warning');
-// if(inpt.hasAttribute("require")){
-// if(inpt.value.length=="0"){
-// validate=false;
-// inpt.classList.add('warning');
-// }
-// }
-// });
-// return validate;
-// }
-
-
-// //Validation
-// var patientname=document.getElementById("patientname")
-// var guardianname=document.getElementById("guardianname")
-// var phonenumber=document.getElementById("phonenumber")
-// var emailaddress=document.getElementById("emailaddress")
-
-
-
-// //user details
-// var appointmentobj={"patientname":"","guardianname":"","phonenumber":"","emailaddress":"","appointmentdate":"",
-//                     "timeslot":"","gender":"","reason":"","emergencyname":"","emergencyphone":""}
-
-// //name checking function
-// function check_name(name){
-//     const reg=/^[a-zA-Z\ ]+$/;
-//     if(name.length==0 || !name.match(reg)){
-//         return true
-//     }
-//     else{
-//         return false
-//     }
-// }
-
-// //number checking function
-// function check_number(numb){
-//     const reg="^[0-9]{10}$";
-//     if(numb.length==0 || !numb.match(reg)){
-//         return true
-//     }
-//     else{
-//         return false
-//     }
-// }
-
-
-// //checking name
-// patientname.addEventListener("change",()=>{
-//     const namemsg=document.getElementById("patientnameal");
-//     if(check_name(patientname.value)){
-//         namemsg.innerHTML=
-//         `<p style="color:red">* name content only characters</p>`
-//         patientname.classList.add('warning');
-//         appointmentobj["patientname"]=""
-//     }
-//     else{
-//         namemsg.innerHTML=``
-//         patientname.classList.remove('warning');
-//         appointmentobj["patientname"]=patientname.value
-//     }
-// })
-// guardianname.addEventListener("change",()=>{
-//     const namemsg=document.getElementById("guardiannameal")
-//     if(check_name(guardianname.value)){
-//         namemsg.innerHTML=
-//         `<p style="color:red">* name content only characters</p>`   
-//         guardianname.classList.add('warning');
-//         appointmentobj["guardianname"]=""
-//     }
-//     else{
-//         namemsg.innerHTML=``
-//         guardianname.classList.remove('warning');
-//         appointmentobj["guardianname"]=guardianname.value
-//     }
-// })
-
-// //Phone Number checking
-// phonenumber.addEventListener("change",()=>{
-//     const numbmsg=document.getElementById("phonenumberal")
-//     if(check_number(phonenumber.value)){
-//         numbmsg.innerHTML=
-//         `<p style="color:red">* enter valid number</p>`
-//         phonenumber.classList.add('warning');
-//         appointmentobj["phonenumber"]=""
-//     }
-//     else{
-//         numbmsg.innerHTML=``
-//         phonenumber.classList.remove('warning');
-//         appointmentobj["phonenumber"]=phonenumber.value
-//     }
-// })
-
-// //Email checking
-// emailaddress.addEventListener("change",()=>{
-//     const reg=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-//     const email=emailaddress.value
-//     const emailmsg=document.getElementById("emailaddressal")
-//     if(!email.match(reg)){
-//         emailmsg.innerHTML=
-//         `<p style="color:red">* enter valid email</p>`
-//         emailaddress.classList.add('warning');
-//         appointmentobj["emailaddress"]=""
-//     }
-//     else{
-//         emailmsg.innerHTML=``
-//         emailaddress.classList.remove('warning');
-//         appointmentobj["emailaddress"]=email
-//     }
-// })
-
-
-// let date=document.getElementById("appointmentdate")
-// var today = new Date();
-// date.value = today.toISOString().substr(0, 10);
-
-
-// function store(){
-//     var email=document.getElementById("username").value
-//     var password=document.getElementById("password").value 
-//        if(email=='' || password==''){
-//          window.alert('enter details')
-//        }
-    
-//     else{
-//     window.localStorage.setItem("username",email);
-//     window.localStorage.setItem("password",password);
-//     console.log(window.localStorage.getItem(username),window.localStorage.getItem(password))
-//     window.location="http://127.0.0.1:5500/User/User-profile/user-profile.html";
-//     console.log("hi");
-//     console.log("hii");
-//     document.getElementById("pname").innerHTML="hi"+window.localStorage.getItem("username");
-//     console.log(document.getElementById("pname").innerHTML);
-//  }
-
-//___________________________END_________________________________________________
-const navigateToFormStep = (stepNumber) => {
-    /**
-     * Hide all form steps.
-     */
-    document.querySelectorAll(".form-step").forEach((formStepElement) => {
-        formStepElement.classList.add("d-none");
-    });
-    /**
-     * Mark all form steps as unfinished.
-     */
-    document.querySelectorAll(".form-stepper-list").forEach((formStepHeader) => {
-        formStepHeader.classList.add("form-stepper-unfinished");
-        formStepHeader.classList.remove("form-stepper-active", "form-stepper-completed");
-    });
-    /**
-     * Show the current form step (as passed to the function).
-     */
-    document.querySelector("#step-" + stepNumber).classList.remove("d-none");
-    /**
-     * Select the form step circle (progress bar).
-     */
-    const formStepCircle = document.querySelector('li[step="' + stepNumber + '"]');
-    /**
-     * Mark the current form step as active.
-     */
-    formStepCircle.classList.remove("form-stepper-unfinished", "form-stepper-completed");
-    formStepCircle.classList.add("form-stepper-active");
-    /**
-     * Loop through each form step circles.
-     * This loop will continue up to the current step number.
-     * Example: If the current step is 3,
-     * then the loop will perform operations for step 1 and 2.
-     */
-    for (let index = 0; index < stepNumber; index++) {
-        /**
-         * Select the form step circle (progress bar).
-         */
-        const formStepCircle = document.querySelector('li[step="' + index + '"]');
-        /**
-         * Check if the element exist. If yes, then proceed.
-         */
-        if (formStepCircle) {
-            /**
-             * Mark the form step as completed.
-             */
-            formStepCircle.classList.remove("form-stepper-unfinished", "form-stepper-active");
-            formStepCircle.classList.add("form-stepper-completed");
-        }
+//name checking function
+function check_name(name){
+    const reg=/^[a-zA-Z\ ]+$/;
+    if(name.length==0 || !name.match(reg)){
+        return true
     }
-};
-/**
- * Select all form navigation buttons, and loop through them.
- */
-document.querySelectorAll(".btn-navigate-form-step").forEach((formNavigationBtn) => {
-    /**
-     * Add a click event listener to the button.
-     */
-    formNavigationBtn.addEventListener("click", () => {
-        /**
-         * Get the value of the step.
-         */
-        const stepNumber = parseInt(formNavigationBtn.getAttribute("step_number"));
-        /**
-         * Call the function to navigate to the target form step.
-         */
-        navigateToFormStep(stepNumber);
-    });
-});
+    else{
+        return false
+    }
+}
+
+//number checking function
+function check_number(numb){
+    const reg="^[0-9]{10}$";
+    if(numb.length==0 || !numb.match(reg)){
+        return true
+    }
+    else{
+        return false
+    }
+}
+
+//checking name
+patientname.addEventListener("change",()=>{
+    const namemsg=document.getElementById("patientnameal");
+    if(check_name(patientname.value)){
+        namemsg.innerHTML=
+        `<p style="color:red">* name content only characters</p>`
+        patientname.classList.add('warning');
+        appointmentobj["patientname"]=""
+    }
+    else{
+        namemsg.innerHTML=``
+        patientname.classList.remove('warning');
+        appointmentobj["patientname"]=patientname.value
+    }
+})
+guardianname.addEventListener("change",()=>{
+    const namemsg=document.getElementById("guardiannameal")
+    if(check_name(guardianname.value)){
+        namemsg.innerHTML=
+        `<p style="color:red">* name content only characters</p>`   
+        guardianname.classList.add('warning');
+        appointmentobj["guardianname"]=""
+    }
+    else{
+        namemsg.innerHTML=``
+        guardianname.classList.remove('warning');
+        appointmentobj["guardianname"]=guardianname.value
+    }
+})
+emergencyname.addEventListener("change",()=>{
+  const namemsg=document.getElementById("emergencynameal")
+  if(check_name(emergencyname.value)){
+      namemsg.innerHTML=
+      `<p style="color:red">* name content only characters</p>`   
+      emergencyname.classList.add('warning');  
+      appointmentobj["emergencyname"]=""
+  }
+  else{
+      namemsg.innerHTML=``
+      emergencyname.classList.remove('warning');
+      appointmentobj["emergencyname"]=emergencyname.value
+  }
+})
+
+//Phone Number checking
+phonenumber.addEventListener("change",()=>{
+    const numbmsg=document.getElementById("phonenumberal")
+    if(check_number(phonenumber.value)){
+        numbmsg.innerHTML=
+        `<p style="color:red">* enter valid number</p>`
+        phonenumber.classList.add('warning');
+        appointmentobj["phonenumber"]=""
+    }
+    else{
+        numbmsg.innerHTML=``
+        phonenumber.classList.remove('warning');
+        appointmentobj["phonenumber"]=phonenumber.value
+    }
+})
+emergencyphone.addEventListener("change",()=>{
+  const numbmsg=document.getElementById("emergencyphoneal")
+  if(check_number(emergencyphone.value)){
+      numbmsg.innerHTML=
+      `<p style="color:red">* enter valid number</p>`
+      emergencyphone.classList.add('warning');
+      appointmentobj["emergencyphone"]=""
+  }
+  else{
+      numbmsg.innerHTML=``
+      emergencyphone.classList.remove('warning');
+      appointmentobj["emergencyphone"]=emergencyphone.value
+  }
+})
+
+
+//Email checking
+emailaddress.addEventListener("change",()=>{
+    const reg=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const email=emailaddress.value
+    const emailmsg=document.getElementById("emailaddressal")
+    if(!email.match(reg)){
+        emailmsg.innerHTML=
+        `<p style="color:red">* enter valid email</p>`
+        emailaddress.classList.add('warning');
+        appointmentobj["emailaddress"]=""
+    }
+    else{
+        emailmsg.innerHTML=``
+        emailaddress.classList.remove('warning');
+        appointmentobj["emailaddress"]=email
+    }
+})
+//event for getting date
+appointmentdate.addEventListener("change",()=>{
+  appointmentobj["appointmentdate"]=appointmentdate.value
+})
+
+//event for getting timeslot
+timeslot.addEventListener("change",()=>{
+  const timemsg=document.getElementById("timeal")
+  if(timeslot.value=="Selet Time"){
+      timemsg.innerHTML=
+      `<p class="alert alert-danger py-0">* Select Time Slot</p>`
+      appointmentobj["timeslot"]=""
+  }
+  else{
+      timemsg.innerHTML=``
+      appointmentobj["timeslot"]=timeslot.value
+  }
+})
+
+//event for getting the reason
+reason.addEventListener("change",()=>{
+  const reasonmsg=document.getElementById("reasonal")
+  if(reason.value=="Select Reason"){
+      reasonmsg.innerHTML=
+      `<p class="alert alert-danger py-0">* Select Reason</p>`
+      appointmentobj["reason"]=""
+  }
+  else{
+      reasonmsg.innerHTML=``
+      appointmentobj["reason"]=reason.value
+  }
+})
+
+let date=document.getElementById("appointmentdate")
+var today = new Date();
+date.value = today.toISOString().substr(0, 10);
+
+var login_btn=document.getElementById("login")
+var logout_btn=document.getElementById("logout")
+if(JSON.parse(localStorage.getItem("active"))){
+    login_btn.innerHTML=``
+}
+else{
+    logout_btn.innerHTML=``
+}
+
+
+//------------------------------------------------------------------------------------------
+
+
+var currentTab = 0; // Current tab is set to be the first tab (0)
+        showTab(currentTab); // Display the current tab
+        
+        function showTab(n) {
+          // This function will display the specified tab of the form...
+          var x = document.getElementsByClassName("step");
+          x[n].style.display = "block";
+          //... and fix the Previous/Next buttons:
+          if (n == 0) {
+            document.getElementById("prevBtn").style.display = "none";
+          } else {
+            document.getElementById("prevBtn").style.display = "inline";
+          }
+          if (n == (x.length - 1)) {
+            document.getElementById("nextBtn").innerHTML = "Submit";
+          } else {
+            document.getElementById("nextBtn").innerHTML = "Next";
+          }
+          //... and run a function that will display the correct step indicator:
+          fixStepIndicator(n)
+        }
+        
+        function nextPrev(n) {
+          // This function will figure out which tab to display
+          var x = document.getElementsByClassName("step");
+          // Exit the function if any field in the current tab is invalid:
+          if (n == 1 && !validateForm()) return false;
+          // Hide the current tab:
+          x[currentTab].style.display = "none";
+          // Increase or decrease the current tab by 1:
+          currentTab = currentTab + n;
+          // if you have reached the end of the form...
+          if (currentTab >= x.length) {
+            // ... the form gets submitted:
+            document.getElementById("signUpForm").submit();
+            return false;
+          }
+          // Otherwise, display the correct tab:
+          showTab(currentTab);
+        }
+        
+        function validateForm() {
+          // This function deals with validation of the form fields
+          var x, y, i, valid = true;
+          x = document.getElementsByClassName("step");
+          y = x[currentTab].getElementsByTagName("input");
+          // A loop that checks every input field in the current tab:
+          for (i = 0; i < y.length; i++) {
+            // If a field is empty...
+            if (y[i].value == "") {
+              // add an "invalid" class to the field:
+              y[i].className += " invalid";
+              // and set the current valid status to false
+              valid = false;
+            }
+          }
+          // If the valid status is true, mark the step as finished and valid:
+          if (valid) {
+            document.getElementsByClassName("stepIndicator")[currentTab].className += " finish";
+          }
+          return valid; // return the valid status
+        }
+        
+        function fixStepIndicator(n) {
+          // This function removes the "active" class of all steps...
+          var i, x = document.getElementsByClassName("stepIndicator");
+          for (i = 0; i < x.length; i++) {
+            x[i].className = x[i].className.replace(" active", "");
+          }
+          //... and adds the "active" class on the current step:
+          x[n].className += " active";
+        }

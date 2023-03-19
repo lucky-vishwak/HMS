@@ -10,7 +10,7 @@ function getProfileDetails() {
   profileaddress.innerText=userobj.address
 
   let userDetails = document.getElementById("Render")
-  userDetails.innerHTML = `<div class="card mb-4">
+  userDetails.innerHTML = `<div class="card mb-4 bg-glass">
     <div class="card-body">
         <p class="mb-4 display-5"> Personal Info</p>
       <div class="row">
@@ -61,7 +61,7 @@ function getProfileDetails() {
     </div>
     <div class="row">
       <div class="col-md-6">
-        <div class="card mb-4 mb-md-0">
+        <div class="card mb-4 mb-md-0 bg-glass">
             <div class="card-body">
                 <p class="mb-4 display-5"> Latest Info</p>
               <div class="row">
@@ -112,7 +112,7 @@ function getProfileDetails() {
         </div>
       </div>
       <div class="col-md-6">
-        <div class="card mb-4 mb-md-0">
+        <div class="card mb-4 mb-md-0 bg-glass">
             <div class="card-body">
                 <p class="mb-4 display-5">Emergency </p>
               <div class="row">
@@ -168,7 +168,7 @@ function getProfileDetails() {
 function getEditProfile() {
   let userDetails = document.getElementById("Render");
   console.log(userobj)
-  userDetails.innerHTML = ` <div class="card mb-4">
+  userDetails.innerHTML = ` <div class="card mb-4 bg-glass">
      <div class="card-header display-5">Account Details</div>
      <div class="card-body">
          <form>
@@ -239,7 +239,7 @@ function getMyappointment() {
   let userDetails = document.getElementById("Render");
 
   userDetails.innerHTML = `<div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 700px">
-     <table class="table table-striped mb-0">
+     <table class="table table-striped mb-0 bg-glass">
        <thead style="background-color: #1c5cbd;">
          <tr class="text-white">
            <th scope="col">Class name</th>
@@ -374,7 +374,7 @@ function getFeedback() {
 
   let userDetails = document.getElementById("Render");
 
-  userDetails.innerHTML = `<div class="card mb-4">
+  userDetails.innerHTML = `<div class="card mb-4 bg-glass">
      <div class="card-header display-5">Feedback form</div>
      <div class="card-body">
          <form>
