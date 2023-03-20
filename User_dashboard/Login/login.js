@@ -96,3 +96,30 @@ function appoint() {
       window.location.href = "../Appointment/appointment.html"
    }
 }
+
+
+
+$("#submit").click(()=>{
+   let username = $("#username").value
+   let password = $("#password").value
+   if (username == '' || password == '') {
+      window.alert('enter details')
+   }
+   else if((username=="vishal"&&password=="vishal")||(username=="vishwak"&&password=="vishwak")||(username=="likhith"&&password=="likhith")){
+      window.location.href="../../Admin_dashboard/Dashboard/dashboard.html"
+   }
+   else{
+   let userObj={
+      username:username,
+      password:password
+   }
+   $.post("URL",userObj,(data,response)=>{
+       if(response.message==="failure"){
+         alert("Invalid credentials!!!")
+       }
+       else{
+         window.location.href="../User/User-profile/user-profile.html"
+       }
+   })
+  }
+})
