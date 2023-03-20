@@ -145,15 +145,16 @@ function validate() {
             x = false
         }
     }
-    //console.log(user)
     user=JSON.stringify(user)
+    console.log(user)
     if (x == true) {
         $.post({
-            url:"http://localhost:3000/register", 
+            url:"http://localhost:3004/user/register", 
             data:user,
             contentType:'application/json; charset=utf-8'
         })
         .done((res,stat)=>{
+            console.log(res,stat)
             if(res.message=="registration successful")
             {
                 window.location='../Login/login.html'
