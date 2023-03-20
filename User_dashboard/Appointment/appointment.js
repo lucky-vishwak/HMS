@@ -10,8 +10,7 @@ var preference = document.getElementById("preference")
 var emergencyname = document.getElementById("emergencyname")
 var emergencyphone = document.getElementById("emergencyphone")
 var problem = document.getElementById("problem")
-
-
+var sub=false
 //user details
 var appointmentobj = {
   "patientname": "", "guardianname": "", "phonenumber": "", "emailaddress": "", "appointmentdate": "",
@@ -135,6 +134,16 @@ emailaddress.addEventListener("change", () => {
 //event for getting date
 appointmentdate.addEventListener("change", () => {
   appointmentobj["appointmentdate"] = appointmentdate.value
+  const appointmentmsg = document.getElementById("timeal")
+  if (timeslot.value == "Selet Time") {
+    timemsg.innerHTML =
+      `<p class="alert alert-danger py-0">* Select Time Slot</p>`
+    appointmentobj["timeslot"] = ""
+  }
+  else {
+    timemsg.innerHTML = ``
+    appointmentobj["timeslot"] = timeslot.value
+  }
 })
 
 //event for getting timeslot
@@ -170,8 +179,11 @@ var today = new Date();
 date.value = today.toISOString().substr(0, 10);
 
 var login_btn = document.getElementById("login")
-var logout_btn = document.getElementById("logout")
-if (JSON.parse(localStorage.getItem("active"))) {
+var logout_btn = document.getElementById("logout1")
+$("#logout").click(()=>{
+  localStorage.clear()
+})
+if (localStorage.getItem("active_user")) {
   login_btn.innerHTML = ``
 }
 else {
@@ -197,16 +209,24 @@ function showTab(n) {
   }
   if (n == (x.length - 1)) {
     document.getElementById("nextBtn").innerHTML = "Submit";
+    sub=true
+
   } else {
     document.getElementById("nextBtn").innerHTML = "Next";
+    sub=false
   }
   //... and run a function that will display the correct step indicator:
   fixStepIndicator(n)
 }
 
+
 function nextPrev(n) {
   // This function will figure out which tab to display
-  var x = document.getElementsByClassName("step");
+  if(sub && n!=-1){
+    
+  }
+  else{
+    var x = document.getElementsByClassName("step");
   // Exit the function if any field in the current tab is invalid:
   if (n == 1 && !validateForm()) return false;
   // Hide the current tab:
@@ -221,7 +241,9 @@ function nextPrev(n) {
   }
   // Otherwise, display the correct tab:
   showTab(currentTab);
+  }
 }
+ 
 
 function validateForm() {
   // This function deals with validation of the form fields
