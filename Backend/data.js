@@ -3,12 +3,8 @@ let user=[{firstname:'lucky',lastname:'lucky',username:'lucky',phonenumber:'7890
 {firstname:'vishu',lastname:'vishu',username:'vishu',phonenumber:'8907654321',email:'vishu@gmail.com',password:'vishu',confirmpassword:'vishu',address:'hyderabad',city:'hyderabad',pincode:'500090',state:'telangana',gender:'male'}]
 
 
-let admin=[{username:"vishwak",password:"vishwak"},
-{username:"vishal",password:"vishal"},
-{username:"likhith",password:"likhith"}]
 
 
 
 
-
-module.exports={user,admin}
+module.exports={user}
