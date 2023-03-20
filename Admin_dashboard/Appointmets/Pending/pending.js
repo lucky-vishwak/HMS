@@ -12,7 +12,8 @@ function doctor(){
     u1.className='btn btn-white'
     d1.className='btn btn-primary'
     document.getElementById('tb')
-}var tb=document.getElementById('b')
+}
+var tb=document.getElementById('b')
 var d1= document.getElementById('d1')
 var u1= document.getElementById('u1')
 var c=document.getElementById('c')
