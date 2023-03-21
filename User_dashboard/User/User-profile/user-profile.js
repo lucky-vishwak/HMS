@@ -1,8 +1,20 @@
+var appo=[];
 if(JSON.parse(localStorage.getItem("access"))){
   location.href="../../../Admin_dashboard/Dashboard/dashboard.html"
 }
 else if (localStorage.getItem("active_user")) {
   var userobj = JSON.parse(localStorage.getItem("active_user"))
+  $.get({
+    url: `http://localhost:3005/appointment/appointments/${userobj.username}`,
+    contentType: 'application/json; charset=utf-8'
+  }).done((response,stat)=>{
+    if(stat="success"){
+      response
+      for(let ele of response){
+        appo.push(ele)
+      }
+    }
+  })
 }
 else{
   location.href="../../../404/404.html"
@@ -190,138 +202,31 @@ function change_details() {
 }
 
 function getMyappointment() {
-
   let userDetails = document.getElementById("Render");
-
   userDetails.innerHTML = `<div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 700px">
      <table class="table table-striped mb-0 bg-glass">
        <thead style="background-color: #1c5cbd;">
          <tr class="text-white">
-           <th scope="col">Class name</th>
-           <th scope="col">Type</th>
-           <th scope="col">Hours</th>
-           <th scope="col">Trainer</th>
-           <th scope="col">Spots</th>
+           <th scope="col">Doctor Name</th>
+           <th scope="col">Reason</th>
+           <th scope="col">Date</th>
+           <th scope="col">Time</th>
+           <th scope="col">Status</th>
          </tr>
        </thead>
-       <tbody>
-         <tr>
-           <td>Like a butterfly</td>
-           <td>Boxing</td>
-           <td>9:00 AM - 11:00 AM</td>
-           <td>Aaron Chapman</td>
-           <td>10</td>
-         </tr>
-         <tr>
-           <td>Mind &amp; Body</td>
-           <td>Yoga</td>
-           <td>8:00 AM - 9:00 AM</td>
-           <td>Adam Stewart</td>
-           <td>15</td>
-         </tr>
-         <tr>
-           <td>Crit Cardio</td>
-           <td>Gym</td>
-           <td>9:00 AM - 10:00 AM</td>
-           <td>Aaron Chapman</td>
-           <td>10</td>
-         </tr>
-         <tr>
-           <td>Wheel Pose Full Posture</td>
-           <td>Yoga</td>
-           <td>7:00 AM - 8:30 AM</td>
-           <td>Donna Wilson</td>
-           <td>15</td>
-         </tr>
-         <tr>
-           <td>Playful Dancer's Flow</td>
-           <td>Yoga</td>
-           <td>8:00 AM - 9:00 AM</td>
-           <td>Donna Wilson</td>
-           <td>10</td>
-         </tr>
-         <tr>
-           <td>Zumba Dance</td>
-           <td>Dance</td>
-           <td>5:00 PM - 7:00 PM</td>
-           <td>Donna Wilson</td>
-           <td>20</td>
-         </tr>
-         <tr>
-           <td>Cardio Blast</td>
-           <td>Gym</td>
-           <td>5:00 PM - 7:00 PM</td>
-           <td>Randy Porter</td>
-           <td>10</td>
-         </tr>
-         <tr>
-           <td>Pilates Reformer</td>
-           <td>Gym</td>
-           <td>8:00 AM - 9:00 AM</td>
-           <td>Randy Porter</td>
-           <td>10</td>
-         </tr>
-         <tr>
-           <td>Supple Spine and Shoulders</td>
-           <td>Yoga</td>
-           <td>6:30 AM - 8:00 AM</td>
-           <td>Randy Porter</td>
-           <td>15</td>
-         </tr>
-         <tr>
-           <td>Yoga for Divas</td>
-           <td>Yoga</td>
-           <td>9:00 AM - 11:00 AM</td>
-           <td>Donna Wilson</td>
-           <td>20</td>
-         </tr>
-         <tr>
-           <td>Virtual Cycle</td>
-           <td>Gym</td>
-           <td>8:00 AM - 9:00 AM</td>
-           <td>Randy Porter</td>
-           <td>20</td>
-         </tr>
-         <tr>
-           <td>Like a butterfly</td>
-           <td>Boxing</td>
-           <td>9:00 AM - 11:00 AM</td>
-           <td>Aaron Chapman</td>
-           <td>10</td>
-         </tr>
-         <tr>
-           <td>Mind &amp; Body</td>
-           <td>Yoga</td>
-           <td>8:00 AM - 9:00 AM</td>
-           <td>Adam Stewart</td>
-           <td>15</td>
-         </tr>
-         <tr>
-           <td>Crit Cardio</td>
-           <td>Gym</td>
-           <td>9:00 AM - 10:00 AM</td>
-           <td>Aaron Chapman</td>
-           <td>10</td>
-         </tr>
-         <tr>
-           <td>Wheel Pose Full Posture</td>
-           <td>Yoga</td>
-           <td>7:00 AM - 8:30 AM</td>
-           <td>Donna Wilson</td>
-           <td>15</td>
-         </tr>
-         <tr>
-           <td>Playful Dancer's Flow</td>
-           <td>Yoga</td>
-           <td>8:00 AM - 9:00 AM</td>
-           <td>Donna Wilson</td>
-           <td>10</td>
-         </tr>
-        
+       <tbody id="details">
        </tbody>
      </table>
  </div>`;
-
+ for(let ele of appo){
+  let tr=$("<tr></tr>")
+  tr.append($("<td></td>").text(ele.preference))
+  tr.append($("<td></td>").text(ele.reason))
+  tr.append($("<td></td>").text(ele.appointmentdate))
+  tr.append($("<td></td>").text(ele.timeslot))
+  tr.append($("<td></td>").text("pending"))
+  $("#details").append(tr)
+ }
 }
 
 

@@ -58,7 +58,7 @@ $(document).ready(function(){
     });
     
     $.get({
-      url:"http://localhost:3000/doctor/all-doctors",
+      url:"http://localhost:3005/doctor/all-doctors",
       contentType:'application/json; charset=utf-8'
     })
     .done((res,stat)=>{

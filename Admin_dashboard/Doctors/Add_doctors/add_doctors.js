@@ -136,7 +136,7 @@ function validate() {
     }
     if (x == true) {
         $.post({
-            url:"http://localhost:3000/doctor/add-doctor", 
+            url:"http://localhost:3005/doctor/add-doctor", 
             data:JSON.stringify(Doctors),
             contentType:'application/json; charset=utf-8'
         })
