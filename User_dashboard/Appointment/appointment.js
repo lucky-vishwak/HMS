@@ -227,14 +227,19 @@ function nextPrev(n) {
         return
       }
     }
-    appointmentobj={...appointmentobj,"preference":$("#preference").val(),"problem":$("#problem").val()}
+    appointmentobj={...appointmentobj,"preference":$("#preference").val(),"problem":$("#problem").val(),"username":JSON.parse(localStorage.getItem("active_user")).username}
+    console.log(appointmentobj)
     $.post({
-      url: "http://localhost:3004/addappointment",
+      url: "http://localhost:3004/appointment/addappointment",
       data: JSON.stringify(appointmentobj),
       contentType: 'application/json; charset=utf-8'
    }).done(function (response,stat){
     if(stat=="success"){
+      alert("appointment done successfully")
       location.href="../User/User-profile/user-profile.html"
+    }
+    else{
+      console.log("something wrong")
     }
    })
   }

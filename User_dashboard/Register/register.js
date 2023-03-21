@@ -145,12 +145,11 @@ function validate() {
             x = false
         }
     }
-    user=JSON.stringify(user)
     console.log(user)
     if (x == true) {
         $.post({
             url:"http://localhost:3004/user/register", 
-            data:user,
+            data:JSON.stringify(user),
             contentType:'application/json; charset=utf-8'
         })
         .done((res,stat)=>{
