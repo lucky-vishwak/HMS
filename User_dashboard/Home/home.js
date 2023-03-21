@@ -1,14 +1,17 @@
+if(JSON.parse(localStorage.getItem("access"))){
+    location.href="../../Admin_dashboard/Dashboard/dashboard.html"
+ }
+
 var login_btn=document.getElementById("login")
 var logout_btn=document.getElementById("logout")
-if(JSON.parse(localStorage.getItem("active"))){
+if(localStorage.getItem("active_user")){
     login_btn.innerHTML=``
 }
 else{
     logout_btn.innerHTML=``
 }
 function appoint(){
-    console.log(JSON.parse(localStorage.getItem("active")))
-    if(!JSON.parse(localStorage.getItem("active"))){
+    if(!localStorage.getItem("active_user")){
         window.location.href="../Login/login.html"
     }
     else{
@@ -17,8 +20,5 @@ function appoint(){
 }
 
 function logout(){
-    console.log("hello")
-    let act=!JSON.parse(localStorage.getItem("active"))
-    act=JSON.stringify(act)
-    localStorage.setItem("active",act)
+    localStorage.clear()
 }

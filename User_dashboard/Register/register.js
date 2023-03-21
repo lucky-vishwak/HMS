@@ -3,7 +3,6 @@ var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;  //Javascript r
 var regPhone = /^\d{10}$/;                                         //Javascript reGex for Phone Number validation.
 var regName = /^[a-zA-Z\ ]+$/
 var regpass = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/
-document.addEventListener("change", firstName);
 
 user={firstname:'',lastname:'',username:'',phonenumber:'',email:'',password:'',confirmpassword:'',address:'',city:'',pincode:'',state:'',gender:''}
 // user = { firstname: '', lastname: '', username: '', phonenumber: '', email: '', password: '', confirmpassword: '', gender: '' }
@@ -145,27 +144,25 @@ function validate() {
             document.getElementById(`${i}t`).innerHTML = `<p class="alert alert-danger my-1 p-2" role="alert"> ${i} is not filled</p>`
             x = false
         }
-
     }
+    user=JSON.stringify(user)
+    console.log(user)
     if (x == true) {
-        if (!localStorage.getItem("users")) {
-            localStorage.setItem("users", '[]')
-        }
-        var y = localStorage.getItem("users")
-        if (y) {
-            for (const i of JSON.parse(y)) {
-
-                if (i.username == user.username) {
-                    document.getElementById("usernamet").innerHTML = `<p class="alert alert-danger my-1 p-2" role="alert">username already exists</p>`
-
-                }
+        $.post({
+            url:"http://localhost:3004/user/register", 
+            data:user,
+            contentType:'application/json; charset=utf-8'
+        })
+        .done((res,stat)=>{
+            console.log(res,stat)
+            if(res.message=="registration successful")
+            {
+                window.location='../Login/login.html'
+                console.log(res.message,stat)
             }
-        }
-        let empobj = JSON.parse(localStorage.getItem("users"))
-        empobj.push(user)
-        console.log(empobj)
-        empobj = JSON.stringify(empobj)
-        localStorage.setItem("users", empobj)
-        location.href = "../Login/login.html"
-    }
+            else{
+                alert('error in register')
+            }
+        })
+}
 }
