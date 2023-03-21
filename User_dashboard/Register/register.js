@@ -4,7 +4,7 @@ var regPhone = /^\d{10}$/;                                         //Javascript 
 var regName = /^[a-zA-Z\ ]+$/
 var regpass = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/
 
-user={firstname:'',lastname:'',username:'',phonenumber:'',email:'',password:'',confirmpassword:'',address:'',city:'',pincode:'',state:'',gender:''}
+user={firstname:'',lastname:'',username:'',phonenumber:'',email:'',password:'',confirmpassword:'',address:'',city:'',pincode:'',state:'',gender:'',date:''}
 // user = { firstname: '', lastname: '', username: '', phonenumber: '', email: '', password: '', confirmpassword: '', gender: '' }
 function firstName() {
     var fName = form.firstname.value;
@@ -145,12 +145,12 @@ function validate() {
             x = false
         }
     }
-    user=JSON.stringify(user)
+    
     console.log(user)
     if (x == true) {
         $.post({
-            url:"http://localhost:3004/user/register", 
-            data:user,
+            url:"http://localhost:3005/user/register", 
+            data:JSON.stringify(user),
             contentType:'application/json; charset=utf-8'
         })
         .done((res,stat)=>{
@@ -158,7 +158,7 @@ function validate() {
             if(res.message=="registration successful")
             {
                 window.location='../Login/login.html'
-                console.log(res.message,stat)
+               
             }
             else{
                 alert('error in register')
