@@ -229,7 +229,7 @@ function nextPrev(n) {
     }
     appointmentobj={...appointmentobj,"preference":$("#preference").val(),"problem":$("#problem").val()}
     $.post({
-      url: "http://localhost:3004/addappointment",
+      url: "http://localhost:3005/addappointment",
       data: JSON.stringify(appointmentobj),
       contentType: 'application/json; charset=utf-8'
    }).done(function (response,stat){

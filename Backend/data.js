@@ -7,4 +7,5 @@ let user=[{firstname:'lucky',lastname:'lucky',username:'lucky',phonenumber:'7890
 
 
 
+
 module.exports={user}

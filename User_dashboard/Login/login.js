@@ -29,7 +29,7 @@ $("#submit").click(() => {
          password: password
       }
       $.post({
-         url: "http://localhost:3004/login",
+         url: "http://localhost:3005/login",
          data: JSON.stringify(userObj),
          contentType: 'application/json; charset=utf-8'
       }).done(function (response) {
@@ -50,34 +50,4 @@ $("#submit").click(() => {
          }
       });
    }
-<<<<<<< HEAD
-}
-
-
-
-$("#submit").click(()=>{
-   let username = $("#username").value
-   let password = $("#password").value
-   if (username == '' || password == '') {
-      window.alert('enter details')
-   }
-   else if((username=="vishal"&&password=="vishal")||(username=="vishwak"&&password=="vishwak")||(username=="likhith"&&password=="likhith")){
-      window.location.href="../../Admin_dashboard/Dashboard/dashboard.html"
-   }
-   else{
-   let userObj={
-      username:username,
-      password:password
-   }
-   $.post("URL",userObj,(data,response)=>{
-       if(response.message==="failure"){
-         alert("Invalid credentials!!!")
-       }
-       else{
-         window.location.href="../User/User-profile/user-profile.html"
-       }
-   })
-  }
-=======
->>>>>>> d9afce77f8b0759b3804095acfc2051fa810fcc6
 })

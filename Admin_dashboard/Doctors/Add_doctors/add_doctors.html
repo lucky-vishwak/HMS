@@ -279,35 +279,42 @@
                         <h6 class="mb-0 fw-bold ">Doctor Basic Inforamtion</h6>
                     </div>
                     <div class="card-body">
-                        <form>
+                        <form id="form">
                             <div class="row g-3 align-items-center">
                                 <div class="col-md-6">
                                     <label for="firstname" class="form-label">First Name</label>
-                                    <input type="text" class="form-control" id="firstname" name="firstname" required="">
+                                    <input type="text" class="form-control" id="firstname" name="firstname" required="" oninput="firstName()">
+                                    <div id="firstnamet"></div>
                                 </div>
+                               
                                 <div class="col-md-6">
                                     <label for="lastname" class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" id="lastname" name="lastname" required="">
+                                    <input type="text" class="form-control" id="lastname" name="lastname" required="" oninput="lastName()">
+                                    <div id="lastnamet"></div>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="phonenumber" class="form-label">Phone Number</label>
-                                    <input type="text" class="form-control" id="phonenumber" name="phonenumber" required="">
+                                    <input type="text" class="form-control" id="phonenumber" name="phonenumber" required="" oninput="phoneNumber()">
+                                    <div id="phonenumbert"></div>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="emailaddress" class="form-label">Email Address</label>
-                                    <input type="email" class="form-control" id="emailaddress" required="">
+                                    <input type="email" class="form-control" id="emailaddress" required="" name="email" oninput="emailAdd()">
+                                    <div id="emailt"></div>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="admitdate" class="form-label">Join Date</label>
                                     <input type="date" class="form-control" id="admitdate" name="admitdate" required="">
-                                </div>
+                                    <div id="datet"></div>
+                                  </div>
                                 <div class="col-md-6">
                                     <label for="admittime" class="form-label">Join Time</label>
                                     <input type="time" class="form-control" id="admittime" name="admittime" required="">
-                                </div>
+                                    <div id="timet"></div>
+                                  </div>
                                 <div class="col-md-6">
-                                    <label for="formFileMultiple" class="form-label"> Document Upload</label>
-                                    <input class="form-control" type="file" id="formFileMultiple" name="formFileMultiple" multiple="" required="">
+                                    <label for="formFileMultiple" class="form-label"> Image URL</label>
+                                    <input class="form-control" type="text" id="formFileMultiple" name="formFileMultiple" multiple="" required="">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Gender</label>
@@ -350,28 +357,28 @@
                         <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
                             <h6 class="mb-0 fw-bold ">Authentication Information</h6>
                         </div>
-                        <div class="card-body">
-                            <form>
+                       <div class="card-body">
+                            <form id="form1">
                                 <div class="row g-3 align-items-center">
                                     <div class="col-md-6">
                                         <label for="username" class="form-label">User Name</label>
-                                        <input type="text" class="form-control" id="username" name="username" required="">
+                                        <input type="text" class="form-control" id="username" name="username" required="" oninput="userName()">
                                     </div>
+                                    <div id="usernamet"></div>
                                     <div class="col-md-6">
                                         <label for="password" class="form-label">Password</label>
-                                        <input type="password" class="form-control" id="password" name="password" required="">
+                                        <input type="password" class="form-control" id="password" name="password" required="" oninput="passwordd()">
                                     </div>
-                                    <div class="col-md-6">
-                                        
-                                    </div>
+                                    <div id="passwordt"></div>
                                     <div class="col-md-6">
                                         <label for="cnpassword" class="form-label">Confirm Password</label>
-                                        <input type="password" class="form-control" id="cnpassword" name="cnpassword" required="">
+                                        <input type="password" class="form-control" id="cnpassword" name="cnpassword" required="" oninput="confirmPasswordd() ">
                                     </div>
+                                    <div id="confirmpasswordt"></div>
                                     
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary mt-4 px-5">Submit</button>   
+                                    <button type="button" class="btn btn-primary mt-4 px-5" onclick="validate()">Submit</button>   
                                 </div>
                                  </form>
                         </div>  
@@ -401,7 +408,7 @@
   </footer><!-- End Footer -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
+  <script src="add_doctors.js"></script>
   <!-- Vendor JS Files -->
   <script src="../../assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

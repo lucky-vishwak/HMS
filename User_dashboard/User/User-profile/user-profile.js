@@ -9,6 +9,7 @@ else{
 }
 
 function getProfileDetails() {
+  console
   let profileuser=document.getElementById("profileuser")
   let profilecity=document.getElementById("profilecity")
   let profileaddress=document.getElementById("profileaddress")
@@ -31,6 +32,15 @@ function getProfileDetails() {
       <hr>
       <div class="row">
         <div class="col-sm-3">
+          <p class="mb-0">Username</p>
+        </div>
+        <div class="col-sm-9">
+            <p class="text-muted mb-0">${userobj.username}</p>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+        <div class="col-sm-3">
           <p class="mb-0">Email</p>
         </div>
         <div class="col-sm-9">
@@ -49,10 +59,19 @@ function getProfileDetails() {
         <hr>
         <div class="row">
           <div class="col-sm-3">
-            <p class="mb-0">Mobile</p>
+            <p class="mb-0">Birthday</p>
           </div>
           <div class="col-sm-9">
-            <p class="text-muted mb-0">${userobj.phonenumber}</p>
+            <p class="text-muted mb-0">${userobj.date}</p>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-sm-3">
+            <p class="mb-0">Gender</p>
+          </div>
+          <div class="col-sm-9">
+            <p class="text-muted mb-0">${userobj.gender}</p>
           </div>
         </div>
         <hr>
@@ -64,121 +83,37 @@ function getProfileDetails() {
             <p class="text-muted mb-0">${userobj.address}</p>
           </div>
         </div>
+        <hr>
+        <div class="row">
+        <div class="col-sm-3">
+          <p class="mb-0">Address</p>
+        </div>
+        <div class="col-sm-9">
+          <p class="text-muted mb-0">${userobj.city}</p>
+        </div>
+      </div>
+      <hr>
+        <div class="row">
+          <div class="col-sm-3">
+            <p class="mb-0">city</p>
+          </div>
+          <div class="col-sm-9">
+            <p class="text-muted mb-0">${userobj.state}</p>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="card mb-4 mb-md-0 bg-glass">
-            <div class="card-body">
-                <p class="mb-4 display-5"> Latest Info</p>
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Full Name</p>
-                </div>
-                <div class="col-sm-9">
-                  <p class="text-muted mb-0">Johnatan Smith</p>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Email</p>
-                </div>
-                <div class="col-sm-9">
-                    <p class="text-muted mb-0">example@example.com</p>
-                  </div>
-                </div>
-                <hr>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <p class="mb-0">Phone</p>
-                  </div>
-                  <div class="col-sm-9">
-                    <p class="text-muted mb-0">(097) 234-5678</p>
-                  </div>
-                </div>
-                <hr>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <p class="mb-0">Mobile</p>
-                  </div>
-                  <div class="col-sm-9">
-                    <p class="text-muted mb-0">(098) 765-4321</p>
-                  </div>
-                </div>
-                <hr>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <p class="mb-0">Address</p>
-                  </div>
-                  <div class="col-sm-9">
-                    <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
-                  </div>
-                </div>
-              </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card mb-4 mb-md-0 bg-glass">
-            <div class="card-body">
-                <p class="mb-4 display-5">Emergency </p>
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Gurdian Name</p>
-                </div>
-                <div class="col-sm-9">
-                  <p class="text-muted mb-0">Johnatan Smith</p>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Email</p>
-                </div>
-                <div class="col-sm-9">
-                    <p class="text-muted mb-0">example@example.com</p>
-                  </div>
-                </div>
-                <hr>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <p class="mb-0">Phone</p>
-                  </div>
-                  <div class="col-sm-9">
-                    <p class="text-muted mb-0">(097) 234-5678</p>
-                  </div>
-                </div>
-                <hr>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <p class="mb-0">Mobile</p>
-                  </div>
-                  <div class="col-sm-9">
-                    <p class="text-muted mb-0">(098) 765-4321</p>
-                  </div>
-                </div>
-                <hr>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <p class="mb-0">Address</p>
-                  </div>
-                  <div class="col-sm-9">
-                    <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
-                  </div>
-                </div>
-              </div>
-        </div>
-      </div>`;
+    
+    `
 
 }
 
 function getEditProfile() {
   let userDetails = document.getElementById("Render");
-  console.log(userobj)
   userDetails.innerHTML = ` <div class="card mb-4 bg-glass">
      <div class="card-header display-5">Account Details</div>
      <div class="card-body">
-         <form>
+         <form id="x">
              <!-- Form Group (username)-->
              <div class="mb-3">
                  <label class="small mb-1" for="inputUsername">Username</label>
@@ -233,9 +168,22 @@ function getEditProfile() {
              </div>
               </form>
      </div>
- 
+           
  </div>`;
+
+  function change_details(){
+    userobj={}
+      var form=document.forms.x;
+      user['state']=form.state.value
+      user['date'] = form.date.value
+      user['gender'] = form.Gender.value;
+       user['city']=form.city.value;
+       user['pincode']=form.pincode.value
+       user['address']=form.Address.value
+      $.put("http://localhost:3005/user/edit/:username",JSON.stringify(userobj))
+  }
 }
+
 
 function change_details() {
 
