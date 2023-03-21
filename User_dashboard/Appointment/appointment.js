@@ -1,4 +1,4 @@
-//Validation
+//Validation variables
 var patientname = document.getElementById("patientname")
 var guardianname = document.getElementById("guardianname")
 var phonenumber = document.getElementById("phonenumber")
@@ -14,7 +14,7 @@ var sub=false
 //user details
 var appointmentobj = {
   "patientname": "", "guardianname": "", "phonenumber": "", "emailaddress": "", "appointmentdate": "",
-  "timeslot": "", "gender": "", "reason": "", "emergencyname": "", "emergencyphone": ""
+  "timeslot": "", "reason": "", "emergencyname": "", "emergencyphone": ""
 }
 
 //name checking function
@@ -39,7 +39,7 @@ function check_number(numb) {
   }
 }
 
-//checking name
+//checking names
 patientname.addEventListener("change", () => {
   const namemsg = document.getElementById("patientnameal");
   if (check_name(patientname.value)) {
@@ -131,28 +131,24 @@ emailaddress.addEventListener("change", () => {
     appointmentobj["emailaddress"] = email
   }
 })
+
+//Setting Today Date
+let date = document.getElementById("appointmentdate")
+var today = new Date();
+date.value = today.toISOString().substr(0, 10);
+appointmentobj["appointmentdate"]=today.toISOString().substr(0, 10);
 //event for getting date
 appointmentdate.addEventListener("change", () => {
   appointmentobj["appointmentdate"] = appointmentdate.value
-  const appointmentmsg = document.getElementById("timeal")
-  if (timeslot.value == "Selet Time") {
-    timemsg.innerHTML =
-      `<p class="alert alert-danger py-0">* Select Time Slot</p>`
-    appointmentobj["timeslot"] = ""
-  }
-  else {
-    timemsg.innerHTML = ``
-    appointmentobj["timeslot"] = timeslot.value
-  }
 })
 
 //event for getting timeslot
 timeslot.addEventListener("change", () => {
-  const timemsg = document.getElementById("timeal")
-  if (timeslot.value == "Selet Time") {
+  const timemsg = document.getElementById("timeslotal")
+  if (timeslot.value == "Select Time") {
     timemsg.innerHTML =
       `<p class="alert alert-danger py-0">* Select Time Slot</p>`
-    appointmentobj["timeslot"] = ""
+    appointmentobj["timeslot"] = ``
   }
   else {
     timemsg.innerHTML = ``
@@ -174,9 +170,7 @@ reason.addEventListener("change", () => {
   }
 })
 
-let date = document.getElementById("appointmentdate")
-var today = new Date();
-date.value = today.toISOString().substr(0, 10);
+
 
 var login_btn = document.getElementById("login")
 var logout_btn = document.getElementById("logout1")
@@ -191,7 +185,7 @@ else {
 }
 
 
-//------------------------------------------------------------------------------------------
+//----------------------------Validation End---------------------------
 
 
 var currentTab = 0; // Current tab is set to be the first tab (0)
@@ -223,7 +217,31 @@ function showTab(n) {
 function nextPrev(n) {
   // This function will figure out which tab to display
   if(sub && n!=-1){
-    
+    appointmentobj= {
+      "patientname": $("#patientname").val(), "guardianname": $("#guardianname").val(), "phonenumber": $("#phonenumber").val(), "emailaddress": $("#emailaddress").val(), "appointmentdate": $("#appointmentdate").val(),
+      "timeslot": $("#timeslot").val(), "reason": $('#reason').val(), "emergencyname": $("#emergencyname").val(), "emergencyphone": $("#emergencyphone").val()
+    }
+    for(let ele in appointmentobj){
+      if(appointmentobj[`${ele}`]==""){
+        alert("fill all fields correctly")
+        return
+      }
+    }
+    appointmentobj={...appointmentobj,"preference":$("#preference").val(),"problem":$("#problem").val(),"username":JSON.parse(localStorage.getItem("active_user")).username}
+    console.log(appointmentobj)
+    $.post({
+      url: "http://localhost:3004/appointment/addappointment",
+      data: JSON.stringify(appointmentobj),
+      contentType: 'application/json; charset=utf-8'
+   }).done(function (response,stat){
+    if(stat=="success"){
+      alert("appointment done successfully")
+      location.href="../User/User-profile/user-profile.html"
+    }
+    else{
+      console.log("something wrong")
+    }
+   })
   }
   else{
     var x = document.getElementsByClassName("step");
@@ -244,7 +262,6 @@ function nextPrev(n) {
   }
 }
  
-
 function validateForm() {
   // This function deals with validation of the form fields
   var x, y, i, valid = true;

@@ -30,6 +30,9 @@ const data=require("./data.js")
 //Middleware
 app.use(express.json())
 
+//appointment API
+const appointmentapi=require("./APIs/Appointment.js").appointmentapi
+app.use("/appointment",appointmentapi)
 
 //For Login
 app.post('/login',async(req,res)=>{
