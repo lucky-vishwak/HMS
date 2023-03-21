@@ -5,7 +5,7 @@ if(JSON.parse(localStorage.getItem("access"))){
 else if (localStorage.getItem("active_user")) {
   var userobj = JSON.parse(localStorage.getItem("active_user"))
   $.get({
-    url: `http://localhost:3004/appointment/appointments/${userobj.username}`,
+    url: `http://localhost:3005/appointment/appointments/${userobj.username}`,
     contentType: 'application/json; charset=utf-8'
   }).done((response,stat)=>{
     if(stat="success"){

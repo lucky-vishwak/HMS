@@ -3,10 +3,6 @@ const userapi=express.Router()
 const mongoose=require('mongoose')
 let loginobj=
     {
-<<<<<<< HEAD
-        firstname:{type:String},lastname:{type:String},username:{type:String},phonenumber:{type:Number},email:{type:String},password:{type:String},confirmpassword:{type:String},address:{type:String},city:{type:String},pincode:{type:Number},state:{type:String},gender:{type:String},
-        date:{type:String}
-=======
         firstname:{type:String},
         lastname:{type:String},
         username:{type:String},
@@ -19,7 +15,6 @@ let loginobj=
         pincode:{type:Number},
         state:{type:String},
         gender:{type:String}
->>>>>>> ba11b99207ace6a11a7be248f096d1302cd5a50e
     } 
 
  let logad={
