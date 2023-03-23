@@ -121,14 +121,14 @@ function getEditProfile() {
              <!-- Form Group (username)-->
              <div class="mb-3">
                  <label class="small mb-1" for="inputUsername">Username</label>
-                 <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username" value="${userobj.username}">
+                 <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username" disabled name='username' value="${userobj.username}">
              </div>
              <!-- Form Row-->
              <div class="row gx-3 mb-3">
                  <!-- Form Group (first name)-->
                  <div class="col-md-12">
-                     <label class="small mb-1" for="inputFirstName">First name</label>
-                     <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your full name" value="${userobj.fullname}">
+                     <label class="small mb-1" for="inputFirstName">Full name</label>
+                     <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your full name" name='fullname' value="${userobj.fullname}">
                  </div>
                  <!-- Form Group (last name)-->
                
@@ -138,30 +138,30 @@ function getEditProfile() {
                  <!-- Form Group (organization name)-->
                  <div class="col-md-6">
                      <label class="small mb-1" for="inputcity">City</label>
-                     <input class="form-control" id="inputcity" type="text" placeholder="Enter your city name" value="${userobj.city}">
+                     <input class="form-control" id="inputcity" type="text" placeholder="Enter your city name" name='city' value="${userobj.city}">
                  </div>
                  <!-- Form Group (location)-->
                  <div class="col-md-6">
                      <label class="small mb-1" for="inputLocation">State</label>
-                     <input class="form-control" id="inputLocation" type="text" placeholder="Enter your location" value="${userobj.state}">
+                     <input class="form-control" id="inputLocation" type="text" placeholder="Enter your location" name='state' value="${userobj.state}">
                  </div>
              </div>
              <!-- Form Group (email address)-->
              <div class="mb-3">
                  <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                 <input class="form-control" id="inputEmailAddress" type="email" placeholder="Enter your email address" value="${userobj.email}">
+                 <input class="form-control" id="inputEmailAddress" type="email" placeholder="Enter your email address" name='email' value="${userobj.email}">
              </div>
              <!-- Form Row-->
              <div class="row gx-3 mb-3">
                  <!-- Form Group (phone number)-->
                  <div class="col-md-6">
                      <label class="small mb-1" for="inputPhone">Phone number</label>
-                     <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="${userobj.phonenumber}">
+                     <input class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" name='phonenumber' value="${userobj.phonenumber}">
                  </div>
                  <!-- Form Group (birthday)-->
                  <div class="col-md-6">
                      <label class="small mb-1" for="inputBirthday">Date of Birth</label>
-                     <input class="form-control" id="inputBirthday" type="date" name="birthday" placeholder="Enter your birthday" value="${userobj.date}">
+                     <input class="form-control" id="inputBirthday" type="date" name="date" placeholder="Enter your birthday"  value="${userobj.date}">
                  </div>
              </div>
              <!-- Save changes button-->
@@ -172,22 +172,41 @@ function getEditProfile() {
            
  </div>`;
 
-  function change_details(){
-    userobj={}
-      var form=document.forms.x;
-      user['state']=form.state.value
-      user['date'] = form.date.value
-      user['gender'] = form.Gender.value;
-       user['city']=form.city.value;
-       user['pincode']=form.pincode.value
-       user['address']=form.Address.value
-      $.put("http://localhost:3005/user/edit/:username",JSON.stringify(userobj))
-  }
+
 }
 
 
 function change_details() {
+  user={}
+  var form=document.forms.x;
+  user['state']=form.state.value
+  user['date'] = form.date.value
+   user['city']=form.city.value;
+   user['username']=form.username.value
+   user['fullname']=form.fullname.value
+   user['email']=form.email.value
+   user['phonenumber']=form.phonenumber.value
+   user.gender=userobj.gender
+  $.post({
+    url:"http://localhost:3005/user/edit/:username", 
+    data:JSON.stringify(user),
+    contentType:'application/json; charset=utf-8'
+})
+.done((res,stat,xhr)=>{
 
+    if(res.message=="changes successfully done")
+    {
+       alert(res.message)
+    
+       userobj=res.user
+      
+       getProfileDetails()
+       localStorage.setItem('active_user',JSON.stringify(user))
+    }
+    else{
+        alert(xhr.statusText)
+    }
+})
 }
 
 function getMyappointment() {

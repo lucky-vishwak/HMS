@@ -78,5 +78,11 @@ userapi.post('/register', async(req, res) => {
     }
 })
 
+userapi.post('/edit/:username',async(req,res)=>{
+    var fusername=req.params.username;
+    var user= req.body
+    await loginus.updateOne({username:user.username},{$set:{...user}})
 
+    res.send({message:'changes successfully done','user':user})
+})
 module.exports={userapi,loginus,loginad}
