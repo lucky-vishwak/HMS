@@ -3,14 +3,12 @@ const userapi=express.Router()
 const mongoose=require('mongoose')
 const login_user=
     {
-        firstname:{type:String},
-        lastname:{type:String},
+        fullname:{type:String},
         username:{type:String},
         phonenumber:{type:Number},
         email:{type:String},
         password:{type:String},
-        confirmpassword:{type:String},
-        address:{type:String},
+        date:{type:String},
         city:{type:String},
         pincode:{type:Number},
         state:{type:String},
@@ -42,25 +40,6 @@ userapi.post('/register', async(req, res) => {
 
        return
     }
-    var fName = us.firstname;
-    if (!fName.match(regName)) {
-        res.send({ message: 'First name shouldnt contain numbers' })
-        return
-    }
-    else if (fName.length < 4) {
-        res.send({ message: 'first name should have minimum 4 characters' })
-        return
-    }
-    var lName = us.lastname;
-    if (lName.length < 4) {
-        res.send({ message: 'first name should have minimum 4 characters' })
-        return
-    }
-    else if (!lName.match(regName)) {
-        res.send({ message: 'First name shouldnt contain numbers' })
-        return
-    }
-
     var username = us.username;
     if (username.length < 6) {
         res.send({ message: 'username should be minimum 6 characters' })
@@ -80,16 +59,11 @@ userapi.post('/register', async(req, res) => {
    
     var pass = us.password;
     if (!pass.match(regpass)) {
-        res.send({ message: 'password should confirmpasswordtain Atleast one digit,Atleast one lowercase character Atleast one uppercase character Atleast one special character' })
+        res.send({ message: 'password should conttain Atleast one digit,Atleast one lowercase character Atleast one uppercase character Atleast one special character' })
         return
     }
     
-    var conpass = us.confirmpassword;
-    if (pass != conpass || conpass == "") {
-        res.send({ message: 'password and confirm  password are not same' })
-        return
-
-    }
+  
    
     x = true
     for (const i in us) {
@@ -99,6 +73,7 @@ userapi.post('/register', async(req, res) => {
         }
     }
     if (x == true) {
+        
         await loginus.create(us)
         res.send({ message: "registration successful" })
     }

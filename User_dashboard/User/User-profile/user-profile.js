@@ -21,13 +21,13 @@ else{
 }
 
 function getProfileDetails() {
-  console
+
   let profileuser=document.getElementById("profileuser")
   let profilecity=document.getElementById("profilecity")
-  let profileaddress=document.getElementById("profileaddress")
+  //let profileaddress=document.getElementById("profileaddress")
   profileuser.innerText=userobj.username
   profilecity.innerText=userobj.city
-  profileaddress.innerText=userobj.address
+  //profileaddress.innerText=userobj.address
 
   let userDetails = document.getElementById("Render")
   userDetails.innerHTML = `<div class="card mb-4 bg-glass">
@@ -38,7 +38,7 @@ function getProfileDetails() {
           <p class="mb-0">Full Name</p>
         </div>
         <div class="col-sm-9">
-          <p class="text-muted mb-0">${userobj.firstname} ${userobj.lastname}</p>
+          <p class="text-muted mb-0">${userobj.fullname}</p>
         </div>
       </div>
       <hr>
@@ -71,7 +71,7 @@ function getProfileDetails() {
         <hr>
         <div class="row">
           <div class="col-sm-3">
-            <p class="mb-0">Birthday</p>
+            <p class="mb-0">Date of Birth</p>
           </div>
           <div class="col-sm-9">
             <p class="text-muted mb-0">${userobj.date}</p>
@@ -87,18 +87,10 @@ function getProfileDetails() {
           </div>
         </div>
         <hr>
-        <div class="row">
-          <div class="col-sm-3">
-            <p class="mb-0">Address</p>
-          </div>
-          <div class="col-sm-9">
-            <p class="text-muted mb-0">${userobj.address}</p>
-          </div>
-        </div>
-        <hr>
+     
         <div class="row">
         <div class="col-sm-3">
-          <p class="mb-0">Address</p>
+          <p class="mb-0">city</p>
         </div>
         <div class="col-sm-9">
           <p class="text-muted mb-0">${userobj.city}</p>
@@ -107,7 +99,7 @@ function getProfileDetails() {
       <hr>
         <div class="row">
           <div class="col-sm-3">
-            <p class="mb-0">city</p>
+            <p class="mb-0">state</p>
           </div>
           <div class="col-sm-9">
             <p class="text-muted mb-0">${userobj.state}</p>
@@ -134,15 +126,12 @@ function getEditProfile() {
              <!-- Form Row-->
              <div class="row gx-3 mb-3">
                  <!-- Form Group (first name)-->
-                 <div class="col-md-6">
+                 <div class="col-md-12">
                      <label class="small mb-1" for="inputFirstName">First name</label>
-                     <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" value="${userobj.firstname}">
+                     <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your full name" value="${userobj.fullname}">
                  </div>
                  <!-- Form Group (last name)-->
-                 <div class="col-md-6">
-                     <label class="small mb-1" for="inputLastName">Last name</label>
-                     <input class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value="${userobj.lastname}">
-                 </div>
+               
              </div>
              <!-- Form Row        -->
              <div class="row gx-3 mb-3">
@@ -153,8 +142,8 @@ function getEditProfile() {
                  </div>
                  <!-- Form Group (location)-->
                  <div class="col-md-6">
-                     <label class="small mb-1" for="inputLocation">Location</label>
-                     <input class="form-control" id="inputLocation" type="text" placeholder="Enter your location" value="${userobj.address}">
+                     <label class="small mb-1" for="inputLocation">State</label>
+                     <input class="form-control" id="inputLocation" type="text" placeholder="Enter your location" value="${userobj.state}">
                  </div>
              </div>
              <!-- Form Group (email address)-->
@@ -171,7 +160,7 @@ function getEditProfile() {
                  </div>
                  <!-- Form Group (birthday)-->
                  <div class="col-md-6">
-                     <label class="small mb-1" for="inputBirthday">Birthday</label>
+                     <label class="small mb-1" for="inputBirthday">Date of Birth</label>
                      <input class="form-control" id="inputBirthday" type="date" name="birthday" placeholder="Enter your birthday" value="${userobj.date}">
                  </div>
              </div>
