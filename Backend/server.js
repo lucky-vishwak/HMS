@@ -1,7 +1,14 @@
 const express = require("express")
+
+const userapi=require("./APIs/User").userapi
+const appointmentapi=require("./APIs/Appointment.js").appointmentapi
+
 const session=require("express-session")
+
 const {v4:uuidv4}=require("uuid")
+
 const app = express()
+
 const cors=require("cors")
 app.use(cors())
 app.use(session({
@@ -9,16 +16,18 @@ app.use(session({
     resave:false,
     saveUninitialized:true
 }))
+
+//Middleware
+app.use(express.json())
+
+//models for userapi
 const loginus=require('./APIs/User').loginus
 const loginad=require('./APIs/User').loginad
-//appointment API
-const userapi=require("./APIs/User").userapi
-const appointmentapi=require("./APIs/Appointment.js").appointmentapi
-const doctorApi=require('./APIs/Doctor').doctorApi
 
+//appointment API
 app.use("/appointment",appointmentapi)
+//user api
 app.use('/user',userapi)
-app.use('/doctor',doctorApi)
 
 //connection established
 const mongoose=require('mongoose')
@@ -26,12 +35,6 @@ mongoose.connect('mongodb+srv://hms:hms@cluster0.dvzgdxk.mongodb.net/hms').then(
     console.log('connected to database')
 )
  
-//Static Data
-const data=require("./data.js")
-
-//Middleware
-app.use(express.json())
-
 
 //For Login
 app.post('/login',async(req,res)=>{
@@ -45,7 +48,6 @@ app.post('/login',async(req,res)=>{
         }
     else if(userobj!=null){
             res.send({message:"success",userobj:userobj,admin:false})
-          
             return
         }
     res.send({message:"failure"})
@@ -56,5 +58,3 @@ port=3005
 app.listen(port,()=>{
     console.log(`listening on port ${port}`)
 })
-
-module.exports={loginus,loginad}
