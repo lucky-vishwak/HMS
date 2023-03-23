@@ -37,12 +37,19 @@ $("#submit").click(() => {
             alert("Invalid credentials!!!")
          }
          else {
-            if (response.admin) {
+            if (response.message=="doctor") {
+               localStorage.setItem("active_user", `${JSON.stringify(response.doctorObj)}`)
+               localStorage.setItem("access","true")
+               window.location.href="../../Doctor_dashboard/doctor.html"
+            }
+            else if(response.admin){
+
                localStorage.setItem("active_user", `${response.message}`)
                localStorage.setItem("access","true")
                window.location.href = "../../Admin_dashboard/Dashboard/dashboard.html"
+
             }
-            else {
+            else  {
                localStorage.setItem("active_user", `${JSON.stringify(response.userobj)}`)
                localStorage.setItem("access","false")
                window.location.href = "../User/User-profile/user-profile.html"

@@ -29,14 +29,6 @@
 
   <!-- Template Main CSS File -->
   <link href="../../assets/css/style.css" rel="stylesheet">
-
-  <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Updated: Mar 09 2023 with Bootstrap v5.2.3
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body>
@@ -280,76 +272,88 @@
                     </div>
                     <div class="card-body">
                         <form id="form">
-                            <div class="row g-3 align-items-center">
-                                <div class="col-md-6">
-                                    <label for="firstname" class="form-label">First Name</label>
-                                    <input type="text" class="form-control" id="firstname" name="firstname" required="" oninput="firstName()">
-                                    <div id="firstnamet"></div>
-                                </div>
-                               
-                                <div class="col-md-6">
-                                    <label for="lastname" class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" id="lastname" name="lastname" required="" oninput="lastName()">
-                                    <div id="lastnamet"></div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="phonenumber" class="form-label">Phone Number</label>
-                                    <input type="text" class="form-control" id="phonenumber" name="phonenumber" required="" oninput="phoneNumber()">
-                                    <div id="phonenumbert"></div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="emailaddress" class="form-label">Email Address</label>
-                                    <input type="email" class="form-control" id="emailaddress" required="" name="email" oninput="emailAdd()">
-                                    <div id="emailt"></div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="admitdate" class="form-label">Join Date</label>
-                                    <input type="date" class="form-control" id="admitdate" name="admitdate" required="">
-                                    <div id="datet"></div>
-                                  </div>
-                                <div class="col-md-6">
-                                    <label for="admittime" class="form-label">Join Time</label>
-                                    <input type="time" class="form-control" id="admittime" name="admittime" required="">
-                                    <div id="timet"></div>
-                                  </div>
-                                <div class="col-md-6">
-                                    <label for="formFileMultiple" class="form-label"> Image URL</label>
-                                    <input class="form-control" type="text" id="formFileMultiple" name="formFileMultiple" multiple="" required="">
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Gender</label>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="gender" id="male" value="Male" checked="">
-                                                <label class="form-check-label" for="male">
-                                                Male
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="gender" id="female" value="Female">
-                                                <label class="form-check-label" for="female">
-                                                Female
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="gender" id="others" value="Others">
-                                                <label class="form-check-label" for="others">
-                                                Others
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                          <div class="row">
+                              <div class="col-md-6 mb-2">
+                              <div class="form-outline">
+                                <label class="form-label" for="fullName">Full Name</label>
+                                <input type="text" id="fullname" name="fullname" class="form-control p-2" oninput="fullName()" required />
+                              </div>
+                              <div id="fullnamet"></div>
                             </div>
-                            <div class="text-center">
-                                <button type="button" class="btn btn-primary mt-4 px-5">Save</button>   
+                            <div class="col-md-6 col-lg-6 mb-2">
+                              <div class="form-outline">
+                                <label class="form-label" for="email">Email Address</label>
+                                <input type="email" id="Name" name="email" class="form-control p-2" required oninput="emailAdd()" />
+                              </div>
+                              <div id="emailt"></div>
                             </div>
-                            </form>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6 mb-2">
+                             <div class="form-outline">
+                               <label class="form-label" for="phonenumber">Phone Number</label>
+                               <input type="text" id="phonenumber" name="phonenumber" class="form-control p-2" oninput="phoneNumber()" required />
+                             </div>
+                             <div id="phonenumbert"></div>
+                           </div>
+                           <div class="col-md-6 col-lg-6 mb-2">
+                             <div class="form-outline">
+                               <label class="form-label" for="admitdate">Join Date</label>
+                               <input type="date" id="admitdate" name="admitdate" class="form-control p-2" required  />
+                             </div>
+                             <div id="join_datet"></div>
+                           </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6 mb-2">
+                             <div class="form-outline">
+                               <label class="form-label" for="admittime">Join Time</label>
+                               <input type="time" id="admittime" name="admittime" class="form-control p-2"  required />
+                             </div>
+                             <div id="join_timet"></div>
+                           </div>
+                           <div class="col-md-6 col-lg-6 mb-2">
+                             <div class="form-outline">
+                               <label class="form-label" for="imgUrl">Image Url</label>
+                               <input type="text" id="imgUrl" name="imgUrl" class="form-control p-2" required  />
+                             </div>
+                             <div id="imgurlt"></div>
+                           </div>
+     
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <label class="form-label">Gender</label>
+                              <div class="row">
+                                  <div class="col-md-4">
+                                      <div class="form-check">
+                                          <input class="form-check-input" type="radio" name="gender" id="male" value="Male" checked="">
+                                          <label class="form-check-label" for="male">
+                                          Male
+                                          </label>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div class="form-check">
+                                          <input class="form-check-input" type="radio" name="gender" id="female" value="Female">
+                                          <label class="form-check-label" for="female">
+                                          Female
+                                          </label>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <div class="form-check">
+                                          <input class="form-check-input" type="radio" name="gender" id="others" value="Others">
+                                          <label class="form-check-label" for="others">
+                                          Others
+                                          </label>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div id="gendert"></div>
+                          </div>
+                          </div>
+                        </form>
                     </div>
                 </div>
                 <div class="row">
@@ -360,32 +364,58 @@
                        <div class="card-body">
                             <form id="form1">
                                 <div class="row g-3 align-items-center">
-                                    <div class="col-md-6">
-                                        <label for="username" class="form-label">User Name</label>
+                                    <div class="col-md-10">
+                                        <label for="username" class="form-label">Username</label>
                                         <input type="text" class="form-control" id="username" name="username" required="" oninput="userName()">
                                     </div>
                                     <div id="usernamet"></div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-10">
                                         <label for="password" class="form-label">Password</label>
                                         <input type="password" class="form-control" id="password" name="password" required="" oninput="passwordd()">
                                     </div>
                                     <div id="passwordt"></div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-10">
                                         <label for="cnpassword" class="form-label">Confirm Password</label>
                                         <input type="password" class="form-control" id="cnpassword" name="cnpassword" required="" oninput="confirmPasswordd() ">
                                     </div>
                                     <div id="confirmpasswordt"></div>
                                     
                                 </div>
-                                <div class="text-center">
-                                    <button type="button" class="btn btn-primary mt-4 px-5" onclick="validate()">Submit</button>   
-                                </div>
-                                 </form>
+                            </form>
                         </div>  
                     </div></div>
-                </div>
-                
-                
+                    <div class="col-6"><div class="card mb-3">
+                      <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                          <h6 class="mb-0 fw-bold ">More Information</h6>
+                      </div>
+                     <div class="card-body">
+                          <form id="form2">
+                              <div class="row g-3 align-items-center mb-3">
+                                <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
+                                <div class="col-md-8 col-lg-9">
+                                    <textarea name="about" class="form-control" id="about" style="height: 100px"></textarea>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <label class=" col-form-label col-4">Specialization</label>
+                                <div class="col-8">
+                                  <select class="form-select" aria-label="Default select" id="specialization" name="specialization">
+                                    <option value="surgeory" selected>Surgeory</option>
+                                    <option value="dentist">Dentist Chekup</option>
+                                    <option value="bodycheckup">Body Chekup</option>
+                                    <option value="gynecologist">Gynecologist Chekup</option>
+                                    <option value="otherservices">Other Service</option>  
+                                  </select>
+                                </div>
+                              </div>
+                          </form>
+                          <div class="text-center mt-5">
+                            <button type="button" class="btn btn-primary px-5" onclick="validate()">Submit</button>   
+                        </div>
+                      </div>  
+                  </div>
+                   </div>
+                  </div>
             </div>
         </div>
     
@@ -408,6 +438,8 @@
   </footer><!-- End Footer -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  
   <script src="add_doctors.js"></script>
   <!-- Vendor JS Files -->
   <script src="../../assets/vendor/apexcharts/apexcharts.min.js"></script>
