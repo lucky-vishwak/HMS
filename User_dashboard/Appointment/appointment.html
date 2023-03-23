@@ -31,7 +31,7 @@
   <!-- Template Main CSS File -->
   <link href="../assets/css/style.css" rel="stylesheet">
   <link rel="stylesheet" href="appointment.css">
-
+  
   <!--Style for Back Ground Gradient-->
   <style>
     .background-radial-gradient {
@@ -150,40 +150,41 @@
                   <span style="color: hsl(218, 81%, 75%)">Form</span>
                 </h5>
                 <div class="card-body px-4 py-2 px-md-5">
+                  <div class="d-flex justify-content-center">
+                    <button style="background-color: rgb(255, 170, 170) !important;" class="btn appointment-btn" onclick="hello()">Emergency Appointment</button>
+                  </div>
                   <form id="signUpForm" action="#!">
                     <!-- start step indicators -->
-                    <div class="form-header d-flex mb-4">
+                    <div class="form-header d-flex">
                         <span class="stepIndicator px-5 ">1</span>
                         <span class="stepIndicator px-4 ">2</span>
                         <span class="stepIndicator px-5 ">3</span>
                     </div>
                     <!-- end step indicators -->
-                
                     <!-- step one -->
                     <div class="step">
-                        <p class="text-center mb-4">Personal Deatils</p>
-                        <div class="mb-3">
+                        <p class="text-center mt-4"><b class="text-secondary">Patient Details</b></p>
+                        <div class="mb-3 mt-5">
                             <input type="text" placeholder="Patient Name" oninput="this.className = ''" name="patientname" id="patientname">
                             <div id="patientnameal"></div>
                         </div>
                         <div class="mb-3">
-                            <input type="text" placeholder="Gurdian Name" oninput="this.className = ''" name="gurdianname" id="guardianname">
-                            <div id="guardiannameal"></div>
-                        </div>
-                        <div class="mb-3">
-                          <input type="text" name="email" placeholder="Email" oninput="this.className = ''" id="emailaddress">
-                          <div id="emailaddressal"></div>
-                        </div>
-                        <div class="mb-3">
-                            <input type="number" placeholder="Phone Number" oninput="this.className = ''" name="phonenumber" id="phonenumber">
-                            <div id="phonenumberal"></div>
+                          <select id="specialization" name="specialization">
+                            <option selected="">Specialization</option>
+                            <option value="surgeory">Surgeory</option>
+                            <option value="dentist">Dentist Chekup</option>
+                            <option value="bodycheckup">Body Chekup</option>
+                            <option value="gynecologist">Gynecologist Chekup</option>
+                            <option value="otherservices">Other Service</option>
+                        </select>
+                        <div id="specializational"></div>
                         </div>
                     </div>
                 
                     <!-- step two -->
                     <div class="step">
-                        <p class="text-center mb-4">Appointment Deatils</p>
-                        <div class="mb-3">
+                      <p class="text-center mt-4"><b class="text-secondary">Timing Details</b></p>
+                        <div class="mb-3 mt-5">
                           <input type="date" name="date" id="appointmentdate" oninput="this.className = ''">
                           <div id="appointmentdateal"></div>
                         </div>
@@ -200,34 +201,12 @@
                         </select>
                         <div id="timeslotal"></div>
                         </div>
-                        <div class="mb-3">
-                          <select id="reason" name="reason">
-                            <option selected="">Select Reason</option>
-                            <option value="surgeory">Surgeory</option>
-                            <option value="dentist">Dentist Chekup</option>
-                            <option value="bodycheckup">Body Chekup</option>
-                            <option value="gynecologist">Gynecologist Chekup</option>
-                            <option value="otherservices">Other Service</option>
-                        </select>
-                        <div id="reasonal"></div>
-                        </div>
-                        <div class="mb-3">
-                          <select  id="preference" name="preference">
-                            <option selected="">Select Doctor</option>
-                            <option value="DR.Peter">DR.Peter</option>
-                            <option value="DR.Mary">DR.Mary</option>
-                            <option value="DR.Zoe">DR.Zoe</option>
-                            <option value="DR.Lily">DR.Lily</option>
-                            <option value="DR.Adrian">DR.Adrian</option>
-                        </select>
-                        <div id="preferenceal"></div>
-                        </div>
                     </div>
                 
                     <!-- step three -->
                     <div class="step">
-                        <p class="text-center mb-4">Emergency Contact Details</p>
-                        <div class="mb-3">
+                      <p class="text-center mt-4"><b class="text-secondary">Emergency Details</b></p>
+                        <div class="mb-3 mt-5">
                           <input type="text" id="emergencyname" name="emergencyname" placeholder="Emergency Name">
                           <div id="emergencynameal"></div>
                         </div>
@@ -255,10 +234,12 @@
             <div class="col-lg-2 mb-5 mb-lg-0 position-relative"></div>
           </div>
         </div>
+        <div id="toast">
+          <div class="checkicon"> <i class="fas fa-check-square"></i> </div>
+        SUCCESS: We have received your appointment. Thanks!</div>
       </section>
     </section>
     <!-- End Breadcrumbs Section -->
-
   </main>
   <!-- End #main -->
   <!-- ======= Footer ======= -->
@@ -332,6 +313,7 @@
       </div>
     </div>
   </footer>
+
   <!-- End Footer -->
 
   <!--Jquery CDN-->

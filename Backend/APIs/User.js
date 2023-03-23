@@ -1,7 +1,7 @@
 const express=require('express')
 const userapi=express.Router()
 const mongoose=require('mongoose')
-let loginobj=
+const login_user=
     {
         firstname:{type:String},
         lastname:{type:String},
@@ -17,16 +17,17 @@ let loginobj=
         gender:{type:String}
     } 
 
- let logad={
+const login_admin={
     username:{type:String},password:{
         type:String
     }
  }
 
+
 userapi.use(express.json())
 //establish connection between schema and collection
-const loginus=mongoose.model('user',loginobj)
-const loginad=mongoose.model('admin',logad)
+const loginus=mongoose.model('user',login_user)
+const loginad=mongoose.model('admin',login_admin)
 
 userapi.post('/register', async(req, res) => {
     var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;  //Javascript reGex for Email Validation.
@@ -102,6 +103,5 @@ userapi.post('/register', async(req, res) => {
         res.send({ message: "registration successful" })
     }
 })
-
 
 module.exports={userapi,loginus,loginad}

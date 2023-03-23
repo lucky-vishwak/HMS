@@ -220,11 +220,11 @@ function getMyappointment() {
  </div>`;
  for(let ele of appo){
   let tr=$("<tr></tr>")
-  tr.append($("<td></td>").text(ele.preference))
-  tr.append($("<td></td>").text(ele.reason))
+  tr.append($("<td></td>").text(ele.doctor))
+  tr.append($("<td></td>").text(ele.specialization))
   tr.append($("<td></td>").text(ele.appointmentdate))
   tr.append($("<td></td>").text(ele.timeslot))
-  tr.append($("<td></td>").text("pending"))
+  tr.append($("<td></td>").text(ele.status))
   $("#details").append(tr)
  }
 }
