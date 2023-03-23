@@ -230,7 +230,7 @@ function nextPrev(n) {
     appointmentobj={...appointmentobj,"preference":$("#preference").val(),"problem":$("#problem").val(),"username":JSON.parse(localStorage.getItem("active_user")).username}
     console.log(appointmentobj)
     $.post({
-      url: "http://localhost:3005/addappointment",
+      url: "http://localhost:3005/appointment/addappointment",
       data: JSON.stringify(appointmentobj),
       contentType: 'application/json; charset=utf-8'
    }).done(function (response,stat){
