@@ -1,31 +1,17 @@
 const express=require('express')
 const userapi=express.Router()
 const mongoose=require('mongoose')
-const login_user=
-    {
-        fullname:{type:String},
-        username:{type:String},
-        phonenumber:{type:Number},
-        email:{type:String},
-        password:{type:String},
-        date:{type:String},
-        city:{type:String},
-        pincode:{type:Number},
-        state:{type:String},
-        gender:{type:String}
-    } 
+const appointmentschema=require("./Appointment").appointmentschema
 
-const login_admin={
-    username:{type:String},password:{
-        type:String
-    }
- }
+const loginus=require("../server").loginus
+const loginad=require("../server").loginad
+
+
 
 
 userapi.use(express.json())
 //establish connection between schema and collection
-const loginus=mongoose.model('user',login_user)
-const loginad=mongoose.model('admin',login_admin)
+
 
 userapi.post('/register', async(req, res) => {
     var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;  //Javascript reGex for Email Validation.
@@ -79,4 +65,4 @@ userapi.post('/register', async(req, res) => {
     }
 })
 
-module.exports={userapi,loginus,loginad}
+module.exports={userapi}
