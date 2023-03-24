@@ -68,7 +68,6 @@ $("#updateProfile").click(()=>{
         }
     }
     if(flag){
-        alert("Are you sure ??");
         let confirmation = confirm("Do you want to update profile?");
         if(confirmation){
 
@@ -79,9 +78,7 @@ $("#updateProfile").click(()=>{
                 data: JSON.stringify(updatedDoctorObj),
                 success: function (response,stat) {
                     if(stat=="success"){
-                    alert(response.message)
                     doctorobj={...response.updateddoctorobj}
-                    localStorage.setItem("active_user", `${JSON.stringify(response.updateddoctorobj)}`)
                     EditProfile();
                     alert("Profile Updated Successfully!!");
                     }
