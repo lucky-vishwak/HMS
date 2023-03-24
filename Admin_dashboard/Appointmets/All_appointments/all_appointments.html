@@ -29,6 +29,9 @@
 
   <!-- Template Main CSS File -->
   <link href="../../assets/css/style.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+  <!-- <script src="jquery-3.6.3.min.js"></script> -->
 
   <!-- =======================================================
   * Template Name: NiceAdmin
@@ -276,59 +279,15 @@
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Patient Name</th>
-            <th scope="col">Age</th>
+            <th scope="col">Name</th>
             <th scope="col">Doctor Name</th>
+            <th scope="col">Specialization</th>
             <th scope="col">Start Date</th>
             <th scope="col">Approved status</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Brandon Jacob</td>
-          
-            <td>28</td>
-            <td>Angus Grady</td>
-            <td>2016-05-25</td>
-            <td><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> Success</span></td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Bridie Kessler</td>
-          
-            <td>35</td>
-            <td>Angus Grady</td>
-            <td>2014-12-05</td>
-            <td><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> Success</span></td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Ashleigh Langosh</td>
-           
-            <td>45</td>
-            <td>Angus Grady</td>
-            <td>2011-08-12</td>
-            <td><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> Success</span></td>
-          </tr>
-          <tr>
-            <th scope="row">4</th>
-            <td>Angus Grady</td>
-           
-            <td>34</td>
-            <td>Ashleigh Langosh</td>
-            <td>2012-06-11</td>
-            <td><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> Success</span></td>
-          </tr>
-          <tr>
-            <th scope="row">5</th>
-            <td>Raheem Lehner</td>
+        <tbody id="x">
          
-            <td>47</td>
-            <td>Angus Grady</td>
-            <td>2011-04-19</td>
-            <td><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> Success</span></td>
-          </tr>
         </tbody>
       </table>
     
@@ -340,6 +299,8 @@
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
+
+  <script src="all_appointments.js"></script>
   <!-- Vendor JS Files -->
   <script src="../../assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
