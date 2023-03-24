@@ -1,35 +1,12 @@
 const express=require('express')
 const userapi=express.Router()
 const mongoose=require('mongoose')
-const appointmentschema=require("./Appointment").appointmentschema
-
-let loginobj=
-    {
-        myappointments:[appointmentschema],
-        firstname:{type:String},
-        lastname:{type:String},
-        username:{type:String},
-        phonenumber:{type:Number},
-        email:{type:String},
-        password:{type:String},
-        confirmpassword:{type:String},
-        address:{type:String},
-        city:{type:String},
-        pincode:{type:Number},
-        state:{type:String},
-        gender:{type:String}
-    } 
-
- let logad={
-    username:{type:String},password:{
-        type:String
-    }
- }
 
 userapi.use(express.json())
 //establish connection between schema and collection
-const loginus=mongoose.model('user',loginobj)
-const loginad=mongoose.model('admin',logad)
+
+const loginus=require("../schema").loginus
+const loginad=require("../schema").loginad
 
 userapi.post('/register', async(req, res) => {
     var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;  //Javascript reGex for Email Validation.
@@ -44,25 +21,6 @@ userapi.post('/register', async(req, res) => {
 
        return
     }
-    var fName = us.firstname;
-    if (!fName.match(regName)) {
-        res.send({ message: 'First name shouldnt contain numbers' })
-        return
-    }
-    else if (fName.length < 4) {
-        res.send({ message: 'first name should have minimum 4 characters' })
-        return
-    }
-    var lName = us.lastname;
-    if (lName.length < 4) {
-        res.send({ message: 'first name should have minimum 4 characters' })
-        return
-    }
-    else if (!lName.match(regName)) {
-        res.send({ message: 'First name shouldnt contain numbers' })
-        return
-    }
-
     var username = us.username;
     if (username.length < 6) {
         res.send({ message: 'username should be minimum 6 characters' })
@@ -79,32 +37,37 @@ userapi.post('/register', async(req, res) => {
         res.send({ message: 'Email format is worng' })
         return
     }
-   
     var pass = us.password;
     if (!pass.match(regpass)) {
-        res.send({ message: 'password should confirmpasswordtain Atleast one digit,Atleast one lowercase character Atleast one uppercase character Atleast one special character' })
+        res.send({ message: 'password should conttain Atleast one digit,Atleast one lowercase character Atleast one uppercase character Atleast one special character' })
         return
     }
     
-    var conpass = us.confirmpassword;
-    if (pass != conpass || conpass == "") {
-        res.send({ message: 'password and confirm  password are not same' })
-        return
-
-    }
-   
     x = true
+    // us={...us,myappointment:[]}
     for (const i in us) {
-        if (us[i] == '') {
+        console.log(i,us[i])
+        if (us[i] == '' && i!="myappointment") {
+            console.log(i,us[i],1)
             res.send({ message: `${i} is not filled` })
             x = false
         }
+        console.log(i,us[i],2)
     }
+    console.log(us,3)
     if (x == true) {
         await loginus.create(us)
         res.send({ message: "registration successful" })
     }
 })
 
+userapi.post('/edit/:username',async(req,res)=>{
+    var fusername=req.params.username;
+    var user= req.body
+    await loginus.updateOne({username:user.username},{$set:{...user}})
 
-module.exports={userapi,loginus,loginad}
+    res.send({message:'changes successfully done','user':user})
+})
+
+
+module.exports={userapi}

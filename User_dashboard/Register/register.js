@@ -162,7 +162,7 @@ function validate() {
                
             }
             else{
-                alert(xhr.statusText)
+                alert(res.status)
             }
         })
 }

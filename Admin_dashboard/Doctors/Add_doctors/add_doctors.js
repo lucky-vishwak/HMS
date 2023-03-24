@@ -154,3 +154,19 @@ function validate() {
         })
     }
 }
+
+if(localStorage.getItem("active_user")){
+    if(JSON.parse(localStorage.getItem("access"))){
+        $("#username").text(localStorage.getItem("active_user"))
+    }
+    else{
+        location.href="../../../404/404.html"
+    }
+}
+else{
+    location.href="../../../404/404.html"
+}
+$("#logout").click(()=>{
+    localStorage.clear()
+    location.href="../../../User_dashboard/Login/login.html"
+})

@@ -1,4 +1,4 @@
-p{
+/* p{
     font-size: x-small;
     
     font-weight:normal;
@@ -49,4 +49,79 @@ footer{
  }
  li{
      list-style-type: none;
- }
+ } */
+
+ #search{
+    padding: 10px 15px;
+    width: 100%;
+    font-size: 1em;
+    border: 1px solid #e3e3e3;
+    border-radius: 5px;
+    box-shadow: 1px 1px 10px rgb(161, 161, 161);
+}
+input:focus{
+    border: 1.75px solid #1977cc !important;
+    outline: 0 !important;
+}
+
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: #474e5d;
+    padding-top: 50px;
+  }
+  
+  /* Modal Content/Box */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    border: 1px solid #cfcfcf;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+  
+  /* Style the horizontal ruler */
+  hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+  }
+   
+  /* The Modal Close Button (x) */
+  .close {
+    position: absolute;
+    right: 35px;
+    top: 15px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #f1f1f1;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #f44336;
+    cursor: pointer;
+  }
+  
+  /* Clear floats */
+  .clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  
+  /* Change styles for cancel button and delete button on extra small screens */
+  @media screen and (max-width: 300px) {
+    .cancelbtn, .deletebtn {
+       width: 100%;
+    }
+  }
+  .containermodel{
+    padding: 16px;
+    text-align: center;
+  }

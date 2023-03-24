@@ -4,92 +4,35 @@ const mongoose = require("mongoose")
 
 appointmentapi.use(express.json())
 
-let appointment_helper={
-    specialization: {
-        type:String,
-        required:true
-    },
-    date:{
-        type:String,
-        required:true
-    },
-    timeslot: {
-        type:String,
-        required:true
-    },
-    doctor:{
-        type:String,
-        require:true
-    },
-    username:{
-        type:String,
-        require:true
-    }
-}
-
-let appointmentschema = {
-    patientname: { 
-        type: String, 
-        required:true
-    },
-    phonenumber: { 
-        type: Number,
-        required:true
-    },
-    emailaddress: { 
-        type: String, 
-        required:true
-    },
-    appointmentdate: {
-        type:String,
-        required:true
-    },
-    timeslot: {
-        type:String,
-        required:true
-    },
-    specialization: {
-        type:String,
-        required:true
-    },
-    emergencyname: {
-        type:String,
-        required:true
-    },
-    emergencyphone: { 
-        type: Number,
-        required:true
-    },
-    doctor:{
-        type:String,
-        require:true
-    },
-    problem:{
-        type:String,
-        require:true
-    },
-    username:{
-        type:String,
-        require:true
-    },
-    status:{
-        type:String,
-        require:true
-    }
-}
-
 //adding appointment
-const appointmentadd=mongoose.model("appointment",appointmentschema)
-
+const appointmentadd=require("../schema").appointmentadd
+const loginus=require("../schema").loginus
 appointmentapi.post("/addappointment", async (req, res) => {
     let appointmentobj=req.body
-    const usern=appointmentobj.username
+    // let obj= await loginus.findOne({username:`${appointmentobj.username}`})
+    // obj["myappointment"].push(appointmentobj)
+    // loginus.updateOne({username:`${appointmentobj.username}`},{$set:{myappointment:obj["myappointment"]}})
     appointmentobj={...appointmentobj,doctor:"Not assigned",status:"pending"}
+    await loginus.findOneAndUpdate({username:`${appointmentobj.username}`},{
+        $push:{
+            myappointment:{
+                  patientname: appointmentobj.patientname,
+                  phonenumber: appointmentobj.phonenumber,
+                  emailaddress: appointmentobj.emailaddress,
+                  appointmentdate: appointmentobj.appointmentdate,
+                  timeslot: appointmentobj.timeslot,
+                  specialization: appointmentobj.specialization,
+                  emergencyname: appointmentobj.emergencyname,
+                  emergencyphone: appointmentobj.emergencyphone,
+                  doctor: appointmentobj.doctor,
+                  problem: appointmentobj.problem,
+                  username: appointmentobj.username,
+                  status: appointmentobj.status
+            }
+        }
+    })
     const details=new appointmentadd(appointmentobj)
-
-    // await loginus.update({username:`${appointmentobj.username}`}, {$push: {myappointment:appointmentobj}});
     await details.save()
-
     res.send(appointmentobj)
 })
 
@@ -97,11 +40,9 @@ appointmentapi.post("/addappointment", async (req, res) => {
 //getting appointment
 appointmentapi.get("/appointments/:username",async (req,res)=>{
     const name=req.params.username
-    let result=await appointmentadd.find({username:`${name}`})
-    res.send(result)
+    let result=await loginus.findOne({username:`${name}`})
+    res.send(result.myappointment)
 })
 
 
-
-
-module.exports = {appointmentapi,appointmentschema}
+module.exports = {appointmentapi}

@@ -1,5 +1,4 @@
 const express = require("express")
-
 const userapi=require("./APIs/User").userapi
 const appointmentapi=require("./APIs/Appointment.js").appointmentapi
 
@@ -21,8 +20,8 @@ app.use(session({
 app.use(express.json())
 
 //models for userapi
-const loginus=require('./APIs/User').loginus
-const loginad=require('./APIs/User').loginad
+const loginus=require('./schema').loginus
+const loginad=require('./schema').loginad
 
 //appointment API
 app.use("/appointment",appointmentapi)
@@ -31,9 +30,6 @@ app.use('/user',userapi)
 
 //connection established
 const mongoose=require('mongoose')
-mongoose.connect('mongodb+srv://hms:hms@cluster0.dvzgdxk.mongodb.net/hms').then(
-    console.log('connected to database')
-)
  
 
 //For Login
@@ -58,3 +54,4 @@ port=3005
 app.listen(port,()=>{
     console.log(`listening on port ${port}`)
 })
+

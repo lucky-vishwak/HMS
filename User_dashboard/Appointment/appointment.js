@@ -13,6 +13,8 @@ var appointmentobj = {
   "timeslot": "", "specialization": "", "emergencyname": "", "emergencyphone": ""
 }
 
+var hospitals=["yashoda","medplus","apollo","kminani","image hospitals"]
+
 //name checking function
 function check_name(name) {
   const reg = /^[a-zA-Z\ ]+$/;
@@ -256,6 +258,12 @@ function logout() {
 window.onload = function () {
   var today = new Date().toISOString().split('T')[0];
   document.getElementsByName("date")[0].setAttribute('min', today);
+
+  //for hospitals
+  for(const ele of hospitals){
+    let option=$("<option></option>").text(`${ele}`)
+    $("#hospital").append(option)
+  }
 }
 
 function toastFunction() {
