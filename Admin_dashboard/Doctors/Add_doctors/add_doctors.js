@@ -131,4 +131,48 @@ $(document).ready(()=>{
     var today = new Date().toISOString().split('T')[0];
     $("#admitdate").attr('min', today);
     $("#admitdate").val(today)
+    Doctors['image_url']=form.formFileMultiple.value;
+
+    for (const i in Doctors) {
+        if (Doctors[i] == '') {
+            document.getElementById(`${i}t`).innerHTML = `<p class="alert alert-danger my-1 p-2" role="alert"> ${i} is not filled</p>`
+            x = false
+        }
+    }
+    if (x == true) {
+        $.post({
+            url:"http://localhost:3005/doctor/add-doctor", 
+            data:JSON.stringify(Doctors),
+            contentType:'application/json; charset=utf-8'
+        })
+        .done((res,stat)=>{
+            console.log(res,stat)
+            if(res.message=="Doctor added successfully")
+            {
+                window.location='#'
+                console.log(res.message,stat)
+                alert(res.message)
+            }
+            else{
+                alert('error in Doctor-added')
+            }
+        })
+    }
+})
+
+if(localStorage.getItem("active_user")){
+    if(localStorage.getItem("type")=="hospital"){
+        $("#username").text(JSON.parse(localStorage.getItem("active_user")).username)
+        $(".name").text(JSON.parse(localStorage.getItem("active_user")).username)
+    }
+    else{
+        location.href="../../../404/404.html"
+    }
+}
+else{
+    location.href="../../../404/404.html"
+}
+$("#logout").click(()=>{
+    localStorage.clear()
+    location.href="../../../User_dashboard/Login/login.html"
 })

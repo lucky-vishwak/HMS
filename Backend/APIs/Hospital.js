@@ -5,37 +5,20 @@ const mongoose=require('mongoose')
 hospitalApi.use(express.json())
 //establish connection between schema and collection
 
-const HospitalSchema={
-    hospitalName:{
-        type:String
-    },
-    username:{
-        type:String
-    },
-    password:{
-        type:String
-    }
-}
 
-const HospitalModel=mongoose.model('hospital',HospitalSchema)
-const loginad=require('./User').loginad;
-const loginus=require('./User').loginus;
+const hospitalModel=require('./../schema').hospitalModel;
+const masterAdminModel=require('./../schema').masterAdminModel;
+const userModel=require('./../schema').userModel;
 
 hospitalApi.post('/add-hospital',async(req,res)=>{
 
     let hospitalObj=req.body;
 
-    // console.log(hospitalObj);
 
-    let hospitalname=await HospitalModel.find({hospitalName:hospitalObj['hospitalName']})
-    let hospitaluser=await HospitalModel.find({username:hospitalObj['username']})
-    let adminobj=await loginad.find({username:hospitalObj['username']})
-    let userobj=await loginus.find({username:hospitalObj['username']})
-   
-    // console.log(hospitalname)
-    // console.log(hospitaluser)
-    // console.log(adminobj)
-    // console.log(userobj)
+    let hospitalname=await hospitalModel.find({hospitalName:hospitalObj['hospitalName']})
+    let hospitaluser=await hospitalModel.find({username:hospitalObj['username']})
+    let adminobj=await masterAdminModel.find({username:hospitalObj['username']})
+    let userobj=await userModel.find({username:hospitalObj['username']})
 
     if(hospitalname.length!=0)
     {
@@ -46,20 +29,19 @@ hospitalApi.post('/add-hospital',async(req,res)=>{
         res.send({message:"username already exist"}); 
     }
     else{
-        await HospitalModel.create(hospitalObj);
+        await hospitalModel.create(hospitalObj);
         res.send({message:"Hospital added succesfully"});
     }
 })
 
 hospitalApi.get('/all-hospitals',async(req,res)=>{
     
-    let hospitals=await HospitalModel.find({});
+    let hospitals=await hospitalModel.find({});
     if(hospitals.length!=0)
     res.send({message:"Success",hospitalsObj:hospitals});
     else
     res.send({message:"No Hospital found"});
 
 })
-
 
 module.exports={hospitalApi}

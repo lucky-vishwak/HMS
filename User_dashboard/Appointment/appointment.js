@@ -1,21 +1,19 @@
 //Validation variables
 var patientname = document.getElementById("patientname")
-var guardianname = document.getElementById("guardianname")
-var phonenumber = document.getElementById("phonenumber")
-var emailaddress = document.getElementById("emailaddress")
 var appointmentdate = document.getElementById("appointmentdate")
 var timeslot = document.getElementById("timeslot")
-var reason = document.getElementById("reason")
-var preference = document.getElementById("preference")
+var specialization = document.getElementById("specialization")
 var emergencyname = document.getElementById("emergencyname")
 var emergencyphone = document.getElementById("emergencyphone")
 var problem = document.getElementById("problem")
-var sub=false
+var sub = false
 //user details
 var appointmentobj = {
-  "patientname": "", "guardianname": "", "phonenumber": "", "emailaddress": "", "appointmentdate": "",
-  "timeslot": "", "reason": "", "emergencyname": "", "emergencyphone": ""
+  "patientname": "", "appointmentdate": "",
+  "timeslot": "", "specialization": "", "emergencyname": "", "emergencyphone": ""
 }
+
+var hospitals=["yashoda","medplus","apollo","kminani","image hospitals"]
 
 //name checking function
 function check_name(name) {
@@ -54,20 +52,7 @@ patientname.addEventListener("change", () => {
     appointmentobj["patientname"] = patientname.value
   }
 })
-guardianname.addEventListener("change", () => {
-  const namemsg = document.getElementById("guardiannameal")
-  if (check_name(guardianname.value)) {
-    namemsg.innerHTML =
-      `<p style="color:red">* name content only characters</p>`
-    guardianname.classList.add('warning');
-    appointmentobj["guardianname"] = ""
-  }
-  else {
-    namemsg.innerHTML = ``
-    guardianname.classList.remove('warning');
-    appointmentobj["guardianname"] = guardianname.value
-  }
-})
+
 emergencyname.addEventListener("change", () => {
   const namemsg = document.getElementById("emergencynameal")
   if (check_name(emergencyname.value)) {
@@ -83,21 +68,7 @@ emergencyname.addEventListener("change", () => {
   }
 })
 
-//Phone Number checking
-phonenumber.addEventListener("change", () => {
-  const numbmsg = document.getElementById("phonenumberal")
-  if (check_number(phonenumber.value)) {
-    numbmsg.innerHTML =
-      `<p style="color:red">* enter valid number</p>`
-    phonenumber.classList.add('warning');
-    appointmentobj["phonenumber"] = ""
-  }
-  else {
-    numbmsg.innerHTML = ``
-    phonenumber.classList.remove('warning');
-    appointmentobj["phonenumber"] = phonenumber.value
-  }
-})
+
 emergencyphone.addEventListener("change", () => {
   const numbmsg = document.getElementById("emergencyphoneal")
   if (check_number(emergencyphone.value)) {
@@ -114,29 +85,11 @@ emergencyphone.addEventListener("change", () => {
 })
 
 
-//Email checking
-emailaddress.addEventListener("change", () => {
-  const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  const email = emailaddress.value
-  const emailmsg = document.getElementById("emailaddressal")
-  if (!email.match(reg)) {
-    emailmsg.innerHTML =
-      `<p style="color:red">* enter valid email</p>`
-    emailaddress.classList.add('warning');
-    appointmentobj["emailaddress"] = ""
-  }
-  else {
-    emailmsg.innerHTML = ``
-    emailaddress.classList.remove('warning');
-    appointmentobj["emailaddress"] = email
-  }
-})
-
 //Setting Today Date
 let date = document.getElementById("appointmentdate")
 var today = new Date();
 date.value = today.toISOString().substr(0, 10);
-appointmentobj["appointmentdate"]=today.toISOString().substr(0, 10);
+appointmentobj["appointmentdate"] = today.toISOString().substr(0, 10);
 //event for getting date
 appointmentdate.addEventListener("change", () => {
   appointmentobj["appointmentdate"] = appointmentdate.value
@@ -156,17 +109,17 @@ timeslot.addEventListener("change", () => {
   }
 })
 
-//event for getting the reason
-reason.addEventListener("change", () => {
-  const reasonmsg = document.getElementById("reasonal")
-  if (reason.value == "Select Reason") {
-    reasonmsg.innerHTML =
-      `<p class="alert alert-danger py-0">* Select Reason</p>`
-    appointmentobj["reason"] = ""
+//event for getting the specialization
+specialization.addEventListener("change", () => {
+  const specializationmsg = document.getElementById("specializational")
+  if (specialization.value == "Specialization") {
+    specializationmsg.innerHTML =
+      `<p class="alert alert-danger py-0">* Select specialization</p>`
+    appointmentobj["specialization"] = ""
   }
   else {
-    reasonmsg.innerHTML = ``
-    appointmentobj["reason"] = reason.value
+    specializationmsg.innerHTML = ``
+    appointmentobj["specialization"] = specialization.value
   }
 })
 
@@ -174,7 +127,7 @@ reason.addEventListener("change", () => {
 
 var login_btn = document.getElementById("login")
 var logout_btn = document.getElementById("logout1")
-$("#logout").click(()=>{
+$("#logout").click(() => {
   localStorage.clear()
 })
 if (localStorage.getItem("active_user")) {
@@ -203,11 +156,11 @@ function showTab(n) {
   }
   if (n == (x.length - 1)) {
     document.getElementById("nextBtn").innerHTML = "Submit";
-    sub=true
+    sub = true
 
   } else {
     document.getElementById("nextBtn").innerHTML = "Next";
-    sub=false
+    sub = false
   }
   //... and run a function that will display the correct step indicator:
   fixStepIndicator(n)
@@ -216,52 +169,53 @@ function showTab(n) {
 
 function nextPrev(n) {
   // This function will figure out which tab to display
-  if(sub && n!=-1){
-    appointmentobj= {
-      "patientname": $("#patientname").val(), "guardianname": $("#guardianname").val(), "phonenumber": $("#phonenumber").val(), "emailaddress": $("#emailaddress").val(), "appointmentdate": $("#appointmentdate").val(),
-      "timeslot": $("#timeslot").val(), "reason": $('#reason').val(), "emergencyname": $("#emergencyname").val(), "emergencyphone": $("#emergencyphone").val()
-    }
-    for(let ele in appointmentobj){
-      if(appointmentobj[`${ele}`]==""){
+  if (sub && n != -1) {
+    for (let ele in appointmentobj) {
+      if (appointmentobj[`${ele}`] == "") {
         alert("fill all fields correctly")
         return
       }
     }
-    appointmentobj={...appointmentobj,"preference":$("#preference").val(),"problem":$("#problem").val(),"username":JSON.parse(localStorage.getItem("active_user")).username}
-    console.log(appointmentobj)
+    appointmentobj = {
+      ...appointmentobj, "problem": $("#problem").val(),
+      "username": JSON.parse(localStorage.getItem("active_user")).username,
+      "emailaddress": JSON.parse(localStorage.getItem("active_user")).email,
+      "phonenumber": JSON.parse(localStorage.getItem("active_user")).phonenumber,
+    }
     $.post({
-      url: "http://localhost:3005/addappointment",
+      url: "http://localhost:3005/appointment/addappointment",
       data: JSON.stringify(appointmentobj),
       contentType: 'application/json; charset=utf-8'
-   }).done(function (response,stat){
-    if(stat=="success"){
-      alert("appointment done successfully")
-      location.href="../User/User-profile/user-profile.html"
-    }
-    else{
-      console.log("something wrong")
-    }
-   })
+    }).done(function (response, stat) {
+      if (stat == "success") {
+        toastFunction()
+        // alert("appointment done successfully")
+        // location.href = "../User/User-profile/user-profile.html"
+      }
+      else {
+        console.log("something wrong")
+      }
+    })
   }
-  else{
+  else {
     var x = document.getElementsByClassName("step");
-  // Exit the function if any field in the current tab is invalid:
-  if (n == 1 && !validateForm()) return false;
-  // Hide the current tab:
-  x[currentTab].style.display = "none";
-  // Increase or decrease the current tab by 1:
-  currentTab = currentTab + n;
-  // if you have reached the end of the form...
-  if (currentTab >= x.length) {
-    // ... the form gets submitted:
-    document.getElementById("signUpForm").submit();
-    return false;
-  }
-  // Otherwise, display the correct tab:
-  showTab(currentTab);
+    // Exit the function if any field in the current tab is invalid:
+    if (n == 1 && !validateForm()) return false;
+    // Hide the current tab:
+    x[currentTab].style.display = "none";
+    // Increase or decrease the current tab by 1:
+    currentTab = currentTab + n;
+    // if you have reached the end of the form...
+    if (currentTab >= x.length) {
+      // ... the form gets submitted:
+      document.getElementById("signUpForm").submit();
+      return false;
+    }
+    // Otherwise, display the correct tab:
+    showTab(currentTab);
   }
 }
- 
+
 function validateForm() {
   // This function deals with validation of the form fields
   var x, y, i, valid = true;
@@ -299,4 +253,24 @@ function logout() {
   let act = !JSON.parse(localStorage.getItem("active"))
   act = JSON.stringify(act)
   localStorage.setItem("active", act)
+}
+
+window.onload = function () {
+  var today = new Date().toISOString().split('T')[0];
+  document.getElementsByName("date")[0].setAttribute('min', today);
+
+  //for hospitals
+  for(const ele of hospitals){
+    let option=$("<option></option>").text(`${ele}`)
+    $("#hospital").append(option)
+  }
+}
+
+function toastFunction() {
+  var x = document.getElementById("toast");
+  x.className = "show";
+  setTimeout(function(){ 
+    x.className = x.className.replace("show", ""); 
+    location.href="../User/User-profile/user-profile.html"
+}, 3000);
 }
