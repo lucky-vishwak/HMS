@@ -6,17 +6,19 @@ const mongoose=require("mongoose")
 doctorApi.use(express.json())
 
 let doctorSchema={
-    firstname:{type:String},
-    lastname:{type:String},
+    fullname:{type:String},
     username:{type:String},
     phonenumber:{type:Number},
     join_date:{type:String},
     join_time:{type:String},
     email:{type:String},
     password:{type:String},
-    confirmpassword:{type:String},
-    gender:{type:String}
-    } 
+    specialization:{type:String},
+    gender:{type:String},
+    about:{type:String},
+    imgurl:{type:String},
+    hospital:{type:String}
+} 
 
 const doctorModel=mongoose.model('doctor',doctorSchema)
 
@@ -41,7 +43,27 @@ doctorApi.get("/all-doctors",async(req,res)=>{
     
 })
 
+doctorApi.put("/upadteProfile/:username",async(req,res)=>{
+    let username=req.params.username;
+    
+    let updatedDoctorObj=req.body;
+
+    let filter={username:username}
+
+    await doctorModel.updateOne(filter,{ $set :{phonenumber:updatedDoctorObj['phonenumber']}});
+
+    await doctorModel.updateOne(filter,{ $set :{email:updatedDoctorObj['email']}});
+
+    await doctorModel.updateOne(filter,{ $set :{about:updatedDoctorObj['about']}});
+    
+    console.log(await doctorModel.findOne(filter));
+    res.send({message:"Updated Successfully",updateddoctorobj:updatedDoctorObj});
+
+})
 
 
 
-module.exports={doctorApi}
+
+
+
+module.exports={doctorApi,doctorModel}

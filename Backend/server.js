@@ -15,10 +15,13 @@ const loginad=require('./APIs/User').loginad
 const userapi=require("./APIs/User").userapi
 const appointmentapi=require("./APIs/Appointment.js").appointmentapi
 const doctorApi=require('./APIs/Doctor').doctorApi
+const doctorModel=require('./APIs/Doctor').doctorModel;
+const hospitalApi=require('./APIs/Hospital').hospitalApi
 
 app.use("/appointment",appointmentapi)
 app.use('/user',userapi)
 app.use('/doctor',doctorApi)
+app.use('/hospital',hospitalApi);
 
 //connection established
 const mongoose=require('mongoose')
@@ -38,6 +41,9 @@ app.post('/login',async(req,res)=>{
     const userreq=req.body
     const adminobj=await loginad.findOne({username:userreq.username})
     const userobj=await loginus.findOne({username:userreq.username})
+    const doctorobj=await doctorModel.findOne({username:userreq.username})
+    
+    console.log(doctorobj)
    
     if(adminobj!=null){
             res.send({message:adminobj.username,admin:true})
@@ -48,6 +54,10 @@ app.post('/login',async(req,res)=>{
           
             return
         }
+    else if(doctorobj!=null){
+        res.send({message:"doctor",doctorObj:doctorobj,admin:false})
+        return
+    }
     res.send({message:"failure"})
 })
 
