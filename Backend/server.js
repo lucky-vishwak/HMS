@@ -16,10 +16,12 @@ const userapi=require("./APIs/User").userapi
 const appointmentapi=require("./APIs/Appointment.js").appointmentapi
 const doctorApi=require('./APIs/Doctor').doctorApi
 const doctorModel=require('./APIs/Doctor').doctorModel;
+const hospitalApi=require('./APIs/Hospital').hospitalApi
 
 app.use("/appointment",appointmentapi)
 app.use('/user',userapi)
 app.use('/doctor',doctorApi)
+app.use('/hospital',hospitalApi);
 
 //connection established
 const mongoose=require('mongoose')
