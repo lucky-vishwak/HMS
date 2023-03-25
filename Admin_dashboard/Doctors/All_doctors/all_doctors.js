@@ -2,43 +2,47 @@ function search(){
    // var s=document.getElementById('x').value.toUpperCase()
   var x=$('.card').length
   var s=$('#x').val().toUpperCase()
-    p=0
-    for (const i of $('.card')) {
-        var val=i.innerText.toUpperCase()
-        if(val.indexOf(s)>-1){
-           
-            i.style.display=""
-        }
-        else{
-            i.style.display='none'
-            p+=1
-        }
-
-    }
-    if(p==x){
-      
-      //document.getElementById('sorry').innerHTML=`<h1>No one found</h1>`
-        $("h1").text(`No one found`)
-    }
-    else{
-      $("h1").text(``)
-    }
+   sea(x,s)
 }
+function sea(x,s){
+  p=0
+  for (const i of $('.card')) {
+      var val=i.innerText.toUpperCase()
+      if(val.indexOf(s)>-1){
+         
+          i.style.display=""
+      }
+      else{
+          i.style.display='none'
+          p+=1
+      }
 
+  }
+  if(p==x){
+    
+    //document.getElementById('sorry').innerHTML=`<h1>No one found</h1>`
+      $("#sorry").text(`No one found`)
+  }
+  else{
+    $("#sorry").text(``)
+  }
+}
 function displayDoctors(doctor){
 
    for(let i=0;i<doctor.length;i++){
-      let div_col=$('<div></div>').addClass('col text-center')
-      let div_card=$('<div></div>').addClass('card')
+      let div_col=$('<div></div>').addClass('col')
+      let div_card=$('<div></div>').addClass('card').css("height","")
       let div_card_body=$('<div></div>').addClass('card-body')
       let user_img=$('<img />')
+      //user_img.attr('width',"18rem")
       user_img.attr('src', doctor[i].imgurl);
       let div_card_info=$('<div></div>').addClass('teacher-info')
-      let p_username=$('<p></p>').text(doctor[i].username)
-      let p_designation=$('<p></p>').text(doctor[i].designation)
+      let p_username=$('<p></p>').text(doctor[i].username).addClass('mt-2 text-bold' ).css('margin-bottom',"-3px")
+      let p_designation=$('<p></p>').text(doctor[i].specialization).css("fontStyle","italic")
       let button_viewMore=$('<button></button>').text('View')
       button_viewMore.addClass('btn btn-primary')
-      div_card.append(user_img)
+      div_card.append(user_img) 
+      user_img.css({"width":"100%","height":"10rem"})
       div_card_info.append(p_username)
       div_card_info.append(p_designation)
       div_card_info.append(button_viewMore)
@@ -50,6 +54,12 @@ function displayDoctors(doctor){
 }
 
 $(document).ready(function(){
+  var x=`<select class="form-select" id='sel' aria-label="Default select example">
+  <option selected>specialization</option>
+  <option value="surgeory">surgeory</option>
+  <option value="gynecologist">gynecologist</option>
+</select>`
+  $('#y').append(x).hide()
     $("#myInput").on("keyup", function() {
       var value = $(this).val().toLowerCase();
       $(".dropdown-menu li").filter(function() {
@@ -68,3 +78,35 @@ $(document).ready(function(){
     })
 
   });
+
+  if(localStorage.getItem("active_user")){
+    if(localStorage.getItem("type")=="hospital"){
+        $("#username").text(JSON.parse(localStorage.getItem("active_user")).username)
+        $(".name").text(JSON.parse(localStorage.getItem("active_user")).username)
+    }
+    else{
+        location.href="../../../404/404.html"
+    }
+}
+else{
+    location.href="../../../404/404.html"
+}
+$("#logout").click(()=>{
+    localStorage.clear()
+    location.href="../../../User_dashboard/Login/login.html"
+})
+
+$('#hell').click(()=>{
+   $('#y').fadeToggle()
+  $(`#sel`).click(()=>{
+    var x=$('.card').length
+    var s=$('#sel').val().toUpperCase()
+    if(s=='SPECIALIZATION'){
+      location.reload()
+    }
+   else{
+    sea(x,s)
+   }
+    
+  })
+})

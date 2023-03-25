@@ -1,3 +1,20 @@
+if(localStorage.getItem("active_user")){
+  if(localStorage.getItem("type")=="hospital"){
+      $("#username").text(JSON.parse(localStorage.getItem("active_user")).username)
+      $(".name").text(JSON.parse(localStorage.getItem("active_user")).username)
+  }
+  else{
+      location.href="../../../404/404.html"
+  }
+}
+else{
+  location.href="../../../404/404.html"
+}
+$("#logout").click(()=>{
+  localStorage.clear()
+  location.href="../../../User_dashboard/Login/login.html"
+})
+
 var tb=document.getElementById('b')
 var d1= document.getElementById('d1')
 var u1= document.getElementById('u1')

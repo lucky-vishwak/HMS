@@ -130,6 +130,7 @@ function datee() {
  function  pincodee(){
      document.getElementById(`pincodet`).innerHTML=``
  }
+
 function validate() {
 
     var x = true
@@ -139,6 +140,19 @@ function validate() {
      user['city']=form.city.value;
      user['pincode']=form.pincode.value
     // user['address']=form.Address.value
+
+ 
+ let   formData=new FormData();
+
+ //append file to form data
+ formData.append('photo',this.file)
+
+ //append userObj
+ 
+
+ formData.append('user',JSON.stringify(this.user))
+
+
 
     for (const i in user) {
         if (user[i] == '') {
@@ -151,7 +165,7 @@ function validate() {
     if (x == true) {
         $.post({
             url:"http://localhost:3005/user/register", 
-            data:JSON.stringify(user),
+            data:formData,
             contentType:'application/json; charset=utf-8'
         })
         .done((res,stat,xhr)=>{
@@ -162,7 +176,7 @@ function validate() {
                
             }
             else{
-                alert(xhr.statusText)
+                alert(res.status)
             }
         })
 }

@@ -24,35 +24,43 @@ $("#submit").click(() => {
       window.alert('enter details')
    }
    else {
-      let userObj = {
+      let signObj = {
          username: username,
          password: password
       }
       $.post({
          url: "http://localhost:3005/login",
-         data: JSON.stringify(userObj),
+         data: JSON.stringify(signObj),
          contentType: 'application/json; charset=utf-8'
       }).done(function (response) {
          if (response.message === "failure") {
             alert("Invalid credentials!!!")
+            // $("#username").val('')
+            // $("#password").val('')
          }
          else {
-            if (response.message=="doctor") {
+            if (response.type=="admin") {
+               localStorage.setItem("active_user", `${JSON.stringify(response.masterObj)}`)
+               localStorage.setItem("type","admin")
+               window.location.href="../../Mater_admin_dashboard/master_admin_dashboard/master_admin_dashboard.html"
+            }
+            else if (response.type=="user") {
+               localStorage.setItem("active_user", `${JSON.stringify(response.userObj)}`)
+               localStorage.setItem("type","user")
+               window.location.href="../User/User-profile/user-profile.html"
+            }
+            else if (response.type=="doctor") {
+               console.log(response.doctorObj)
                localStorage.setItem("active_user", `${JSON.stringify(response.doctorObj)}`)
-               localStorage.setItem("access","true")
+               localStorage.setItem("type","doctor")
                window.location.href="../../Doctor_dashboard/doctor.html"
             }
-            else if(response.admin){
+            else if(response.type=="hospital"){
 
-               localStorage.setItem("active_user", `${response.message}`)
-               localStorage.setItem("access","true")
+               localStorage.setItem("active_user", `${JSON.stringify(response.hospitalObj)}`)
+               localStorage.setItem("type","hospital")
                window.location.href = "../../Admin_dashboard/Dashboard/dashboard.html"
 
-            }
-            else  {
-               localStorage.setItem("active_user", `${JSON.stringify(response.userobj)}`)
-               localStorage.setItem("access","false")
-               window.location.href = "../User/User-profile/user-profile.html"
             }
          }
       });
