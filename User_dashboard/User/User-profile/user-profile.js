@@ -177,6 +177,9 @@ function getEditProfile() {
 
 
 function change_details() {
+var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;  //Javascript reGex for Email Validation.
+var regPhone = /^\d{10}$/;                                         //Javascript reGex for Phone Number validation.
+var regName = /^[a-zA-Z\ ]+$/
   user={}
   var form=document.forms.x;
   user['state']=form.state.value
@@ -187,6 +190,35 @@ function change_details() {
    user['email']=form.email.value
    user['phonenumber']=form.phonenumber.value
    user.gender=userobj.gender
+
+
+   var fName = form.fullname.value; 
+   if (!fName.match(regName)) {
+    alert('Full name shouldnt contain numbers')
+   return
+}
+
+if (fName.length < 4) {
+  alert('full name should have minimum 4 characters')
+  return
+ 
+}
+var phonenumber = form.phonenumber.value;
+    if (!phonenumber.match(regPhone)) {
+      alert('phone number should consist of 10 digits')
+       return
+    }
+    var email = form.email.value;
+    if (!email.match(regEmail)) {
+      alert('Email format is worng')
+        return
+    }
+    for (const i in user) {
+      if (user[i] == '') {
+        alert(`${i} is not filled`)
+        return
+      }
+  }
   $.post({
     url:"http://localhost:3005/user/edit/:username", 
     data:JSON.stringify(user),

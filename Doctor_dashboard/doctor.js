@@ -16,14 +16,17 @@ let appointments=[];
 //reusing function in both edit and overview
 function toUpdateProfile(){
     doctorobj = JSON.parse(localStorage.getItem("active_user"));
+    $(`#specalizationMain`).text(`${doctorobj.specialization}`)
     $(`#aboutProfile`).text(`${doctorobj.about}`);
     $(`#fullNameProfile`).text(`${doctorobj.fullname}`);
     $(`#specalizationProfile`).text(`${doctorobj.specialization}`);
     $(`#emailProfile`).text(`${doctorobj.email}`);
     $(`#phonenumberProfile`).text(`${doctorobj.phonenumber}`);
+    
 }
 
 $(document).ready(()=>{
+   
     toUpdateProfile();
 })
 // overview related jquery
@@ -43,9 +46,63 @@ function EditProfile(){
 }
 
 $("#editProfileButton").click(()=>{
+    var x=`<form>
+    <div class="row mb-3">
+    <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+    <div class="col-md-8 col-lg-9">
+        <img src="assets/img/profile-img.jpg" alt="Profile" id="imageEdit">
+        <div class="pt-2">
+        <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
+        <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
+        </div>
+    </div>
+    </div>
+
+    <div class="row mb-3">
+    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+    <div class="col-md-8 col-lg-9">
+        <input name="fullName" type="text" class="form-control" id="fullNameEdit" value="Kevin Anderson" disabled>
+    </div>
+    </div>
+
+    <div class="row mb-3">
+    <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
+    <div class="col-md-8 col-lg-9">
+        <textarea name="about" class="form-control" id="aboutEdit" style="height: 100px" >Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
+    </div>
+    </div>
+
+    <div class="row mb-3">
+    <label for="specalization" class="col-md-4 col-lg-3 col-form-label">Specalization</label>
+    <div class="col-md-8 col-lg-9">
+        <input name="specalization" type="text" class="form-control" id="specalizationEdit" value="Lueilwitz, Wisoky and Leuschke" disabled>
+    </div>
+    </div>
+
+    <div class="row mb-3">
+    <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+    <div class="col-md-8 col-lg-9">
+        <input name="phone" type="text" class="form-control" id="phonenumberEdit" value="(436) 486-3538 x29071">
+    </div>
+    </div>
+
+    <div class="row mb-3">
+    <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+    <div class="col-md-8 col-lg-9">
+        <input name="email" type="email" class="form-control" id="emailEdit" value="k.anderson@example.com">
+    </div>
+    </div>
+
+    <div class="text-center">
+    <button type="button" class="btn btn-primary" id="updateProfile" click='change()'>Save Changes</button>
+    </div>
+</form>`
+  $(`#profile-edit`).append(x)
     EditProfile();
 })
-
+function change(){
+    
+}
 $("#updateProfile").click(()=>{
 
     let updatedDoctorObj={};
@@ -218,22 +275,22 @@ $("#butonModel").click(()=>{
     
 })
 
-//on logout
-if(localStorage.getItem("active_user")){
-    if(JSON.parse(localStorage.getItem("access"))){
-        $("#username").text(localStorage.getItem("active_user"))
-    }
-    else{
-        location.href="../../404/404.html"
-    }
-}
-else{
-    location.href="../../404/404.html"
-}
-$("#logout").click(()=>{
-    localStorage.clear()
-    location.href="../User_dashboard/Login/login.html"
-})
+// //on logout
+// if(localStorage.getItem("active_user")){
+//     if(JSON.parse(localStorage.getItem("access"))){
+//         $("#username").text(localStorage.getItem("active_user"))
+//     }
+//     else{
+//         location.href="../../404/404.html"
+//     }
+// }
+// else{
+//     location.href="../../404/404.html"
+// }
+// $("#logout").click(()=>{
+//     localStorage.clear()
+//     location.href="../User_dashboard/Login/login.html"
+// })
 
 
 
