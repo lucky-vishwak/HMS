@@ -58,7 +58,12 @@ const doctorSchema = {
         type:String
     },
     rating:{
-        type:Number
+        type:Array,
+        'default':[0,0,0,0,0]
+    },
+    rating_avg:{
+        type:Number,
+        default:1
     },
     hospitalName:{
         type:String
@@ -77,6 +82,9 @@ let appointmentHelperSchema = {
     }
     ,
     hospitalName:{
+        type:String
+    },
+    reason:{
         type:String
     } 
 }
@@ -116,6 +124,7 @@ let appointmentSchema = {
     },
     doctor: {
         type: String,
+        default:"Not assigned",
         require: true
     },
     problem: {
@@ -127,6 +136,11 @@ let appointmentSchema = {
         require: true
     },
     status: {
+        type: String,
+        default:"pending",
+        require: true
+    },
+    hospitalName: {
         type: String,
         require: true
     }

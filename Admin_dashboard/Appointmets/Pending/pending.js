@@ -15,85 +15,90 @@ $("#logout").click(()=>{
   location.href="../../../User_dashboard/Login/login.html"
 })
 
-var tb=document.getElementById('b')
-var d1= document.getElementById('d1')
-var u1= document.getElementById('u1')
-function user(){
-    d1.className='btn btn-white'
-    u1.className='btn btn-primary'
-   
+let appointmentsAssigned=[];
+let appointmentsNotAssigned=[];
 
+function notAssignOnLoadAndOnClick(){
+  for(let i=0;i<appointmentsNotAssigned.length;i++){
+     let tr=$("<tr></tr>").addClass(`${appointmentsNotAssigned[i].appointmentdate}${appointmentsNotAssigned[i].timeslot}`);
+     let td_name=$("<td></td>").text(`${appointmentsNotAssigned[i].patientname}`);
+     let td_date=$("<td></td>").text(`${appointmentsNotAssigned[i].appointmentdate}`);
+     let td_time=$("<td></td>").text(`${appointmentsNotAssigned[i].timeslot}`);
+     let td_specalization=$("<td></td>").text(`${appointmentsNotAssigned[i].specialization}`);
+     let td_doctor=$("<td></td>").text(`${appointmentsNotAssigned[i].doctor}`);
+     let td_status=$("<td></td>").text(`${appointmentsNotAssigned[i].status}`);
+     let td_button=$("<button></button>").addClass("btn btn-primary").attr('onclick',`assignDoctor(${i})`).text("Assign").css('background-color','#000000');
+
+     tr.append(td_name);
+     tr.append(td_date);
+     tr.append(td_time);
+     tr.append(td_specalization);
+     tr.append(td_doctor);
+     tr.append(td_status);
+     tr.append(td_button);
+
+     $("#tbody").append(tr);
+  }
 }
 
-function doctor(){
-    u1.className='btn btn-white'
-    d1.className='btn btn-primary'
-    document.getElementById('tb')
-}
-var tb=document.getElementById('b')
-var d1= document.getElementById('d1')
-var u1= document.getElementById('u1')
-var c=document.getElementById('c')
-function user(){
-    d1.className='btn btn-white'
-    u1.className='btn btn-primary'
-    c.innerHTML=''
-    // const tr1=document.createElement('tr') 
-    // const td1=document.createElement('th')
-    // td1.innerHTML=`name`
-    //   tr1.appendChild(td1)
-    //   const td2=document.createElement('th')
-    //   td2.innerHTML=`age`
-     
-    //     tr1.appendChild(td2)
-    //     const td3=document.createElement('th')
-    //     td3.innerHTML=`doctor`
-    //       tr1.appendChild(td3)
-    //       const td4=document.createElement('th')
-    //       td4.innerHTML=`profession`
-    //         tr1.appendChild(td4)
-    // tb.append(tr1)
-    for (var i=0;i<10;i++) {
-        const tr=document.createElement('tr') 
-        const td1=document.createElement('td')
-         td1.innerHTML=`likhith`
-          tr.appendChild(td1)
-          const td2=document.createElement('td')
-          td2.innerHTML=`20`
-          
-            tr.appendChild(td2)
-            const td3=document.createElement('td')
-            td3.innerHTML=`vishwak`
-              tr.appendChild(td3)
-              const td4=document.createElement('td')
-              td4.innerHTML=`dentist`
-                tr.appendChild(td4)
-          tb.append(tr)
-         
-         }
+$(document).ready(()=>{
+  let hospitalObj={name:JSON.parse(localStorage.getItem("active_user")).hospitalName};
+  $.post({
+    url:"http://localhost:3005/appointment/hospitalAppointments",
+    data:JSON.stringify(hospitalObj),
+    contentType:'application/json; charset=utf-8'
+  })
+  .done((response,stat)=>{
+     if(stat=='success'){
+      appointmentsAssigned=response.assignedAppointments;
+      appointmentsNotAssigned=response.notAssignedAppointments;
+      $("#tbody").html('');
+      notAssignOnLoadAndOnClick();
+     }
+  })
+})
 
-}
+$("#notAssign").click(()=>{
+  $("#tbody").html('');
+  notAssignOnLoadAndOnClick();
+})
 
-function doctor(){
-    u1.className='btn btn-white'
-    d1.className='btn btn-primary'
-    tb.innerHTML=''
-    for (var i=0;i<5;i++) {
-        const tr=document.createElement('tr') 
-        const td1=document.createElement('td')
-         td1.innerHTML=`likhith`
-          tr.appendChild(td1)
-          const td2=document.createElement('td')
-          td2.innerHTML=`20`
-          
-            tr.appendChild(td2)
-            const td3=document.createElement('td')
-            td3.innerHTML=`vishal`
-              tr.appendChild(td3)
-              const td4=document.createElement('td')
-              td4.innerHTML=`dentist`
-                tr.appendChild(td4)
-          c.append(tr)
-         
-         }
+$("#assign").click(()=>{
+  $("#tbody").html('');
+  $("notAssign").addClass("btn btn-primary");
+  $("assign").addClass("btn btn-success"); 
+  for(let i=0;i<appointmentsAssigned.length;i++){
+    let tr=$("<tr></tr>");
+    let td_name=$("<td></td>").text(`${appointmentsAssigned[i].patientname}`);
+    let td_date=$("<td></td>").text(`${appointmentsAssigned[i].appointmentdate}`);
+    let td_time=$("<td></td>").text(`${appointmentsAssigned[i].timeslot}`);
+    let td_specalization=$("<td></td>").text(`${appointmentsAssigned[i].specialization}`);
+    let td_doctor=$("<td></td>").text(`${appointmentsAssigned[i].doctor}`);
+    let td_status=$("<td></td>").text(`${appointmentsAssigned[i].status}`);
+
+    tr.append(td_name);
+    tr.append(td_date);
+    tr.append(td_time);
+    tr.append(td_specalization);
+    tr.append(td_doctor);
+    tr.append(td_status);
+
+    $("#tbody").append(tr);
+ }
+
+})
+
+function assignDoctor(val){
+  let hospitalObj={name:JSON.parse(localStorage.getItem("active_user")).hospitalName};
+  console.log(val);
+  // $.post({
+  //   url:"http://localhost:3005/doctor/hospital-wise",
+  //   data:JSON.stringify(hospitalObj),
+  //   contentType:'application/json; charset=utf-8'
+  // })
+  // .done((response,stat)=>{
+  //    if(stat=='success'){
+  //     doctors=response.doctors;
+  //    }
+  // })
 }

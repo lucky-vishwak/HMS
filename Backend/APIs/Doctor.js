@@ -52,6 +52,16 @@ doctorApi.put("/upadteProfile/:username",async(req,res)=>{
 
 })
 
+// doctorApi.post("/addDoctor",async(req,res)=>{
+
+//     let doctorObj=req.body;
+
+//     await doctorModel.create(doctorObj);
+
+//     res.send({message:"Successfully added"})
+
+// })
+
 
 
 module.exports={doctorApi}

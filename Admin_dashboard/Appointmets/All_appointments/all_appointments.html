@@ -265,63 +265,27 @@
 
     <section class="section dashboard">
       <!-- Code should be placed here -->
+      <form>
+        <div class="row mb-3">
+          <label for="inputText" class="col-sm-6 col-form-label"></label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="search" placeholder="Search for Doctor,Patient">
+          </div>
+        </div>
+      </form>
+
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">#</th>
             <th scope="col">Patient Name</th>
-            <th scope="col">Age</th>
             <th scope="col">Doctor Name</th>
-            <th scope="col">Start Date</th>
-            <th scope="col">Approved status</th>
+            <th scope="col">Specalization</th>
+            <th scope="col">Date</th>
+            <th scope="col">Time</th>
+            <th scope="col">Status</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Brandon Jacob</td>
-          
-            <td>28</td>
-            <td>Angus Grady</td>
-            <td>2016-05-25</td>
-            <td><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> Success</span></td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Bridie Kessler</td>
-          
-            <td>35</td>
-            <td>Angus Grady</td>
-            <td>2014-12-05</td>
-            <td><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> Success</span></td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Ashleigh Langosh</td>
-           
-            <td>45</td>
-            <td>Angus Grady</td>
-            <td>2011-08-12</td>
-            <td><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> Success</span></td>
-          </tr>
-          <tr>
-            <th scope="row">4</th>
-            <td>Angus Grady</td>
-           
-            <td>34</td>
-            <td>Ashleigh Langosh</td>
-            <td>2012-06-11</td>
-            <td><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> Success</span></td>
-          </tr>
-          <tr>
-            <th scope="row">5</th>
-            <td>Raheem Lehner</td>
-         
-            <td>47</td>
-            <td>Angus Grady</td>
-            <td>2011-04-19</td>
-            <td><span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> Success</span></td>
-          </tr>
+        <tbody id="tbody">
         </tbody>
       </table>
     

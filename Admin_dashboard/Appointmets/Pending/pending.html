@@ -265,59 +265,30 @@
 
     <section class="section dashboard">
       <!-- Code should be placed here -->
-      <table class="table" >
-        <thead>
-        <tr class="w-100">
-          <th class="text-center"><button class="btn btn-primary" id="d1" onclick="doctor()">Doctor Assigned</button></th>
-          <th class="text-center"><button class="btn" id='u1' onclick="user()">Doctor not Assigned</button></th>
-        </tr>
-      </thead>      
-       </table>
-    <table class="table">
-         <thead>
-          <tr>
-          <th>name</th>
-          <th>age</th>
-          <th>doctor</th>
-          <th>profession</th>
-        </tr>
-         </thead>
-         <tbody id="c">
-                  <tr>
-                    <td>likhith</td>
-                    <td>20</td>
-                    <td>vishwak</td>
-                    <td>dentist</td>
-                  </tr>
-                  <tr>
-                    <td>likhith</td>
-                    <td>20</td>
-                    <td>vishwak</td>
-                    <td>dentist</td>
-                  </tr>
-                  <tr>
-                    <td>likhith</td>
-                    <td>20</td>
-                    <td>vishwak</td>
-                    <td>dentist</td>
-                  </tr>
-                  <tr>
-                    <td>likhith</td>
-                    <td>20</td>
-                    <td>vishwak</td>
-                    <td>dentist</td>
-                  </tr>
-                  <tr>
-                    <td>likhith</td>
-                    <td>20</td>
-                    <td>vishwak</td>
-                    <td>dentist</td>
-                  </tr>
-         </tbody>
-         <tbody id="b">
-
-         </tbody>
-    </table>
+      <div class="container">
+        <div class="row">
+          <div class="col-6 text-center"><button type="button" class="btn" id="notAssign">Doctor not Assigned</button></div>
+          <div class="col-6 text-center"><button type="button" class="btn"  id="assign" >Doctor Assigned</button></div>
+        </div>
+        <div class="row">
+          <table class="table">
+            <thead>
+              <tr>
+              <th>Name</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Specalization</th>
+              <th>Doctor</th>
+              <th>Status</th>
+              <th></th>
+              </tr>
+            </thead>
+            <tbody id="tbody">
+                      
+            </tbody>
+        </table>
+        </div>      
+      </div>
     </section>
 
   </main><!-- End #main -->

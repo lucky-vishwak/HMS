@@ -15,37 +15,41 @@ $("#logout").click(()=>{
   location.href="../../../User_dashboard/Login/login.html"
 })
 
-
-function user(){
-    $('#d1').attr("class","btn btn-white")
-   $('#u1').addClass('btn btn-primary')
-    c.innerHTML=''
-    for (var i=0;i<5;i++) {
-      tr1=$("<tr><tr>")
-      tr1.append($('<td></td>').text('likhith'))
-      tr1.append($('<td></td>').text('20'))
-      tr1.append($('<td></td>').text('vishwak'))
-      tr1.append($('<td></td>').text('dentist'))
-        
-
-           
-         }
-         $("#x").append(tr1)
-
-}
-
-function doctor(){
-  $('#u1').attr('class','btn btn-white')
-  $('#d1').addClass('btn btn-primary')
-    x.innerHTML=''
-    for (var i=0;i<5;i++) {
-     tr2=$("<tr><tr>")
-      tr2.append($('<td></td>').text('likhith'))
-      tr2.append($('<td></td>').text('20'))
-    tr2.append($('<td></td>').text('vishal'))
-     tr2.append($('<td></td>').text('dentist'))
-   
-     
-         }
-         $('#c').append(tr2)
-}
+$(document).ready(()=>{
+  let hospitalObj={name:JSON.parse(localStorage.getItem("active_user")).hospitalName};
+  $.post({
+      url:"http://localhost:3005/appointment/cancelled-appointments",
+      data:JSON.stringify(hospitalObj),
+      contentType:'application/json; charset=utf-8'
+  })
+  .done((response,stat)=>{
+      $("#tit").hide();
+        if(stat=='success'){
+          let appointments=response.appointments;
+          if(appointments.length==0){
+              $("#tit").show();
+          }
+          else{
+              for(let i=0;i<appointments.length;i++){
+                  let tr=$("<tr></tr>");
+                  let td_name=$("<td></td>").text(`${appointments[i].patientname}`);
+                  let td_date=$("<td></td>").text(`${appointments[i].appointmentdate}`);
+                  let td_time=$("<td></td>").text(`${appointments[i].timeslot}`);
+                  let td_specalization=$("<td></td>").text(`${appointments[i].specialization}`);
+                  let td_doctor=$("<td></td>").text(`${appointments[i].doctor}`);
+                  let td_status=$("<td></td>").text(`${appointments[i].status}`);
+              
+                  tr.append(td_name);
+                  tr.append(td_doctor);
+                  tr.append(td_specalization);
+                  tr.append(td_date);
+                  tr.append(td_time);
+                  tr.append(td_status);
+                  tr.addClass("datarow")
+              
+                  $("#tbody").append(tr);
+              }
+          }
+        }
+  })
+})
