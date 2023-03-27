@@ -125,3 +125,22 @@ input:focus{
     padding: 16px;
     text-align: center;
   }
+
+  .light-success-bg {
+    background-color: #A0D9B4 !important;
+}
+.bg-info-light {
+    background-color: #9AE8FF !important;
+}
+.bg-lightyellow {
+    background-color: #ffe28c !important;
+}
+.light-danger-bg {
+    background-color: #F1C8DB !important;
+}
+.bg-careys-pink {
+    background-color: #CF9EAC !important;
+}
+.checked {
+    color: orange;
+  }

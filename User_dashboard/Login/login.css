@@ -9,3 +9,70 @@ input:focus {
     border: 1px solid #1977cc;
     outline: 0;
 }
+
+
+
+
+/* .text {
+    width: 100%;
+    text-align: center;
+    margin: auto;
+}
+.rhombus2 {
+    margin: 40px 0 0 60px;
+    margin: auto;
+    margin-top: 100px;
+    border-radius: 10px;
+    height: 75px;
+    width: 75px;
+    margin-bottom: 10px;
+    float: center;
+    animation-delay: 0.3s;
+    animation-duration: 0.2s;
+    animation-name: pump;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: cubic-bezier(.26,-0.53,.57,2.32);
+}
+
+.rhombus2:before {
+    content: "";
+    position: absolute;
+    background: #EA4C89;
+    height: 40px;
+    width: 40px;
+    z-index: 0;
+    margin-top: 15px;
+    margin-left: 15px;
+    transform: rotate(45deg);
+}
+
+.rhombus2 .circle21 {
+    content: "";
+    position: absolute;
+    background: #EA4C89;
+    height: 40px;
+    width: 40px;
+    z-index: 1;
+    border-radius: 50%;
+}
+
+.rhombus2 .circle22 {
+    content: "";
+    position: absolute;
+    background: #EA4C89;
+    height: 40px;
+    width: 40px;
+    z-index: 1;
+    margin-left: 30px;
+    border-radius: 50%;
+}
+
+@keyframes pump {
+    0%{
+        transform: scale(1);
+    }
+    100%{
+        transform: scale(1.1);
+    }
+} */

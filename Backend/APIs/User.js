@@ -70,5 +70,9 @@ userApi.post('/edit/:username',async(req,res)=>{
     res.send({message:'changes successfully done','user':user})
 })
 
+userApi.get("/all-users",async(req,res)=>{
+    let users=await userModel.find({});
+    res.send({message:"Successfully retrived",userObj:users})
+})
 
 module.exports={userApi}

@@ -9,7 +9,6 @@ else if (localStorage.getItem("active_user")) {
     contentType: 'application/json; charset=utf-8'
   }).done((response,stat)=>{
     if(stat="success"){
-      response
       for(let ele of response){
         appo.push(ele)
       }

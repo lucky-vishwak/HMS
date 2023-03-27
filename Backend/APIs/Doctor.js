@@ -27,11 +27,8 @@ doctorApi.post("/add-doctor",async(req,res)=>{
 })
 
 doctorApi.get("/all-doctors",async(req,res)=>{
-
     let doctors=await doctorModel.find({});
-
     res.send({message:"Successfully retrived",doctorObj:doctors})
-    
 })
 
 doctorApi.put("/upadteProfile/:username",async(req,res)=>{

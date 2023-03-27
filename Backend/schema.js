@@ -23,7 +23,6 @@ const hospitalSchema={
 }
 
 const doctorSchema = {
-
     fullname: { 
         type: String 
     },
@@ -57,9 +56,9 @@ const doctorSchema = {
     specialization:{
         type:String
     },
-    rating:{
+    rating:[{
         type:Number
-    },
+    }],
     hospitalName:{
         type:String
     }
@@ -116,6 +115,7 @@ let appointmentSchema = {
     },
     doctor: {
         type: String,
+        default:"Not assigned",
         require: true
     },
     problem: {
@@ -128,7 +128,12 @@ let appointmentSchema = {
     },
     status: {
         type: String,
+        enum:["pending","completed","canceled"],
+        default:"pending",
         require: true
+    },
+    hospitalName:{
+        type:String
     }
 }
 
