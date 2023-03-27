@@ -18,6 +18,8 @@ doctorApi.post("/add-doctor",async(req,res)=>{
     let admins=await masterAdminModel.find({username:`${doctorObj.username}`})
 
     if(doctors.length==0&&users.length==0&&admins.length==0){
+        hashedPassword= await bcryptjs.hash(doctorObj.password,7)
+        doctorObj.password=hashedPassword
     await doctorModel.create(doctorObj);
     res.send({message:"Doctor added successfully"})
     }
@@ -52,15 +54,6 @@ doctorApi.put("/upadteProfile/:username",async(req,res)=>{
 
 })
 
-// doctorApi.post("/addDoctor",async(req,res)=>{
-
-//     let doctorObj=req.body;
-
-//     await doctorModel.create(doctorObj);
-
-//     res.send({message:"Successfully added"})
-
-// })
 
 
 

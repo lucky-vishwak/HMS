@@ -1,9 +1,14 @@
+//import express
 const express = require("express")
+//import session
 const session=require("express-session")
+//import mongoose
 const mongoose=require('mongoose')
-
+//import bcryptjs
+const bcryptjs=require('bcryptjs')
 const {v4:uuidv4}=require("uuid")
 
+//calling express
 const app = express()
 
 const cors=require("cors")
@@ -14,60 +19,31 @@ app.use(session({
     saveUninitialized:true
 }))
 
+//connected to database
 mongoose.connect('mongodb+srv://hms:hms@cluster0.dvzgdxk.mongodb.net/hms').then(
     console.log('connected to database')
 )
 
-//appointment API
-const userApi=require("./APIs/User").userApi
-const appointmentApi=require("./APIs/Appointment.js").appointmentApi
-const doctorApi=require('./APIs/Doctor').doctorApi
-const hospitalApi=require('./APIs/Hospital').hospitalApi
-
-//models
-const doctorModel=require('./schema').doctorModel;
-const userModel=require('./schema').userModel;
-const masterAdminModel=require('./schema').masterAdminModel;
-const hospitalModel=require('./schema').hospitalModel;
-
 //Middleware
 app.use(express.json())
 
+//importing routes
+const userRoute=require("./Routes/userRoute.js").userRoute
+const adminRoute=require("./Routes/adminRoute.js").adminRoute
+const doctorRoute=require('./Routes/doctorRoute.js').doctorRoute
+const appointmentRoute=require("./Routes/appointmentRoute.js").appointmentRoute
+const hospitalRoute = require("./Routes/hospitalRoute.js").hospitalRoute
+const loginRoute=require('./Routes/loginRoute').loginRoute;
+const contactRoute = require("./Routes/contactRoute.js").contactRoute
 
 //API Routers
-app.use("/appointment",appointmentApi)
-app.use('/user',userApi)
-app.use('/doctor',doctorApi)
-app.use('/hospital',hospitalApi);
- 
-
-//For Login
-app.post('/login',async(req,res)=>{
-    const userreq=req.body
-
-    const adminobj=await masterAdminModel.findOne({username:userreq.username})
-    const userobj=await userModel.findOne({username:userreq.username})
-    const doctorobj=await doctorModel.findOne({username:userreq.username})
-    const hospitalObj=await hospitalModel.findOne({username:userreq.username})
-     
-    if(adminobj!=null){
-            res.send({message:"success",masterObj:adminobj,type:"admin"})
-            return
-        }
-    else if(userobj!=null){
-            res.send({message:"success",userObj:userobj,type:"user"})
-            return
-        }
-    else if(doctorobj!=null){
-        res.send({message:"success",doctorObj:doctorobj,type:"doctor"})
-        return
-    }
-    else if(hospitalObj!=null){
-        res.send({message:"success",hospitalObj:hospitalObj,type:"hospital"})
-    }
-    else
-    res.send({message:"failure"})
-})
+app.use('/',loginRoute)
+app.use('/appointment',appointmentRoute)
+app.use('/user',userRoute)
+app.use('/doctor',doctorRoute);
+app.use('/hospital',hospitalRoute);
+app.use('/admin',adminRoute)
+app.use('/contact',contactRoute);
 
 
 port=3005

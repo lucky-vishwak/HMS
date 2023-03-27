@@ -1,6 +1,7 @@
 const express=require('express')
 const hospitalApi=express.Router()
 const mongoose=require('mongoose');
+const bcryptjs=require('bcryptjs')
 const { doctorModel } = require('./../schema');
 
 hospitalApi.use(express.json())
@@ -32,6 +33,8 @@ hospitalApi.post('/add-hospital',async(req,res)=>{
         res.send({message:"username already exist"}); 
     }
     else{
+        hashedPassword= await bcryptjs.hash(hospitalObj.password,7)
+        hospitalObj.password=hashedPassword
         await hospitalModel.create(hospitalObj);
         res.send({message:"Hospital added succesfully"});
     }
