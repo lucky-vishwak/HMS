@@ -10,10 +10,10 @@ var sub = false
 //user details
 var appointmentobj = {
   "patientname": "", "appointmentdate": "",
-  "timeslot": "", "specialization": "", "emergencyname": "", "emergencyphone": ""
+  "timeslot": "", "specialization": "", "emergencyname": "", "emergencyphone": "",
+  "hospitalName":""
 }
 
-var hospitals=["yashoda","medplus","apollo","kminani","image hospitals"]
 
 //name checking function
 function check_name(name) {
@@ -108,6 +108,19 @@ timeslot.addEventListener("change", () => {
     appointmentobj["timeslot"] = timeslot.value
   }
 })
+
+$("#hospital").change(()=>{
+  const x=$("#hospital").val()
+  if(x=="Select Hospital"){
+    $("#hospitalal").append($("<p></p>").text("Select Hospital Name").addClass("alert alert-danger py-0"))
+    appointmentobj["hospitalName"]=``
+  }
+  else{
+    $("#hospitalal").html(``)
+    appointmentobj["hospitalName"]=x
+  }
+})
+
 
 //event for getting the specialization
 specialization.addEventListener("change", () => {
@@ -255,22 +268,26 @@ function logout() {
   localStorage.setItem("active", act)
 }
 
+//getting hospital names
 window.onload = function () {
+  $.get({
+    url: "http://localhost:3005/hospital/all-hospitals"
+  })
+    .done((response, stat) => {
+      for (const ele of response.hospitalsObj) {
+        let option = $("<option></option>").text(`${ele.hospitalName}`)
+        $("#hospital").append(option)
+      }
+    })
   var today = new Date().toISOString().split('T')[0];
   document.getElementsByName("date")[0].setAttribute('min', today);
-
-  //for hospitals
-  for(const ele of hospitals){
-    let option=$("<option></option>").text(`${ele}`)
-    $("#hospital").append(option)
-  }
 }
 
 function toastFunction() {
   var x = document.getElementById("toast");
   x.className = "show";
-  setTimeout(function(){ 
-    x.className = x.className.replace("show", ""); 
-    location.href="../User/User-profile/user-profile.html"
-}, 3000);
+  setTimeout(function () {
+    x.className = x.className.replace("show", "");
+    location.href = "../User/User-profile/user-profile.html"
+  }, 3000);
 }

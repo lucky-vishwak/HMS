@@ -16,7 +16,7 @@ async function register(req,res){
         var regPhone = /^\d{10}$/;                                         //Javascript reGex for Phone Number validation.
         var regName = /^[a-zA-Z\ ]+$/
         var regpass = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/
-        let us=JSON.parse(req.body);
+        let us=req.body;
         const adminobj=await masterAdminModel.findOne({username:us.username})
         const userobj=await userModel.findOne({username:us.username})
         const hospitalObj=await hospitalModel.findOne({username:us.username})
@@ -67,6 +67,7 @@ async function register(req,res){
     
 }
 
+//update details
 async function updateDetails(req,res){
     var fusername=req.params.username;
     var user= req.body
@@ -75,4 +76,10 @@ async function updateDetails(req,res){
     res.send({message:'changes successfully done','user':user})
 }
 
-module.exports={register,updateDetails}
+//to get count of users
+async function allusers(req,res){
+    let users=await userModel.find({});
+    res.send({message:"Successfully retrived",userObj:users})
+}
+
+module.exports={register,updateDetails,allusers}

@@ -27,11 +27,8 @@ async function addDoctor(req,res){
 
 //retriving all doctors based on hospitals
 async function allDoctors(req,res){
-
     let hospitalObj=req.body;
-
     let doctors=await doctorModel.find({hospitalName:hospitalObj.name});
-
     res.send({message:"Successfully retrived",doctorObj:doctors});
 
 }

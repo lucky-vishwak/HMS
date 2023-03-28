@@ -9,7 +9,7 @@ appointmentRoute.use(express.json())
 const appointmentController=require("./../Controllers/appointmentController");
 
 
-appointmentRoute.post("/add-appointment",appointmentController.addApp)
+appointmentRoute.post("/add-appointment",appointmentController.addappointment)
 //addappointment req
 appointmentRoute.post("/addappointment",appointmentController.addappointment)
 //getting appointment
@@ -22,6 +22,8 @@ appointmentRoute.post("/all-appointments",appointmentController.allAppointments)
 appointmentRoute.post("/completed-appointments",appointmentController.completedAppointments);
 //all cancelled appointments under specific hospitails
 appointmentRoute.post("/cancelled-appointments",appointmentController.cancelledAppointments);
+//today appointment for doctor
+appointmentRoute.post("/get-today",appointmentController.gettoday)
 
 
 
