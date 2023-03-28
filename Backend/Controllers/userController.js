@@ -6,6 +6,9 @@ const hospitalModel=require('../Models/hospitalModel.js').hospitalModel
 //import bcrypt
 const bcryptjs=require('bcryptjs')
 
+//import multer
+const upload=require('../Controllers/multer').upload
+
 //register
 async function register(req,res){
 
@@ -57,10 +60,7 @@ async function register(req,res){
         if (x == true) {
             hashedPassword= await bcryptjs.hash(us.password,7)
             us.password=hashedPassword
-            upload(req,res,(err)=>{
-                us.image=req.file
-            })
-            
+         
             await userModel.create(us)
             res.send({ message: "registration successful" })
         }
