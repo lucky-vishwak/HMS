@@ -49,6 +49,7 @@ async function assignDoctorToAppointments(req,res){
     let hospitalName=req.params.hospitalName;
 
     let doctors=await doctorModel.find({hospitalName:hospitalName,specialization:appointmentAssignObj.specialization}).sort({rating_avg:-1});
+    console.log(doctors);
 
     if(doctors.length==0){
         res.send({message:"No doctor under this specalisation"});
