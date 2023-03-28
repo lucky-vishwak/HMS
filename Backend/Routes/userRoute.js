@@ -18,11 +18,5 @@ userRoute.post('/register', userController.register)
 //update user request
 userRoute.post('/edit/:username',userController.updateDetails)
 
-userRoute.post('/x',(req,res)=>{
-    upload(req,res,(err)=>{
-        res.send({message:'image created successfully'})
-    })
-    
-})
 
 module.exports={userRoute}

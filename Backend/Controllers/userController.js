@@ -75,4 +75,6 @@ async function updateDetails(req,res){
     res.send({message:'changes successfully done','user':user})
 }
 
+
+
 module.exports={register,updateDetails}
