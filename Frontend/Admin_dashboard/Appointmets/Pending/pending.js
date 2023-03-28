@@ -92,18 +92,19 @@ $("#assign").click(()=>{
 
 function assignDoctor(index){
   console.log(appointmentsNotAssigned[index])
-  // $.ajax({
-  //   type:"PUT",
-  //   url:`http://localhost:3005/hospital/assign-doctor/${JSON.parse(localStorage.getItem("active_user")).hospitalName}`,
-  //   data:JSON.stringify(appointmentsNotAssigned[index]),
-  //   contentType:'application/json; charset=utf-8'
-  // })
-  // .done((response,stat)=>{
-  //    if(stat=='success'){
-  //     if(response.succ=='success'){
-  //        alert(response.message);
-  //        window.location.href='./pending.html';
-  //     }
-  //    }
-  // })
+  $.ajax({
+    type:"PUT",
+    url:`http://localhost:3005/hospital/assign-doctor/${JSON.parse(localStorage.getItem("active_user")).hospitalName}`,
+    data:JSON.stringify(appointmentsNotAssigned[index]),
+    contentType:'application/json; charset=utf-8'
+  })
+  .done((response,stat)=>{
+     if(stat=='success'){
+      if(response.succ=='success'){
+         alert(response.message);
+         window.location.href='./pending.html';
+      }
+      alert(response.message);
+     }
+  })
 }

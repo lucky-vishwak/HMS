@@ -1,14 +1,31 @@
+if(JSON.parse(localStorage.getItem("active_user"))){
+    if(localStorage.getItem("type")=="doctor"){
+        $("#username").text(localStorage.getItem("active_user"))
+    }
+    else{
+        location.href="../404/404.html"
+        console.log("hello");
+    }
+}
+else{
+    location.href="../404/404.html"
+}
+$("#logout").click(()=>{
+    localStorage.clear()
+    location.href="../User_dashboard/Login/login.html"
+})
+
+
+
 //on load related jquery
 $("#username").text(JSON.parse(localStorage.getItem("active_user")).username)
 $(".username_id").text(JSON.parse(localStorage.getItem("active_user")).fullname)
 function Today() {
-    const date = new Date();
-
-    let day = date.getDate();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
-    let currentDate = `${year}-${month}-${day}`;
-    return currentDate;
+    var now = new Date();
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var today = now.getFullYear() + "-" + (month) + "-" + (day);
+    return today;
 }
 
 let doctorobj = {};
@@ -166,20 +183,16 @@ $("#todayAppointmentButton").click(() => {
         .done((response, stat) => {
             appointments = response.appointments;
             $("#appointmentSlots").html("")
-            var i = 0
+            var i=0
             for (let time of timeslots) {
                 if (obj = appointments.find(x => x.timeslot === time)) {
-                    $("#fullNameToday").val(`${obj.patientname}`)
-                    $("#percerptionToday").val(``)
-                    $("#genderToday").val(`${obj.gender}`)
-                    $("#ageToday").val(`${obj.age}`)
                     let div_col = $('<div></div>').addClass('col');
                     let div_card = $('<div></div>').addClass('card text-center');
                     let div_card_body = $('<div></div>').addClass('card-body').attr('id', 'cardTodayApp');
                     let h5_title = $('<h5></h5>').addClass('card-title').text(`${obj.timeslot}`);
                     let p_name = $('<p></p>').addClass('card-text d-block').text(`Name:${obj.patientname}`);
                     let p_reason = $('<p></p>').addClass('card-text d-block').text(`Reason:${obj.problem}`);
-                    let button_view = $('<button></button>').text('View').attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered", id: `${i + 1}` }).addClass('btn btn-primary');
+                    let button_view = $('<button></button>').text('View').attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered", "onclick": `model(${i})`}).addClass('btn btn-primary');
                     div_card_body.append(h5_title);
                     div_card_body.append(p_name);
                     div_card_body.append(p_reason);
@@ -187,6 +200,7 @@ $("#todayAppointmentButton").click(() => {
                     div_card.append(div_card_body);
                     div_col.append(div_card);
                     $("#appointmentSlots").append(div_col);
+                    i++
                 }
                 else {
                     let div_col = $('<div></div>').addClass('col');
@@ -205,39 +219,16 @@ $("#todayAppointmentButton").click(() => {
                     $("#appointmentSlots").append(div_col);   
                 }
             }
-            // for (let obj of appointments) {
-            //     $("#fullNameToday").val(`${obj.patientname}`)
-            //     $("#percerptionToday").val(``)
-            //     $("#genderToday").val(`${obj.gender}`)
-            //     $("#ageToday").val(`${obj.age}`)
-            //     let div_col = $('<div></div>').addClass('col');
-            //     let div_card = $('<div></div>').addClass('card text-center');
-            //     let div_card_body = $('<div></div>').addClass('card-body').attr('id', 'cardTodayApp');
-            //     let h5_title = $('<h5></h5>').addClass('card-title').text(`${obj.timeslot}`);
-            //     let p_name = $('<p></p>').addClass('card-text d-block').text(`Name:${obj.patientname}`);
-            //     let p_reason = $('<p></p>').addClass('card-text d-block').text(`Reason:${obj.problem}`);
-            //     let button_view = $('<button></button>').text('View').attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered", id: `${i + 1}` }).addClass('btn btn-primary');
-            //     div_card_body.append(h5_title);
-            //     div_card_body.append(p_name);
-            //     div_card_body.append(p_reason);
-            //     div_card_body.append(button_view);
-            //     div_card.append(div_card_body);
-            //     div_col.append(div_card);
-            //     $("#appointmentSlots").append(div_col);
-            // }
         })
 })
-$(".model_click").click(()=>{
-    console.log("hello")
-})
 
-$("#cardTodayApp>button").click(() => {
-    let index = $("#cardTodayApp>button").attr('id');
-    $("#fullNameToday").val(`${appointments[index - 1].fullname}`)
+
+function model(val) {
+    $("#fullNameToday").val(`${appointments[val].username}`)
     $("#percerptionToday").val(``)
-    $("#genderToday").val(`${appointments[index - 1].gender}`)
-    $("#ageToday").val(`${appointments[index - 1].age}`)
-})
+    $("#genderToday").val(`${appointments[val].gender}`)
+    $("#ageToday").val(`${appointments[val].age}`)
+}
 
 $("#updatePercerption").click(() => {
     if ($("#percerptionToday").val() == '')
@@ -307,22 +298,6 @@ $("#butonModel").click(() => {
 
 })
 
-//on logout
-// if(localStorage.getItem("active_user")){
-//     if(JSON.parse(localStorage.getItem("access"))){
-//         $("#username").text(localStorage.getItem("active_user"))
-//     }
-//     else{
-//         location.href="../404/404.html"
-//     }
-// }
-// else{
-//     location.href="../404/404.html"
-// }
-$("#logout").click(()=>{
-    localStorage.clear()
-    location.href="../User_dashboard/Login/login.html"
-})
 
 
 

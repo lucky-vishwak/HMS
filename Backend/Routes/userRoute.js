@@ -3,7 +3,8 @@ const userRoute=express.Router()
 
 
 const multer=require('multer')
-
+//import multer
+const upload=require('../Controllers/multer').upload
 
 //import userController
 const userController=require('../Controllers/userController')
