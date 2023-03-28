@@ -1,0 +1,115 @@
+
+likhith.s@DBOXHYDLT-03752:~$ ssh -keygen
+Bad escape character 'ygen'.
+likhith.s@DBOXHYDLT-03752:~$ ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/likhith.s/.ssh/id_rsa): ^C
+likhith.s@DBOXHYDLT-03752:~$ /home/likhith.s/.ssh/id_rsa
+bash: /home/likhith.s/.ssh/id_rsa: No such file or directory
+likhith.s@DBOXHYDLT-03752:~$ ls
+Desktop    Downloads  Pictures  sara       Videos
+Documents  Music      Public    Templates  xx
+likhith.s@DBOXHYDLT-03752:~$ ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/likhith.s/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Passphrases do not match.  Try again.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/likhith.s/.ssh/id_rsa
+Your public key has been saved in /home/likhith.s/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:GDDcY5H5cMDXAGe9siG8eD5cODcAqdRZTyApsrNd4NA likhith.s@DBOXHYDLT-03752
+The key's randomart image is:
++---[RSA 3072]----+
+| . o+B*B=+       |
+|o E B+O=o o      |
+| * + +.*.  .     |
+|o o . +o+ .      |
+| + . ..=S+       |
+|. . . = =        |
+|     + + .       |
+|      +          |
+|       .         |
++----[SHA256]-----+
+likhith.s@DBOXHYDLT-03752:~$ 
+likhith.s@DBOXHYDLT-03752:~$ 
+likhith.s@DBOXHYDLT-03752:~$ /home/likhith.s/.ssh/id_rsa
+bash: /home/likhith.s/.ssh/id_rsa: Permission denied
+likhith.s@DBOXHYDLT-03752:~$ cat /home/likhith.s/.ssh/id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC3C402L5zcap3gf6y2QBZupytYferaty+5Fl1PinCSrbO/WJTUSWEMWPmB7cBR/2nk95jtdV1mhR/pB5XZ16RAUgTnY7VHJaKPcMKuDkecebSdH5T0IVbWG4zQEGcHWc0x7bfCEowcjRcaq0LCKSxWFCgvAKokJ1Cvm1fcrryLaNqCVompNDhsT6QQWrP49b/5pqgMKHfYO7enHU8G2xxdT22ihHCPPpkHK+Vqw+at2lDcPO6qvVx623pL5DnMi1qkbnXqIYINXvp8n9wM3sl20zO+Gqok3fLatzwIe0SBK/QvojQ9NeNjY8P0qE8tVOBlT/PPRjTd/snoqEbU2DPjUNHVjzKl9YwN27Rntzz9N+1QP2DFXCJQTZ14KYn9uoS8n4m0pgdqruPq4kCR95J4JMKGFsAbms+/nwCzFf24NsoWkctqJIKfEUkPV/Sexs6ytX3WTUFCNS5TF/iFIImMPxiQKic+UzCzJ4Xbrfl20etnSDmQU2OigA73DTsD+80= likhith.s@DBOXHYDLT-03752
+likhith.s@DBOXHYDLT-03752:~$ mkdir Project
+likhith.s@DBOXHYDLT-03752:~$ cd Project
+likhith.s@DBOXHYDLT-03752:~/Project$ git clone git@github.com:lucky-vishwak/Hospital-Management-System.git
+Cloning into 'Hospital-Management-System'...
+The authenticity of host 'github.com (20.207.73.82)' can't be established.
+ECDSA key fingerprint is SHA256:p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'github.com,20.207.73.82' (ECDSA) to the list of known hosts.
+remote: Enumerating objects: 4, done.
+remote: Counting objects: 100% (4/4), done.
+remote: Compressing objects: 100% (3/3), done.
+Receiving objects: 100% (4/4), done.
+remote: Total 4 (delta 0), reused 0 (delta 0), pack-reused 0
+likhith.s@DBOXHYDLT-03752:~/Project$ ls
+Hospital-Management-System
+likhith.s@DBOXHYDLT-03752:~/Project$ ^C
+likhith.s@DBOXHYDLT-03752:~/Project$ Hospital-Management-System
+Hospital-Management-System: command not found
+likhith.s@DBOXHYDLT-03752:~/Project$ cd Hospital-Management-System
+likhith.s@DBOXHYDLT-03752:~/Project/Hospital-Management-System$ ls
+README.md
+likhith.s@DBOXHYDLT-03752:~/Project/Hospital-Management-System$ git config --global user.email "saralikhith@gmail.com"
+likhith.s@DBOXHYDLT-03752:~/Project/Hospital-Management-System$ git config --global user.name "saralikhith"
+likhith.s@DBOXHYDLT-03752:~/Project/Hospital-Management-System$ ls
+README.md
+likhith.s@DBOXHYDLT-03752:~/Project/Hospital-Management-System$ nano index.ht,l
+likhith.s@DBOXHYDLT-03752:~/Project/Hospital-Management-System$ mv index.ht,l index.html
+likhith.s@DBOXHYDLT-03752:~/Project/Hospital-Management-System$ ls
+index.html  README.md
+likhith.s@DBOXHYDLT-03752:~/Project/Hospital-Management-System$ git commit -m 'intial commit'
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	index.html
+
+nothing added to commit but untracked files present (use "git add" to track)
+likhith.s@DBOXHYDLT-03752:~/Project/Hospital-Management-System$ git add .
+likhith.s@DBOXHYDLT-03752:~/Project/Hospital-Management-System$ git commit -m 'intial commit'
+[main 1379621] intial commit
+ 1 file changed, 2 insertions(+)
+ create mode 100644 index.html
+likhith.s@DBOXHYDLT-03752:~/Project/Hospital-Management-System$ git push
+To github.com:lucky-vishwak/Hospital-Management-System.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'git@github.com:lucky-vishwak/Hospital-Management-System.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+likhith.s@DBOXHYDLT-03752:~/Project/Hospital-Management-System$ git pull
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 3 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), 283 bytes | 283.00 KiB/s, done.
+From github.com:lucky-vishwak/Hospital-Management-System
+   0a18d8b..9d39f21  main       -> origin/main
+Merge made by the 'recursive' strategy.
+ README.md | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+likhith.s@DBOXHYDLT-03752:~/Project/Hospital-Management-System$ git push
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (5/5), 664 bytes | 664.00 KiB/s, done.
+Total 5 (delta 0), reused 0 (delta 0)
+To github.com:lucky-vishwak/Hospital-Management-System.git
+   9d39f21..1d2243b  main -> main
+likhith.s@DBOXHYDLT-03752:~/Project/Hospital-Management-System$ 
+

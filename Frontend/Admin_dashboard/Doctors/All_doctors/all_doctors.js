@@ -1,24 +1,39 @@
 function search(){
    // var s=document.getElementById('x').value.toUpperCase()
-  var x=$('.card').length
+  var x=$('.card')
   var s=$('#x').val().toUpperCase()
-   sea(x,s)
+  var spec=$('#sel').val().toUpperCase()
+  if(spec=='SPECIALIZATION'){
+    spec=''
+  }
+   sea(x,s,spec)
 }
-function sea(x,s){
-  p=0
-  for (const i of $('.card')) {
-      var val=i.innerText.toUpperCase()
+function sea(x,s,spec){
+  q=0
+  
+  
+  for ( i=0;i<x.length;i++) {
+      var val=$('.card-title')[i].innerText.toUpperCase()
+      var p=$('.card')[i].innerText.toUpperCase() 
+      if(p.indexOf(spec)>-1){
+      
       if(val.indexOf(s)>-1){
-         
-          i.style.display=""
+       
+          x[i].style.display=""
       }
       else{
-          i.style.display='none'
-          p+=1
+        x[i].style.display='none'
+          q+=1
       }
+    }
+    else{
+      x[i].style.display='none'
+        q+=1
+    }
 
   }
-  if(p==x){
+  console.log(q)
+  if(q==x.length){
     
     //document.getElementById('sorry').innerHTML=`<h1>No one found</h1>`
       $("#sorry").text(`No one found`)
@@ -29,37 +44,39 @@ function sea(x,s){
 }
 function displayDoctors(doctor){
 
-   for(let i=0;i<doctor.length;i++){
-      let div_col=$('<div></div>').addClass('col')
-      let div_card=$('<div></div>').addClass('card')
-      let div_card_body=$('<div></div>').addClass('card-body')
-      let user_img=$('<img />')
-      //user_img.attr('width',"18rem")
-      user_img.attr('src', doctor[i].imgurl);
-      user_img.css("height","260px")
-      user_img.css("width","130px")
-      let div_card_info=$('<div></div>').addClass('teacher-info')
-      let p_username=$('<p></p>').text(doctor[i].username).addClass('mt-2 text-bold' ).css('margin-bottom',"-3px")
-      let p_designation=$('<p></p>').text(doctor[i].specialization).css("fontStyle","italic")
-      let button_viewMore=$('<button></button>').text('View')
-      button_viewMore.addClass('btn btn-primary')
-      div_card_info.append(user_img)
-      div_card_info.append(p_username)
-      div_card_info.append(p_designation)
-      div_card_info.append(button_viewMore)
-      div_card_body.append(div_card_info)
-      div_card.append(div_card_body)
-      div_card.css("height","350px")
-      div_col.append(div_card)
-      $("#row-append").append(div_col);
-   }
+ 
+  for(let i=0;i<doctor.length;i++){
+    let div_col=$('<div></div>').addClass('col')
+    let div_card=$('<div></div>').addClass('card').css("height","")
+    let div_card_body=$('<div></div>').addClass('card-body')
+    let user_img=$('<img />')
+    //user_img.attr('width',"18rem")
+    user_img.attr('src', doctor[i].imgurl);
+    let div_card_info=$('<div></div>').addClass('teacher-info')
+    let p_username=$('<p></p>').text(doctor[i].username).addClass('mt-2 text-bold card-title' ).css('margin-bottom',"-3px")
+    let p_designation=$('<p </p>').text(doctor[i].specialization).css("fontStyle","italic").addClass('spec')
+    let button_viewMore=$('<button></button>').text('View')
+    button_viewMore.addClass('btn btn-primary')
+    div_card.append(user_img) 
+    user_img.css({"width":"100%","height":"10rem"})
+    div_card_info.append(p_username)
+    div_card_info.append(p_designation)
+    div_card_info.append(button_viewMore)
+    div_card_body.append(div_card_info)
+    div_card.append(div_card_body)
+    div_col.append(div_card)
+    $("#row-append").append(div_col);
+}
 }
 
 $(document).ready(function(){
   var x=`<select class="form-select" id='sel' aria-label="Default select example">
   <option selected>specialization</option>
-  <option value="surgeory">surgeory</option>
-  <option value="gynecologist">gynecologist</option>
+  <option value="surgeory">Surgeory</option>
+  <option value="dentist">Dentist Chekup</option>
+                            <option value="bodycheckup">Body Chekup</option>
+                            <option value="gynecologist">Gynecologist Chekup</option>
+                            <option value="otherservices">General physician</option>
 </select>`
   $('#y').append(x).hide()
     $("#myInput").on("keyup", function() {
@@ -102,14 +119,15 @@ $("#logout").click(()=>{
 $('#hell').click(()=>{
    $('#y').fadeToggle()
   $(`#sel`).click(()=>{
-    var x=$('.card').length
-    var s=$('#sel').val().toUpperCase()
-    if(s=='SPECIALIZATION'){
-      location.reload()
+    var x=$('.card') 
+    $('#x').val('')
+    let s=$('#x').val().toUpperCase()
+    var spec=$('#sel').val().toUpperCase()
+    if(spec=='SPECIALIZATION'){
+      spec=''
     }
-   else{
-    sea(x,s)
-   }
+    sea(x,s,spec)
+   
     
   })
 })
