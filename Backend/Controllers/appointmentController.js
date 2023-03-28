@@ -21,7 +21,8 @@ async function addappointment(req,res){
                   doctor: appointmentobj.doctor,
                   problem: appointmentobj.problem,
                   username: appointmentobj.username,
-                  status: appointmentobj.status
+                  status: appointmentobj.status,
+                  hospitalName:appointmentobj.hospitalName
             }
         }
     })
@@ -39,7 +40,7 @@ async function getappointment(req,res){
 }
 
 
-//to get all appointments
+//to get hospital appointments with sorted by date
 async function hospitalappointment(req,res){
     let hospitalObj=req.body;
     let appointments=await appointmentModel.find({hospitalName:hospitalObj.name}).sort([['appointmentdate', 1], ['timeslot', 1]]);
@@ -47,31 +48,33 @@ async function hospitalappointment(req,res){
     res.send({message:"Success",assignedAppointments:assignedAppointments,notAssignedAppointments:notAssignedAppointments})
 }
 
+//to get all appointments
 async function allAppointments(req,res){
-
     let hospitalObj=req.body;
-
     let appointments=await appointmentModel.find({hospitalName:hospitalObj.name});
-
     res.send({message:"Success",appointments:appointments});
 }
 
+//completed appointments
 async function completedAppointments(req,res){
-
-    let hospitalObj=req.body;
-    
+    let hospitalObj=req.body;    
     let appointments=await appointmentModel.find({hospitalName:hospitalObj.name,status:'completed'});
-
     res.send({message:"Success",appointments:appointments});
 }
 
+//canceled appointments
 async function cancelledAppointments(req,res){
-
     let hospitalObj=req.body;
-
     let appointments=await appointmentModel.find({hospitalName:hospitalObj.name,status:'cancelled'});
-
     res.send({message:"Success",appointments:appointments});
+}
+
+//get today appointments for doctor
+async function gettoday(req,res){
+    const name=req.body.doctorname
+    const today=req.body.date
+    let appointments=await appointmentModel.find({doctor:name,appointmentdate:today})
+    res.send({message:"successfully",appointments:appointments})
 }
 
 async function addApp(req,res){
@@ -83,4 +86,5 @@ async function addApp(req,res){
 
 
 
-module.exports={addApp,addappointment,cancelledAppointments,completedAppointments,allAppointments,getappointment,hospitalappointment}
+module.exports={addApp,addappointment,cancelledAppointments,completedAppointments,
+    allAppointments,getappointment,hospitalappointment,gettoday}

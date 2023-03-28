@@ -67,6 +67,7 @@ async function register(req,res){
     
 }
 
+//update details
 async function updateDetails(req,res){
     var fusername=req.params.username;
     var user= req.body
@@ -75,4 +76,10 @@ async function updateDetails(req,res){
     res.send({message:'changes successfully done','user':user})
 }
 
-module.exports={register,updateDetails}
+//to get count of users
+async function allusers(req,res){
+    let users=await userModel.find({});
+    res.send({message:"Successfully retrived",userObj:users})
+}
+
+module.exports={register,updateDetails,allusers}

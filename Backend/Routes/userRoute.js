@@ -17,4 +17,7 @@ userRoute.post('/register', userController.register)
 //update user request
 userRoute.post('/edit/:username',userController.updateDetails)
 
+//all user
+userRoute.get('/all-users',userController.allusers)
+
 module.exports={userRoute}

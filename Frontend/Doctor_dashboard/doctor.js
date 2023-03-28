@@ -1,20 +1,22 @@
 //on load related jquery
-
-function Today(){
+$("#username").text(JSON.parse(localStorage.getItem("active_user")).username)
+$(".username_id").text(JSON.parse(localStorage.getItem("active_user")).fullname)
+function Today() {
     const date = new Date();
 
     let day = date.getDate();
     let month = date.getMonth() + 1;
     let year = date.getFullYear();
-    let currentDate = `${day}-${month}-${year}`;
+    let currentDate = `${year}-${month}-${day}`;
     return currentDate;
 }
 
-let doctorobj={};
-let appointments=[];
+let doctorobj = {};
+let appointments = [];
+let timeslots = ["10AM-11AM", "11AM-12PM", "12PM-1PM", "1PM-2PM", "2PM-3PM", "3PM-4PM"]
 
 //reusing function in both edit and overview
-function toUpdateProfile(){
+function toUpdateProfile() {
     doctorobj = JSON.parse(localStorage.getItem("active_user"));
     $(`#specalizationMain`).text(`${doctorobj.specialization}`)
     $(`#aboutProfile`).text(`${doctorobj.about}`);
@@ -22,22 +24,22 @@ function toUpdateProfile(){
     $(`#specalizationProfile`).text(`${doctorobj.specialization}`);
     $(`#emailProfile`).text(`${doctorobj.email}`);
     $(`#phonenumberProfile`).text(`${doctorobj.phonenumber}`);
-    
+
 }
 
-$(document).ready(()=>{
-   
+$(document).ready(() => {
+
     toUpdateProfile();
 })
 // overview related jquery
 
-$("#overviewButton").click(()=>{
+$("#overviewButton").click(() => {
     toUpdateProfile();
 })
 
 //edit profile related jquery
-function EditProfile(){
-    
+function EditProfile() {
+
     $(`#aboutEdit`).text(`${doctorobj.about}`);
     $(`#fullNameEdit`).val(`${doctorobj.fullname}`);
     $(`#specalizationEdit`).val(`${doctorobj.specialization}`);
@@ -45,8 +47,8 @@ function EditProfile(){
     $(`#phonenumberEdit`).val(`${doctorobj.phonenumber}`);
 }
 
-$("#editProfileButton").click(()=>{
-    var x=`<form>
+$("#editProfileButton").click(() => {
+    var x = `<form>
     <div class="row mb-3">
     <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
     <div class="col-md-8 col-lg-9">
@@ -97,45 +99,44 @@ $("#editProfileButton").click(()=>{
     <button type="button" class="btn btn-primary" id="updateProfile" click='change()'>Save Changes</button>
     </div>
 </form>`
-  $(`#profile-edit`).append(x)
+    $(`#profile-edit`).append(x)
     EditProfile();
 })
 
-$("#updateProfile").click(()=>{
+$("#updateProfile").click(() => {
 
-    let updatedDoctorObj={};
+    let updatedDoctorObj = {};
     console.log(doctorobj)
 
-    updatedDoctorObj['about']=$("#aboutEdit").val();
-    updatedDoctorObj['fullname']=$("#fullNameedit").val();
-    updatedDoctorObj['specialization']=$("#specalizationEdit").val();
-    updatedDoctorObj['email']=$("#emailEdit").val();
-    updatedDoctorObj['phonenumber']=$("#phonenumberEdit").val();
-    updatedDoctorObj['username']=doctorobj['username']
-   
-    let flag=false;
-    for(let key in updatedDoctorObj){
-        console.log(key,doctorobj[`${key}`])
-        if(doctorobj[`${key}`]!=updatedDoctorObj[`${key}`])
-        {
-            flag=true;
+    updatedDoctorObj['about'] = $("#aboutEdit").val();
+    updatedDoctorObj['fullname'] = $("#fullNameedit").val();
+    updatedDoctorObj['specialization'] = $("#specalizationEdit").val();
+    updatedDoctorObj['email'] = $("#emailEdit").val();
+    updatedDoctorObj['phonenumber'] = $("#phonenumberEdit").val();
+    updatedDoctorObj['username'] = doctorobj['username']
+
+    let flag = false;
+    for (let key in updatedDoctorObj) {
+        console.log(key, doctorobj[`${key}`])
+        if (doctorobj[`${key}`] != updatedDoctorObj[`${key}`]) {
+            flag = true;
             break;
         }
     }
-    if(flag){
+    if (flag) {
         let confirmation = confirm("Do you want to update profile?");
-        if(confirmation){
+        if (confirmation) {
 
             $.ajax({
                 url: `http://localhost:3005/doctor/upadteProfile/${updatedDoctorObj.username}`,
                 type: 'PUT',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(updatedDoctorObj),
-                success: function (response,stat) {
-                    if(stat=="success"){
-                    doctorobj={...response.updateddoctorobj}
-                    EditProfile();
-                    alert("Profile Updated Successfully!!");
+                success: function (response, stat) {
+                    if (stat == "success") {
+                        doctorobj = { ...response.updateddoctorobj }
+                        EditProfile();
+                        alert("Profile Updated Successfully!!");
                     }
                 },
                 error: function (xhr, textStatus, errorThrown) {
@@ -144,7 +145,7 @@ $("#updateProfile").click(()=>{
             })
         }
     }
-    else{
+    else {
         alert("No changes found!!!");
     }
 
@@ -152,72 +153,108 @@ $("#updateProfile").click(()=>{
 
 
 //today related appointment jquery
-$("#todayAppointmentButton").click(()=>{
-
-    let detailsObj={
-        date:Today(),
-        doctorname:doctorobj.username
+$("#todayAppointmentButton").click(() => {
+    let detailsObj = {
+        doctorname: doctorobj.username,
+        date: Today()
     }
-
     $.post({
-        url: `http://localhost:3005/appointments/get-today`,
-        data:JSON.stringify(detailsObj),
+        url: `http://localhost:3005/appointment/get-today`,
+        data: JSON.stringify(detailsObj),
         contentType: 'application/json; charset=utf-8'
     })
-    .done((response,stat)=>{
-        appointments=response.data;
-
-        for(let obj of appointments){
-         
-            let div_col=$('<div></div>').addClass('col');
-            let div_card=$('<div></div>').addClass('card text-center');
-            let div_card_body=$('<div></div>').addClass('card-body').attr('id','cardTodayApp');
-            let h5_title=$('<h5></h5>').addClass('card-title').text(`${obj.timeSlot}`);
-            let p_name=$('<p></p>').addClass('card-text d-block').text(`Name:${obj.patientName}`);
-            let p_reason=$('<p></p>').addClass('card-text d-block').text(`Reason:${obj.reason}`);
-            let button_view=$('<button></button>').text('View').attr({"data-bs-toggle":"modal","data-bs-target":"#verticalycentered",id:`${i+1}`}).addClass('btn btn-primary');
-            
-            div_card_body.append(h5_title);
-            div_card_body.append(p_name);
-            div_card_body.append(p_reason);
-            div_card_body.append(button_view);
-            
-            div_card.append(div_card_body);
-
-            div_col.append(div_card);
-
-            $("#appointmentSlots").append(div_col);
-            
-        }
-    })    
+        .done((response, stat) => {
+            appointments = response.appointments;
+            $("#appointmentSlots").html("")
+            var i = 0
+            for (let time of timeslots) {
+                if (obj = appointments.find(x => x.timeslot === time)) {
+                    $("#fullNameToday").val(`${obj.patientname}`)
+                    $("#percerptionToday").val(``)
+                    $("#genderToday").val(`${obj.gender}`)
+                    $("#ageToday").val(`${obj.age}`)
+                    let div_col = $('<div></div>').addClass('col');
+                    let div_card = $('<div></div>').addClass('card text-center');
+                    let div_card_body = $('<div></div>').addClass('card-body').attr('id', 'cardTodayApp');
+                    let h5_title = $('<h5></h5>').addClass('card-title').text(`${obj.timeslot}`);
+                    let p_name = $('<p></p>').addClass('card-text d-block').text(`Name:${obj.patientname}`);
+                    let p_reason = $('<p></p>').addClass('card-text d-block').text(`Reason:${obj.problem}`);
+                    let button_view = $('<button></button>').text('View').attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered", id: `${i + 1}` }).addClass('btn btn-primary');
+                    div_card_body.append(h5_title);
+                    div_card_body.append(p_name);
+                    div_card_body.append(p_reason);
+                    div_card_body.append(button_view);
+                    div_card.append(div_card_body);
+                    div_col.append(div_card);
+                    $("#appointmentSlots").append(div_col);
+                }
+                else {
+                    let div_col = $('<div></div>').addClass('col');
+                    let div_card = $('<div></div>').addClass('card text-center');
+                    let div_card_body = $('<div></div>').addClass('card-body').attr('id', 'cardTodayApp');
+                    let h5_title = $('<h5></h5>').addClass('card-title').text(time);
+                    let p_name = $('<p></p>').addClass('card-text d-block').text(`Name:not assigned`);
+                    let p_reason = $('<p></p>').addClass('card-text d-block').text(`Reason:not assigned`);
+                    let button_view = $('<button></button>').text('View').attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered", id: `${i + 1}` }).addClass('btn btn-secondary').prop("disabled", true);;
+                    div_card_body.append(h5_title);
+                    div_card_body.append(p_name);
+                    div_card_body.append(p_reason);
+                    div_card_body.append(button_view);
+                    div_card.append(div_card_body);
+                    div_col.append(div_card);
+                    $("#appointmentSlots").append(div_col);   
+                }
+            }
+            // for (let obj of appointments) {
+            //     $("#fullNameToday").val(`${obj.patientname}`)
+            //     $("#percerptionToday").val(``)
+            //     $("#genderToday").val(`${obj.gender}`)
+            //     $("#ageToday").val(`${obj.age}`)
+            //     let div_col = $('<div></div>').addClass('col');
+            //     let div_card = $('<div></div>').addClass('card text-center');
+            //     let div_card_body = $('<div></div>').addClass('card-body').attr('id', 'cardTodayApp');
+            //     let h5_title = $('<h5></h5>').addClass('card-title').text(`${obj.timeslot}`);
+            //     let p_name = $('<p></p>').addClass('card-text d-block').text(`Name:${obj.patientname}`);
+            //     let p_reason = $('<p></p>').addClass('card-text d-block').text(`Reason:${obj.problem}`);
+            //     let button_view = $('<button></button>').text('View').attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered", id: `${i + 1}` }).addClass('btn btn-primary');
+            //     div_card_body.append(h5_title);
+            //     div_card_body.append(p_name);
+            //     div_card_body.append(p_reason);
+            //     div_card_body.append(button_view);
+            //     div_card.append(div_card_body);
+            //     div_col.append(div_card);
+            //     $("#appointmentSlots").append(div_col);
+            // }
+        })
+})
+$(".model_click").click(()=>{
+    console.log("hello")
 })
 
-$("#cardTodayApp>button").click(()=>{
-    let index=$("#cardTodayApp>button").attr('id');
-     
-    $("#fullNameToday").val(`${appointments[index-1].fullname}`)
+$("#cardTodayApp>button").click(() => {
+    let index = $("#cardTodayApp>button").attr('id');
+    $("#fullNameToday").val(`${appointments[index - 1].fullname}`)
     $("#percerptionToday").val(``)
-    $("#genderToday").val(`${appointments[index-1].gender}`)
-    $("#ageToday").val(`${appointments[index-1].age}`)
-
+    $("#genderToday").val(`${appointments[index - 1].gender}`)
+    $("#ageToday").val(`${appointments[index - 1].age}`)
 })
 
-$("#updatePercerption").click(()=>{
-    if( $("#percerptionToday").val()=='')
-    alert("percerption is not updated!!");
-    else{
-        let updateAppointment={
-            percerption:$("#percerptionToday").val(),
-            status:"completed"
+$("#updatePercerption").click(() => {
+    if ($("#percerptionToday").val() == '')
+        alert("percerption is not updated!!");
+    else {
+        let updateAppointment = {
+            percerption: $("#percerptionToday").val(),
+            status: "completed"
         }
         $.put({
             url: `http://localhost:3005/appointments/update-appoint`,
-            data:JSON.stringify(updateAppointment),
+            data: JSON.stringify(updateAppointment),
             contentType: 'application/json; charset=utf-8'
         })
-        .done((response,status)=>{
-            alert(response.message);
-        })
+            .done((response, status) => {
+                alert(response.message);
+            })
 
     }
 })
@@ -225,67 +262,67 @@ $("#updatePercerption").click(()=>{
 // Patient History related jquery
 
 
-$("#patientHistoryButton").click(()=>{
+$("#patientHistoryButton").click(() => {
 
     $.get({
         url: `http://localhost:3005/appointments/${doctorobj.username}`,
         contentType: 'application/json; charset=utf-8'
     })
-    .done((response,stat)=>{
-        if(stat=="success"){
-            let patients=response.data;
-            for(let obj of patients){
-        
-                let th_sno=$('<th><th>').text(`${i+1}`).attr('scope','row');
-                let td_patientName=$('<td><td>').text(`${obj.patientName}`);
-                let td_reason=$('<td><td>').text(`${obj.reason}`);
-                let td_age=$('<td><td>').text(`${obj.age}`);
-                let td_date=$('<td><td>').text(`${obj.date}`);
-                let button_view=$('<button></button>').text('View').attr({"data-bs-toggle":"modal","data-bs-target":"#verticalycentered2",id:`${i+1}`}).addClass('btn btn-primary');
-                let td_button=$('<td><td>').attr('id','#butonModel');
-        
-                td_button.append(button_view);
-        
-                let tr=$('<tr></tr>');
-        
-                tr.append(th_sno);
-                tr.append(td_patientName);
-                tr.append(td_reason);
-                tr.append(td_age);
-                tr.append(td_date);
-                tr.append(td_button);
-        
-                $("#tableBody").append(tr);
-            }  
-    } })
-    
+        .done((response, stat) => {
+            if (stat == "success") {
+                let patients = response.data;
+                for (let obj of patients) {
+                    let th_sno = $('<th><th>').text(`${i + 1}`).attr('scope', 'row');
+                    let td_patientName = $('<td><td>').text(`${obj.patientName}`);
+                    let td_reason = $('<td><td>').text(`${obj.reason}`);
+                    let td_age = $('<td><td>').text(`${obj.age}`);
+                    let td_date = $('<td><td>').text(`${obj.date}`);
+                    let button_view = $('<button></button>').text('View').attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered2", id: `${i + 1}` }).addClass('btn btn-primary');
+                    let td_button = $('<td><td>').attr('id', '#butonModel');
+
+                    td_button.append(button_view);
+
+                    let tr = $('<tr></tr>');
+
+                    tr.append(th_sno);
+                    tr.append(td_patientName);
+                    tr.append(td_reason);
+                    tr.append(td_age);
+                    tr.append(td_date);
+                    tr.append(td_button);
+
+                    $("#tableBody").append(tr);
+                }
+            }
+        })
+
 })
 
-$("#butonModel").click(()=>{
-        
-    let index=$("#buton>button").attr('id');
-    $("#fullNameHistory").val(`${patients[index-1].username}`);
-    $("#percerptionHistory").val(`${patients[index-1].percerption}`);
-    $("#timeHistory").val(`${patients[index-1].time}`);
-    
+$("#butonModel").click(() => {
+
+    let index = $("#buton>button").attr('id');
+    $("#fullNameHistory").val(`${patients[index - 1].username}`);
+    $("#percerptionHistory").val(`${patients[index - 1].percerption}`);
+    $("#timeHistory").val(`${patients[index - 1].time}`);
+
 })
 
-// //on logout
+//on logout
 // if(localStorage.getItem("active_user")){
 //     if(JSON.parse(localStorage.getItem("access"))){
 //         $("#username").text(localStorage.getItem("active_user"))
 //     }
 //     else{
-//         location.href="../../404/404.html"
+//         location.href="../404/404.html"
 //     }
 // }
 // else{
-//     location.href="../../404/404.html"
+//     location.href="../404/404.html"
 // }
-// $("#logout").click(()=>{
-//     localStorage.clear()
-//     location.href="../User_dashboard/Login/login.html"
-// })
+$("#logout").click(()=>{
+    localStorage.clear()
+    location.href="../User_dashboard/Login/login.html"
+})
 
 
 
