@@ -47,7 +47,8 @@ const doctorSchema = {
     },
     hospitalName:{
         type:String
-    }
+    },
+   
 }
 
 //creating doctorModel

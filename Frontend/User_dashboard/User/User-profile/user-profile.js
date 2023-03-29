@@ -111,7 +111,10 @@ function getProfileDetails() {
     `
 
 }
-
+$('#file').click(()=>{
+  let   formData=new FormData();
+  formData.append('image',this.file,this.file.name)
+})
 function getEditProfile() {
   let userDetails = document.getElementById("Render");
   userDetails.innerHTML = ` <div class="card mb-4 bg-glass">
@@ -306,6 +309,12 @@ function getFeedback() {
  </div>`
 }
 
+$.ready(()=>{
+  function selectFile(eventObj){
+    this.file=eventObj.target.files[0]
+  }
+  
+})
 
 var login_btn = document.getElementById("login")
 var logout_btn = document.getElementById("logout")

@@ -11,6 +11,9 @@ const {v4:uuidv4}=require("uuid")
 //calling express
 const app = express()
 
+//import express async-handler
+const errorHandler=require('express-async-handler')
+
 const cors=require("cors")
 app.use(cors())
 app.use(session({
@@ -46,6 +49,18 @@ app.use('/admin',adminRoute)
 app.use('/contact',contactRoute);
 
 
+
+
+//error handling for invalid path
+app.use((req,res,next)=>{
+    res.send({message:`path ${req.url} is invalid`})
+})
+
+//error handling for invalid syntax
+app.use((err,req,res,next)=>{
+     console.log(err.message)
+     res.send({message:`${err.message}`})
+})
 port=3005
 app.listen(port,()=>{
     console.log(`listening on port ${port}`)

@@ -60,7 +60,15 @@ let appointmentSchema = {
     hospitalName: {
         type: String,
         require: true
-    }
+    }, 
+    prescription:{
+        type:Object,
+        'default':{
+         'temperature':'',
+         'description':"",
+         'BP':""
+        }
+     }
 }
 
 //importing models

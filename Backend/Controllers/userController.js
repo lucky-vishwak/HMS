@@ -5,9 +5,10 @@ const hospitalModel=require('../Models/hospitalModel.js').hospitalModel
 
 //import bcrypt
 const bcryptjs=require('bcryptjs')
+const multer=require('multer')
 
 //import multer
-const upload=require('../Controllers/multer').upload
+//var mult=require('../Controllers/multer').upload
 
 //register
 async function register(req,res){
@@ -75,6 +76,8 @@ async function updateDetails(req,res){
 
     res.send({message:'changes successfully done','user':user})
 }
+//get profile pic
+
 
 //to get count of users
 async function allusers(req,res){
@@ -82,4 +85,9 @@ async function allusers(req,res){
     res.send({message:"Successfully retrived",userObj:users})
 }
 
-module.exports={register,updateDetails,allusers}
+//upload profile pic
+async function updateProfilepic(req,res){
+    username=req.params.username
+    console.log(req.file)
+  }
+module.exports={register,updateDetails,allusers,updateProfilepic}
