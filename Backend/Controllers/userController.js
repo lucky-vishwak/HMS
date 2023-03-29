@@ -82,4 +82,9 @@ async function allusers(req,res){
     res.send({message:"Successfully retrived",userObj:users})
 }
 
-module.exports={register,updateDetails,allusers}
+//sample function
+async function sample(req,res){
+    res.send("okay")
+}
+
+module.exports={register,updateDetails,allusers,sample}

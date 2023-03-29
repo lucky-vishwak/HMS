@@ -78,6 +78,12 @@ async function gettoday(req,res){
     res.send({message:"successfully",appointments:appointments})
 }
 
+//total appointments for master admin 
+async function totalappointent(req,res){
+    let appointments=await appointmentModel.find({})
+    res.send({message:"success",appointments:appointments})
+}
+
 async function addApp(req,res){
     let appointmentobj=req.body
     const details=new appointmentModel(appointmentobj)
@@ -88,4 +94,4 @@ async function addApp(req,res){
 
 
 module.exports={addApp,addappointment,cancelledAppointments,completedAppointments,
-    allAppointments,getappointment,hospitalappointment,gettoday}
+    allAppointments,getappointment,hospitalappointment,gettoday,totalappointent}

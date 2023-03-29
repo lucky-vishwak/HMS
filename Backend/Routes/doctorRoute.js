@@ -8,6 +8,8 @@ doctorRoute.post("/add-doctor",doctorController.addDoctor);
 
 doctorRoute.post('/all-doctors',doctorController.allDoctors);
 
+doctorRoute.get('/total-doctors',doctorController.totaldoctors);
+
 doctorRoute.put('/upadteProfile/:username',doctorController.updatedDoctorObj);
 
 module.exports={doctorRoute}

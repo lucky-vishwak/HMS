@@ -242,7 +242,7 @@ var phonenumber = form.phonenumber.value;
 }
 
 function getMyappointment() {
-  let userDetails = document.getElementById("Render");
+  let userDetails = document.getElementById("Render");                  
   userDetails.innerHTML = `<div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 700px">
      <table class="table table-striped mb-0 bg-glass">
        <thead style="background-color: #1c5cbd;">

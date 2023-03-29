@@ -47,7 +47,8 @@ app.use('/contact',contactRoute);
 
 
 port=3005
-app.listen(port,()=>{
+var server = app.listen(port,()=>{
     console.log(`listening on port ${port}`)
 })
 
+module.exports = {server}

@@ -24,6 +24,8 @@ appointmentRoute.post("/completed-appointments",appointmentController.completedA
 appointmentRoute.post("/cancelled-appointments",appointmentController.cancelledAppointments);
 //today appointment for doctor
 appointmentRoute.post("/get-today",appointmentController.gettoday)
+//total appointmnets for master admin
+appointmentRoute.get("/total-appointments",appointmentController.totalappointent)
 
 
 
