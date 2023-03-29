@@ -30,4 +30,11 @@ userRoute.post('/uploadfile/:username',upload,(req,res)=>{
    console.log(upload)
 })
 
+//cancel appointments by specific user
+userRoute.put('/cancel-appointment',userController.cancelAppointment);
+
+//accept appointments by specific user
+userRoute.put('/accept-appointment',userController.accepetAppointment);
+
+
 module.exports={userRoute}

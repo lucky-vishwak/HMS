@@ -6,6 +6,8 @@ const hospitalModel=require('../Models/hospitalModel.js').hospitalModel
 //import bcrypt
 const bcryptjs=require('bcryptjs')
 const multer=require('multer')
+const { appointmentHelperModel } = require('../Models/appointmenthelperModel.js')
+const { appointmentModel } = require('../Models/appointmentModel.js')
 
 //import multer
 //var mult=require('../Controllers/multer').upload
@@ -90,4 +92,34 @@ async function updateProfilepic(req,res){
     username=req.params.username
     console.log(req.file)
   }
-module.exports={register,updateDetails,allusers,updateProfilepic}
+
+//to accept the appointments
+async function accepetAppointment(req,res){
+    
+    let appointmentAssignObj=req.body;
+    //console.log(appointmentAssignObj);
+
+    await userModel.updateOne({"myappointment.id":appointmentAssignObj.id.toString()},{$set:{"myappointment.$.status":"accepted"}});
+
+    await appointmentModel.updateOne({_id:appointmentAssignObj.id},{$set:{status:"accepted"}});
+
+    res.send({message:"Appointment Accepted Successfully!!!"});
+}
+
+//to cancel appointments
+
+async function cancelAppointment(req,res){
+
+    let appointmentAssignObj=req.body;
+
+    await userModel.findOneAndUpdate({username:appointmentAssignObj.username},{"$pull":{"myappointment":{id:appointmentAssignObj.id}}},{ safe: true, multi: false });
+
+    await appointmentModel.updateOne({_id:appointmentAssignObj.id},{$set:{status:"cancelled",doctor:"Not Assigned"}})
+     
+    await appointmentHelperModel.deleteOne({hospitalName: appointmentAssignObj.hospitalName, doctor: appointmentAssignObj.doctor, appointmentdate: appointmentAssignObj.appointmentdate, timeslot: appointmentAssignObj.timeslot});
+
+    res.send({message:"Appointment Successfully cancelled"});
+
+}
+
+module.exports={register,updateDetails,allusers,accepetAppointment,cancelAppointment,updateProfilepic};

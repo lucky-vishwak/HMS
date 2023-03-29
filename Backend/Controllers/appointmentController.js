@@ -35,8 +35,9 @@ async function addappointment(req,res){
 //getting appointment for specific users
 async function getappointment(req,res){
     const name=req.params.username
-    let result=await userModel.findOne({username:`${name}`})
-    res.send(result.myappointment)
+    let result=await userModel.findOne({username:`${name}`});
+    console.log(result);
+    res.send({message:"Success",appointments:result.myappointment})
 }
 
 

@@ -1,32 +1,18 @@
-var appo=[];
-if(JSON.parse(localStorage.getItem("access"))){
-  location.href="../../../Admin_dashboard/Dashboard/dashboard.html"
-}
-else if (localStorage.getItem("active_user")) {
+let appo = [];
+if (localStorage.getItem("active_user")) {
   var userobj = JSON.parse(localStorage.getItem("active_user"))
-  $.get({
-    url: `http://localhost:3005/appointment/appointments/${userobj.username}`,
-    contentType: 'application/json; charset=utf-8'
-  }).done((response,stat)=>{
-    if(stat="success"){
-      response
-      for(let ele of response){
-        appo.push(ele)
-      }
-    }
-  })
 }
-else{
-  location.href="../../../404/404.html"
+else {
+  location.href = "../../../404/404.html"
 }
 
 function getProfileDetails() {
 
-  let profileuser=document.getElementById("profileuser")
-  let profilecity=document.getElementById("profilecity")
+  let profileuser = document.getElementById("profileuser")
+  let profilecity = document.getElementById("profilecity")
   //let profileaddress=document.getElementById("profileaddress")
-  profileuser.innerText=userobj.username
-  profilecity.innerText=userobj.city
+  profileuser.innerText = userobj.username
+  profilecity.innerText = userobj.city
   //profileaddress.innerText=userobj.address
 
   let userDetails = document.getElementById("Render")
@@ -180,72 +166,72 @@ function getEditProfile() {
 
 
 function change_details() {
-var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;  //Javascript reGex for Email Validation.
-var regPhone = /^\d{10}$/;                                         //Javascript reGex for Phone Number validation.
-var regName = /^[a-zA-Z\ ]+$/
-  user={}
-  var form=document.forms.x;
-  user['state']=form.state.value
+  var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;  //Javascript reGex for Email Validation.
+  var regPhone = /^\d{10}$/;                                         //Javascript reGex for Phone Number validation.
+  var regName = /^[a-zA-Z\ ]+$/
+  user = {}
+  var form = document.forms.x;
+  user['state'] = form.state.value
   user['date'] = form.date.value
-   user['city']=form.city.value;
-   user['username']=form.username.value
-   user['fullname']=form.fullname.value
-   user['email']=form.email.value
-   user['phonenumber']=form.phonenumber.value
-   user.gender=userobj.gender
+  user['city'] = form.city.value;
+  user['username'] = form.username.value
+  user['fullname'] = form.fullname.value
+  user['email'] = form.email.value
+  user['phonenumber'] = form.phonenumber.value
+  user.gender = userobj.gender
 
 
-   var fName = form.fullname.value; 
-   if (!fName.match(regName)) {
+  var fName = form.fullname.value;
+  if (!fName.match(regName)) {
     alert('Full name shouldnt contain numbers')
-   return
-}
+    return
+  }
 
-if (fName.length < 4) {
-  alert('full name should have minimum 4 characters')
-  return
- 
-}
-var phonenumber = form.phonenumber.value;
-    if (!phonenumber.match(regPhone)) {
-      alert('phone number should consist of 10 digits')
-       return
+  if (fName.length < 4) {
+    alert('full name should have minimum 4 characters')
+    return
+
+  }
+  var phonenumber = form.phonenumber.value;
+  if (!phonenumber.match(regPhone)) {
+    alert('phone number should consist of 10 digits')
+    return
+  }
+  var email = form.email.value;
+  if (!email.match(regEmail)) {
+    alert('Email format is worng')
+    return
+  }
+  for (const i in user) {
+    if (user[i] == '') {
+      alert(`${i} is not filled`)
+      return
     }
-    var email = form.email.value;
-    if (!email.match(regEmail)) {
-      alert('Email format is worng')
-        return
-    }
-    for (const i in user) {
-      if (user[i] == '') {
-        alert(`${i} is not filled`)
-        return
-      }
   }
   $.post({
-    url:"http://localhost:3005/user/edit/:username", 
-    data:JSON.stringify(user),
-    contentType:'application/json; charset=utf-8'
-})
-.done((res,stat,xhr)=>{
+    url: "http://localhost:3005/user/edit/:username",
+    data: JSON.stringify(user),
+    contentType: 'application/json; charset=utf-8'
+  })
+    .done((res, stat, xhr) => {
 
-    if(res.message=="changes successfully done")
-    {
-       alert(res.message)
-    
-       userobj=res.user
-      
-       getProfileDetails()
-       localStorage.setItem('active_user',JSON.stringify(user))
-    }
-    else{
+      if (res.message == "changes successfully done") {
+        alert(res.message)
+
+        userobj = res.user
+
+        getProfileDetails()
+        localStorage.setItem('active_user', JSON.stringify(user))
+      }
+      else {
         alert(xhr.statusText)
-    }
-})
+      }
+    })
 }
 
-function getMyappointment() {
+function getMyappointmentDisplay() {
   let userDetails = document.getElementById("Render");
+  $("#Render").html("")
   userDetails.innerHTML = `<div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 700px">
      <table class="table table-striped mb-0 bg-glass">
        <thead style="background-color: #1c5cbd;">
@@ -254,24 +240,100 @@ function getMyappointment() {
            <th scope="col">Reason</th>
            <th scope="col">Date</th>
            <th scope="col">Time</th>
-           <th scope="col">Status</th>
+           <th scope="col" id='spann'>Status</th>
          </tr>
        </thead>
        <tbody id="details">
        </tbody>
      </table>
  </div>`;
- for(let ele of appo){
-  let tr=$("<tr></tr>")
-  tr.append($("<td></td>").text(ele.doctor))
-  tr.append($("<td></td>").text(ele.specialization))
-  tr.append($("<td></td>").text(ele.appointmentdate))
-  tr.append($("<td></td>").text(ele.timeslot))
-  tr.append($("<td></td>").text(ele.status))
-  $("#details").append(tr)
- }
+  let i = 0;
+  for (let ele of appo) {
+    let tr = $("<tr></tr>")
+    tr.append($("<td></td>").text(ele.doctor))
+    tr.append($("<td></td>").text(ele.specialization))
+    tr.append($("<td></td>").text(ele.appointmentdate))
+    tr.append($("<td></td>").text(ele.timeslot))
+    let td_status = $("<td></td>").text(ele.status);
+    let td_button = $("<td></td>").attr('id', `but${i}`);
+    let button_cancel = $("<button></button>").text('Reject').addClass(`btn btn-danger mx-1`).attr('onclick', `cancelAppointment(${i})`);
+    let button_accept = $("<button></button>").text('Accept').addClass('btn btn-success').attr('onclick', `accepetAppointment(${i})`);
+    td_button.append(button_cancel);
+    td_button.append(button_accept);
+    if (ele.doctor != 'Not assigned' && ele.status == 'pending') {
+      tr.append(td_button);
+    }
+    else if (ele.status == 'accepted' || ele.status == 'pending') {
+      tr.append(td_status);
+    }
+    $("#details").append(tr);
+    i++;
+  }
+}
+function getMyappointment() {
+  $.get({
+    url: `http://localhost:3005/appointment/appointments/${userobj.username}`,
+    contentType: 'application/json; charset=utf-8'
+  }).done((response, stat) => {
+    if (stat == "success") {
+      if (response.message == "Success") {
+        console.log(response);
+        appo=[]
+        for (let ele of response.appointments) {
+          appo.push(ele)
+        }
+        getMyappointmentDisplay(appo);
+      }
+    }
+  })
 }
 
+function cancelAppointment(index) {
+  let confirmation = confirm('Are You Sure?');
+  if (confirmation) {
+    $.ajax({
+      type: "PUT",
+      url: `http://localhost:3005/user/cancel-appointment`,
+      data: JSON.stringify(appo[index]),
+      contentType: 'application/json; charset=utf-8'
+    })
+      .done((response, stat) => {
+        if (stat == 'success') {
+          if (response.message == 'Appointment Successfully cancelled') {
+            alert(response.message);
+            appo = [];
+            getMyappointment();
+          }
+        }
+      })
+  }
+}
+
+function accepetAppointment(index) {
+  let confirmation = confirm('Are You Sure?');
+  console.log(appo[index])
+  if (confirmation) {
+    $.ajax({
+      type: "PUT",
+      url: `http://localhost:3005/user/accept-appointment`,
+      data: JSON.stringify(appo[index]),
+      contentType: 'application/json; charset=utf-8'
+    })
+      .done((response, stat) => {
+        if (stat == 'success') {
+          if (response.message == 'Appointment Accepted Successfully!!!') {
+            alert(response.message);
+            appo = [];
+            getMyappointment();
+          }
+        }
+      })
+  }
+}
+
+
+
+//feedback
 
 function getFeedback() {
 
@@ -325,7 +387,7 @@ else {
   logout_btn.innerHTML = ``
 }
 function appoint() {
-  if (localStorage.getItem("type")=="") {
+  if (localStorage.getItem("type") == "") {
     window.location.href = "../../Login/login.html"
   }
   else {
