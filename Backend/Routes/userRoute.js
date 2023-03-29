@@ -18,5 +18,14 @@ userRoute.post('/register', userController.register)
 //update user request
 userRoute.post('/edit/:username',userController.updateDetails)
 
+//all user
+userRoute.get('/all-users',userController.allusers)
+
+//cancel appointments by specific user
+userRoute.put('/cancel-appointment',userController.cancelAppointment);
+
+//accept appointments by specific user
+userRoute.put('/accept-appointment',userController.accepetAppointment);
+
 
 module.exports={userRoute}

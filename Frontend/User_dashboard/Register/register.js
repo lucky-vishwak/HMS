@@ -142,15 +142,6 @@ function validate() {
     // user['address']=form.Address.value
 
  
- let   formData=new FormData();
-
- //append file to form data
- formData.append('photo',this.file)
-
- //append userObj
- 
-
- formData.append('user',JSON.stringify(this.user))
 
 
 
@@ -165,7 +156,7 @@ function validate() {
     if (x == true) {
         $.post({
             url:"http://localhost:3005/user/register", 
-            data:formData,
+            data:JSON.stringify(user),
             contentType:'application/json; charset=utf-8'
         })
         .done((res,stat,xhr)=>{

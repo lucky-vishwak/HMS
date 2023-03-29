@@ -6,26 +6,27 @@ const userModel=require("../Models/userModel").userModel
 //addappointment controller
 async function addappointment(req,res){
     let appointmentobj=req.body
-
+    const details=new appointmentModel(appointmentobj)
     await userModel.findOneAndUpdate({username:`${appointmentobj.username}`},{
         $push:{
             myappointment:{
-                  patientname: appointmentobj.patientname,
-                  phonenumber: appointmentobj.phonenumber,
-                  emailaddress: appointmentobj.emailaddress,
-                  appointmentdate: appointmentobj.appointmentdate,
-                  timeslot: appointmentobj.timeslot,
-                  specialization: appointmentobj.specialization,
-                  emergencyname: appointmentobj.emergencyname,
-                  emergencyphone: appointmentobj.emergencyphone,
-                  doctor: appointmentobj.doctor,
-                  problem: appointmentobj.problem,
-                  username: appointmentobj.username,
-                  status: appointmentobj.status
+                  patientname: details.patientname,
+                  phonenumber: details.phonenumber,
+                  emailaddress: details.emailaddress,
+                  appointmentdate: details.appointmentdate,
+                  timeslot: details.timeslot,
+                  specialization: details.specialization,
+                  emergencyname: details.emergencyname,
+                  emergencyphone: details.emergencyphone,
+                  doctor: details.doctor,
+                  problem: details.problem,
+                  username: details.username,
+                  status: details.status,
+                  hospitalName:details.hospitalName,
+                  id:details._id.toString()
             }
         }
     })
-    const details=new appointmentModel(appointmentobj)
     await details.save()
     res.send(appointmentobj)
 }
@@ -34,12 +35,13 @@ async function addappointment(req,res){
 //getting appointment for specific users
 async function getappointment(req,res){
     const name=req.params.username
-    let result=await userModel.findOne({username:`${name}`})
-    res.send(result.myappointment)
+    let result=await userModel.findOne({username:`${name}`});
+    console.log(result);
+    res.send({message:"Success",appointments:result.myappointment})
 }
 
 
-//to get all appointments
+//to get hospital appointments with sorted by date
 async function hospitalappointment(req,res){
     let hospitalObj=req.body;
     let appointments=await appointmentModel.find({hospitalName:hospitalObj.name}).sort([['appointmentdate', 1], ['timeslot', 1]]);
@@ -47,31 +49,34 @@ async function hospitalappointment(req,res){
     res.send({message:"Success",assignedAppointments:assignedAppointments,notAssignedAppointments:notAssignedAppointments})
 }
 
+//to get all appointments
 async function allAppointments(req,res){
-
     let hospitalObj=req.body;
-
     let appointments=await appointmentModel.find({hospitalName:hospitalObj.name});
-
     res.send({message:"Success",appointments:appointments});
 }
 
+//completed appointments
 async function completedAppointments(req,res){
-
-    let hospitalObj=req.body;
-    
+    let hospitalObj=req.body;    
     let appointments=await appointmentModel.find({hospitalName:hospitalObj.name,status:'completed'});
-
     res.send({message:"Success",appointments:appointments});
 }
 
+//canceled appointments
 async function cancelledAppointments(req,res){
-
     let hospitalObj=req.body;
-
     let appointments=await appointmentModel.find({hospitalName:hospitalObj.name,status:'cancelled'});
-
     res.send({message:"Success",appointments:appointments});
+}
+
+//get today appointments for doctor
+async function gettoday(req,res){
+    const name=req.body.doctorname
+    const today=req.body.date
+    let appointments=await appointmentModel.find({doctor:name,appointmentdate:today})
+    console.log(appointments)
+    res.send({message:"successfully",appointments:appointments})
 }
 
 async function addApp(req,res){
@@ -83,4 +88,5 @@ async function addApp(req,res){
 
 
 
-module.exports={addApp,addappointment,cancelledAppointments,completedAppointments,allAppointments,getappointment,hospitalappointment}
+module.exports={addApp,addappointment,cancelledAppointments,completedAppointments,
+    allAppointments,getappointment,hospitalappointment,gettoday}

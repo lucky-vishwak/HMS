@@ -1,9 +1,12 @@
 //impoting mongoose
 const mongoose=require('mongoose')
 
-
+let ObjectId=mongoose.Schema.ObjectId;
 //declaring appointment schema
 let appointmentSchema = {
+    id:{
+        type:String
+    },
     patientname: {
         type: String,
         required: true

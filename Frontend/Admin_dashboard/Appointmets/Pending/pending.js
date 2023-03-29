@@ -21,15 +21,14 @@ let appointmentsNotAssigned=[];
 
 function notAssignOnLoadAndOnClick(){
   for(let i=0;i<appointmentsNotAssigned.length;i++){
-     let tr=$("<tr></tr>").addClass(`${appointmentsNotAssigned[i].appointmentdate}${appointmentsNotAssigned[i].timeslot}`);
+     let tr=$("<tr></tr>").addClass(`${appointmentsNotAssigned[i].appointmentdate} ${appointmentsNotAssigned[i].timeslot}`);
      let td_name=$("<td></td>").text(`${appointmentsNotAssigned[i].patientname}`);
      let td_date=$("<td></td>").text(`${appointmentsNotAssigned[i].appointmentdate}`);
      let td_time=$("<td></td>").text(`${appointmentsNotAssigned[i].timeslot}`);
      let td_specalization=$("<td></td>").text(`${appointmentsNotAssigned[i].specialization}`);
      let td_doctor=$("<td></td>").text(`${appointmentsNotAssigned[i].doctor}`);
      let td_status=$("<td></td>").text(`${appointmentsNotAssigned[i].status}`);
-     let td_button=$("<button></button>").addClass("btn btn-primary").attr('onclick',`assignDoctor(${i})`).text("Assign").css('background-color','#000000');
-
+     let td_button=$("<button></button>").addClass("btn btn-primary bg-primary my-2").attr('onclick',`assignDoctor(${i})`).text("Assign");
      tr.append(td_name);
      tr.append(td_date);
      tr.append(td_time);
@@ -86,8 +85,8 @@ function assignedAppointmentsDisplay(){
 
 $("#assign").click(()=>{
   $("#tbody").html('');
-  $("notAssign").addClass("btn btn-primary");
-  $("assign").addClass("btn btn-success"); 
+  $("#notAssign").addClass("btn btn-primary");
+  $("#assign").addClass("btn btn-success"); 
   assignedAppointmentsDisplay();
 })
 

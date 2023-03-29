@@ -5,6 +5,8 @@ const hospitalModel=require('../Models/hospitalModel.js').hospitalModel
 
 //import bcrypt
 const bcryptjs=require('bcryptjs')
+const { appointmentHelperModel } = require('../Models/appointmenthelperModel.js')
+const { appointmentModel } = require('../Models/appointmentModel.js')
 
 //import multer
 const upload=require('../Controllers/multer').upload
@@ -16,7 +18,7 @@ async function register(req,res){
         var regPhone = /^\d{10}$/;                                         //Javascript reGex for Phone Number validation.
         var regName = /^[a-zA-Z\ ]+$/
         var regpass = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/
-        let us=JSON.parse(req.body);
+        let us=req.body;
         const adminobj=await masterAdminModel.findOne({username:us.username})
         const userobj=await userModel.findOne({username:us.username})
         const hospitalObj=await hospitalModel.findOne({username:us.username})
@@ -67,6 +69,7 @@ async function register(req,res){
     
 }
 
+//update details
 async function updateDetails(req,res){
     var fusername=req.params.username;
     var user= req.body
@@ -75,6 +78,39 @@ async function updateDetails(req,res){
     res.send({message:'changes successfully done','user':user})
 }
 
+//to get count of users
+async function allusers(req,res){
+    let users=await userModel.find({});
+    res.send({message:"Successfully retrived",userObj:users})
+}
 
+//to accept the appointments
+async function accepetAppointment(req,res){
+    
+    let appointmentAssignObj=req.body;
+    //console.log(appointmentAssignObj);
 
-module.exports={register,updateDetails}
+    await userModel.updateOne({"myappointment.id":appointmentAssignObj.id.toString()},{$set:{"myappointment.$.status":"accepted"}});
+
+    await appointmentModel.updateOne({_id:appointmentAssignObj.id},{$set:{status:"accepted"}});
+
+    res.send({message:"Appointment Accepted Successfully!!!"});
+}
+
+//to cancel appointments
+
+async function cancelAppointment(req,res){
+
+    let appointmentAssignObj=req.body;
+
+    await userModel.findOneAndUpdate({username:appointmentAssignObj.username},{"$pull":{"myappointment":{id:appointmentAssignObj.id}}},{ safe: true, multi: false });
+
+    await appointmentModel.updateOne({_id:appointmentAssignObj.id},{$set:{status:"cancelled",doctor:"Not Assigned"}})
+     
+    await appointmentHelperModel.deleteOne({hospitalName: appointmentAssignObj.hospitalName, doctor: appointmentAssignObj.doctor, appointmentdate: appointmentAssignObj.appointmentdate, timeslot: appointmentAssignObj.timeslot});
+
+    res.send({message:"Appointment Successfully cancelled"});
+
+}
+
+module.exports={register,updateDetails,allusers,accepetAppointment,cancelAppointment};
