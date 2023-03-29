@@ -1,12 +1,15 @@
 const express=require("express");
 const doctorRoute=express.Router();
 const doctorController=require('./../Controllers/doctorController');
-
+//import express async-handler
+const errorHandler=require('express-async-handler')
 doctorRoute.use(express.json());
 
-doctorRoute.post("/add-doctor",doctorController.addDoctor);
+doctorRoute.post("/add-doctor",errorHandler(doctorController.addDoctor));
 
-doctorRoute.post('/all-doctors',doctorController.allDoctors);
+doctorRoute.post('/all-doctors',errorHandler(doctorController.allDoctors));
+
+doctorRoute.put('/upadteProfile/:username',errorHandler(doctorController.updatedDoctorObj));
 
 doctorRoute.get('/total-doctors',doctorController.totaldoctors);
 

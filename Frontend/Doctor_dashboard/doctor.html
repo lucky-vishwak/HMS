@@ -241,6 +241,15 @@
                         <div class="col-lg-3 col-md-4 label">Phone Number</div>
                         <div class="col-lg-9 col-md-8" id="phonenumberProfile">9999999999</div>
                     </div>
+                    <div class="row">
+                      <div class="col-lg-3 col-md-4 label">Gender</div>
+                      <div class="col-lg-9 col-md-8" id="genderProfile"></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">rating</div>
+                    <div class="col-lg-9 col-md-8" id="rating_avgProfile"></div>
+                </div>
+              
 
 
                     </div>
@@ -256,6 +265,9 @@
                       <div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-2" id="appointmentSlots">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verticalycentered">View</button>
                       </div>
+
+
+                      <!-- modellll -->
                           <div class="card">
                             <div class="card-body">
                               <div class="modal fade" id="verticalycentered" tabindex="-1">
@@ -273,21 +285,21 @@
                                         </div>
                                       </div>
                                       <div class="row mb-3">
-                                        <label for="percerption" class="col-md-4 col-lg-3 col-form-label">Percerption</label>
+                                        <label for="percerption" class="col-md-4 col-lg-3 col-form-label">Description</label>
                                         <div class="col-md-8 col-lg-9">
                                             <textarea name="percerption" class="form-control" id="percerptionToday" style="height: 100px"></textarea>
                                         </div>
                                       </div>
                                       <div class="row">
-                                        <label for="gender" class="col-md-4 col-lg-3 col-form-label">Gender</label>
+                                        <label for="gender" class="col-md-4 col-lg-3 col-form-label">Temperature</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input type="text" name="gender" class="form-control" id="genderToday"  disabled value=""/>
+                                            <input type="text" name="gender" class="form-control mb-2" id="genderToday"  value=""/>
                                         </div>
                                       </div>
                                       <div class="row">
-                                        <label for="age" class="col-md-4 col-lg-3 col-form-label">Age</label>
+                                        <label for="age" class="col-md-4 col-lg-3 col-form-label ">B/P</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input type="text" name="age" class="form-control" id="ageToday"  disabled value=""/>
+                                            <input type="text" name="age" class="form-control mb-4" id="ageToday"   value=""/>
                                         </div>
                                       </div>
                                     </div>
@@ -302,6 +314,8 @@
                             </div>
                           </div>
                     </div>
+
+
 
                     <div class="tab-pane fade pt-3" id="profile-history">
                         <div class="row">

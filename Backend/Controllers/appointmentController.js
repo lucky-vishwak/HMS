@@ -35,8 +35,9 @@ async function addappointment(req,res){
 //getting appointment for specific users
 async function getappointment(req,res){
     const name=req.params.username
-    let result=await userModel.findOne({username:`${name}`})
-    res.send(result.myappointment)
+    let result=await userModel.findOne({username:`${name}`});
+    //console.log(result);
+    res.send({message:"Success",appointments:result.myappointment})
 }
 
 
@@ -74,7 +75,6 @@ async function gettoday(req,res){
     const name=req.body.doctorname
     const today=req.body.date
     let appointments=await appointmentModel.find({doctor:name,appointmentdate:today})
-    console.log(appointments)
     res.send({message:"successfully",appointments:appointments})
 }
 
@@ -91,7 +91,15 @@ async function addApp(req,res){
     res.send({message:"successfully added"});
 }
 
-
+async function updateDoctorAppointment(req,res){
+    let id=req.params.id;
+    let updatedAppointment=req.body;
+   
+    await appointmentModel.updateOne({_id:id},{$set:{'prescription.temperature':updatedAppointment.temperature,'prescription.description':updatedAppointment.description,'prescription.BP':updatedAppointment.BP,"status":"completed"}})
+    await userModel.updateOne({"myappointment.id":id},{$set:{'myappointment.$.prescription.temperature':updatedAppointment.temperature,'myappointment.$.prescription.description':updatedAppointment.description,'myappointment.$.prescription.BP':updatedAppointment.BP,"myappointment.$.status":"completed"}})
+    res.send({message:"response send successfullySuccessfully"});
+}
 
 module.exports={addApp,addappointment,cancelledAppointments,completedAppointments,
-    allAppointments,getappointment,hospitalappointment,gettoday,totalappointent}
+    allAppointments,totalappointent
+    ,getappointment,hospitalappointment,gettoday,updateDoctorAppointment}

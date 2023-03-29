@@ -59,7 +59,7 @@ async function assignDoctorToAppointments(req, res) {
 
             if (helperObj.length == 0) {
 
-                await appointmentModel.findOneAndUpdate({ _id: appointmentAssignObj._id }, { $set: { "doctor": doctors[i]['username'], "status": "accepted" } });
+                await appointmentModel.findOneAndUpdate({ _id: appointmentAssignObj._id }, { $set: { "doctor": doctors[i]['username']} });
 
                 let helpObj = {
                     "hospitalName": hospitalName,
@@ -70,7 +70,7 @@ async function assignDoctorToAppointments(req, res) {
                 }
 
                 await appointmentHelperModel.create(helpObj);
-                await userModel.updateOne({"myappointment.id":appointmentAssignObj._id.toString()},{$set:{'myappointment.$.doctor':doctors[i]['username'],"myappointment.$.status":"accepted"}})
+                await userModel.updateOne({"myappointment.id":appointmentAssignObj._id.toString()},{$set:{'myappointment.$.doctor':doctors[i]['username']}})
                 res.send({ message: `Successfully assigned with ${doctors[i].username}`, succ: "success", doctorName: doctors[i].username });
                 return;
 
