@@ -97,10 +97,7 @@ function getProfileDetails() {
     `
 
 }
-$('#file').click(()=>{
-  let   formData=new FormData();
-  formData.append('image',this.file,this.file.name)
-})
+
 function getEditProfile() {
   let userDetails = document.getElementById("Render");
   userDetails.innerHTML = ` <div class="card mb-4 bg-glass">
@@ -163,8 +160,12 @@ function getEditProfile() {
 
 
 }
-
-
+          
+$('#image').click(()=>{
+  
+  
+   
+})
 function change_details() {
   var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;  //Javascript reGex for Email Validation.
   var regPhone = /^\d{10}$/;                                         //Javascript reGex for Phone Number validation.
@@ -228,7 +229,26 @@ function change_details() {
       }
     })
 }
+function showPrescription(index){
+  
+  $.ajax({
+    type: "GET",
+    url: `http://localhost:3005/appointment/show_prescription/${appo[index].id}`,
+    contentType: 'application/json; charset=utf-8'
+  })
+    .done((response, stat) => {
+      if (stat == 'success') {
+        if (response.message == 'prescription shown') {
+          var prescription=response.prescription
+          $('#fullNameToday').val(`${response.patientname}`)
+           $('#percerptionToday').val(`${prescription.description}`)
+           $('#genderToday').val(`${prescription.temperature}`)
+           $('#ageToday').val(`${prescription.BP}`)
+        }
+      }
+    })
 
+}
 function getMyappointmentDisplay() {
   let userDetails = document.getElementById("Render");
   $("#Render").html("")
@@ -255,6 +275,7 @@ function getMyappointmentDisplay() {
     tr.append($("<td></td>").text(ele.appointmentdate))
     tr.append($("<td></td>").text(ele.timeslot))
     let td_status = $("<td></td>").text(ele.status);
+    let td_status_comp=$("<td></td>").text(ele.status)
     let td_button = $("<td></td>").attr('id', `but${i}`);
     let button_cancel = $("<button></button>").text('Reject').addClass(`btn btn-danger mx-1`).attr('onclick', `cancelAppointment(${i})`);
     let button_accept = $("<button></button>").text('Accept').addClass('btn btn-success').attr('onclick', `accepetAppointment(${i})`);
@@ -265,6 +286,61 @@ function getMyappointmentDisplay() {
     }
     else if (ele.status == 'accepted' || ele.status == 'pending') {
       tr.append(td_status);
+    }
+    else if (ele.status == 'completed') {
+      var td=$('<td></td>')
+      var mod=$(`<button>view</button>`).attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered" })
+      $('#moddall').append(` <div class="card">
+      <div class="card-body">
+        <div class="modal fade" id="verticalycentered" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Prescription</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="row mb-3">
+                  <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Patient Name</label>
+                  <div class="col-md-8 col-lg-9">
+                     <input name="fullName" type="text" class="form-control" id="fullNameToday" value="" disabled>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="percerption" class="col-md-4 col-lg-3 col-form-label">Description</label>
+                  <div class="col-md-8 col-lg-9">
+                      <textarea name="percerption" class="form-control" id="percerptionToday" style="height: 100px" disabled></textarea>
+                  </div>
+                </div>
+                <div class="row">
+                  <label for="gender" class="col-md-4 col-lg-3 col-form-label">Temperature</label>
+                  <div class="col-md-8 col-lg-9">
+                      <input type="text" name="gender" class="form-control mb-2" id="genderToday" disabled value=""/>
+                  </div>
+                </div>
+                <div class="row">
+                  <label for="age" class="col-md-4 col-lg-3 col-form-label ">B/P</label>
+                  <div class="col-md-8 col-lg-9">
+                      <input type="text" name="age" class="form-control mb-4" id="ageToday" disabled  value=""/>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="updatePercerption">Visited</button>
+              </div>
+            </div>
+          </div>
+        </div><!-- End Vertically centered Modal-->
+
+      </div>
+    </div>`)
+      mod.attr('onclick', `showPrescription(${i})`).addClass('btn btn-primary')
+      td.append(td_status_comp)
+      td.append(mod);
+      tr.append(td)
+      
+
     }
     $("#details").append(tr);
     i++;
@@ -277,7 +353,7 @@ function getMyappointment() {
   }).done((response, stat) => {
     if (stat == "success") {
       if (response.message == "Success") {
-        console.log(response);
+       
         appo=[]
         for (let ele of response.appointments) {
           appo.push(ele)
@@ -311,7 +387,7 @@ function cancelAppointment(index) {
 
 function accepetAppointment(index) {
   let confirmation = confirm('Are You Sure?');
-  console.log(appo[index])
+ 
   if (confirmation) {
     $.ajax({
       type: "PUT",
@@ -330,7 +406,28 @@ function accepetAppointment(index) {
       })
   }
 }
-
+//   const imageFiles=event.target.files[0];
+//   let name=imageFiles.name;
+//   let   formData=new FormData();
+//   formData.append('image',imageFiles,name);
+//   $.ajax({
+//     type: "get",
+//     url:"http://localhost:3005/user/uploadfile", 
+//     data:JSON.stringify(formData),
+//     processData: false,
+// }) .done((res,stat,xhr)=>{
+        
+//   if(res.message=="image updated successfully")
+//   {
+//      console.log(res)
+     
+//   }
+//   else{
+//       console.log(Error)
+//   }
+// })
+  
+// }
 
 
 //feedback
@@ -370,13 +467,6 @@ function getFeedback() {
  
  </div>`
 }
-
-$.ready(()=>{
-  function selectFile(eventObj){
-    this.file=eventObj.target.files[0]
-  }
-  
-})
 
 var login_btn = document.getElementById("login")
 var logout_btn = document.getElementById("logout")

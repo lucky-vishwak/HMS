@@ -36,7 +36,7 @@ async function addappointment(req,res){
 async function getappointment(req,res){
     const name=req.params.username
     let result=await userModel.findOne({username:`${name}`});
-    console.log(result);
+   
     res.send({message:"Success",appointments:result.myappointment})
 }
 
@@ -85,7 +85,12 @@ async function addApp(req,res){
     await details.save()
     res.send({message:"successfully added"});
 }
-
+async function showPrescription(req,res){
+    var id=req.params.id
+    var pres=await appointmentModel.findOne({_id:id})
+    res.send({message:"prescription shown",prescription:pres.prescription,patientname:pres.patientname})
+        
+}
 async function updateDoctorAppointment(req,res){
     let id=req.params.id;
     let updatedAppointment=req.body;
@@ -96,4 +101,4 @@ async function updateDoctorAppointment(req,res){
 }
 
 module.exports={addApp,addappointment,cancelledAppointments,completedAppointments,
-    allAppointments,getappointment,hospitalappointment,gettoday,updateDoctorAppointment}
+    allAppointments,getappointment,hospitalappointment,gettoday,showPrescription}

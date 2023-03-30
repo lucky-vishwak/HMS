@@ -29,4 +29,8 @@ appointmentRoute.post("/get-today",errorHandler(appointmentController.gettoday))
 //
 appointmentRoute.put('/update-appoint/:id',errorHandler(appointmentController.updateDoctorAppointment))
 
+
+//view prescription
+appointmentRoute.get('/show_prescription/:id',appointmentController.showPrescription)
+
 module.exports = {appointmentRoute}

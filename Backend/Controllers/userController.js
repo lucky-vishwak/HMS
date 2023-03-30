@@ -5,12 +5,12 @@ const hospitalModel=require('../Models/hospitalModel.js').hospitalModel
 
 //import bcrypt
 const bcryptjs=require('bcryptjs')
-const multer=require('multer')
+//const multer=require('multer')
 const { appointmentHelperModel } = require('../Models/appointmenthelperModel.js')
 const { appointmentModel } = require('../Models/appointmentModel.js')
 
 //import multer
-//var mult=require('../Controllers/multer').upload
+const multerObj=require('../Controllers/multer').multerObj;
 
 //register
 async function register(req,res){
@@ -89,9 +89,12 @@ async function allusers(req,res){
 
 //upload profile pic
 async function updateProfilepic(req,res){
-    username=req.params.username
-    console.log(req.file)
-  }
+    let username=req.params.username;
+    console.log(req.file.path);
+
+    res.send({message:"image updated successfully",image:req.file.path})
+}
+  
 
 //to accept the appointments
 async function accepetAppointment(req,res){
