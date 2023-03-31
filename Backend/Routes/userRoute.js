@@ -28,4 +28,6 @@ userRoute.put('/cancel-appointment',userController.cancelAppointment);
 userRoute.put('/accept-appointment',userController.accepetAppointment);
 
 
+
+
 module.exports={userRoute}

@@ -52,7 +52,7 @@ async function register(req,res){
         // us={...us,myappointment:[]}
         for (const i in us) {
             if (us[i] == '' && i!="myappointment") {
-                console.log(i,us[i],1)
+               
                 res.send({ message: `${i} is not filled` })
                 x = false
             }
@@ -110,7 +110,8 @@ async function cancelAppointment(req,res){
     await appointmentHelperModel.deleteOne({hospitalName: appointmentAssignObj.hospitalName, doctor: appointmentAssignObj.doctor, appointmentdate: appointmentAssignObj.appointmentdate, timeslot: appointmentAssignObj.timeslot});
 
     res.send({message:"Appointment Successfully cancelled"});
-
 }
+
+
 
 module.exports={register,updateDetails,allusers,accepetAppointment,cancelAppointment};

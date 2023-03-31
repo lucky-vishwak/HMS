@@ -30,13 +30,18 @@ async function addappointment(req,res){
     await details.save()
     res.send(appointmentobj)
 }
-
+async function showPrescription(req,res){
+    var id=req.params.id
+    var pres=await appointmentModel.findOne({_id:id})
+    res.send({message:"prescription shown",prescription:pres.prescription})
+        
+}
 
 //getting appointment for specific users
 async function getappointment(req,res){
     const name=req.params.username
     let result=await userModel.findOne({username:`${name}`});
-    console.log(result);
+    
     res.send({message:"Success",appointments:result.myappointment})
 }
 
@@ -75,7 +80,7 @@ async function gettoday(req,res){
     const name=req.body.doctorname
     const today=req.body.date
     let appointments=await appointmentModel.find({doctor:name,appointmentdate:today})
-    console.log(appointments)
+   
     res.send({message:"successfully",appointments:appointments})
 }
 
@@ -89,4 +94,4 @@ async function addApp(req,res){
 
 
 module.exports={addApp,addappointment,cancelledAppointments,completedAppointments,
-    allAppointments,getappointment,hospitalappointment,gettoday}
+    allAppointments,getappointment,hospitalappointment,gettoday,showPrescription}

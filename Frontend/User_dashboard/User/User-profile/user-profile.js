@@ -252,6 +252,7 @@ function getMyappointmentDisplay() {
     tr.append($("<td></td>").text(ele.appointmentdate))
     tr.append($("<td></td>").text(ele.timeslot))
     let td_status = $("<td></td>").text(ele.status);
+    let td_status_comp=$("<td></td>").text(ele.status)
     let td_button = $("<td></td>").attr('id', `but${i}`);
     let button_cancel = $("<button></button>").text('Reject').addClass(`btn btn-danger mx-1`).attr('onclick', `cancelAppointment(${i})`);
     let button_accept = $("<button></button>").text('Accept').addClass('btn btn-success').attr('onclick', `accepetAppointment(${i})`);
@@ -262,6 +263,16 @@ function getMyappointmentDisplay() {
     }
     else if (ele.status == 'accepted' || ele.status == 'pending') {
       tr.append(td_status);
+    }
+    else if (ele.status == 'completed') {
+      var td=$('<td></td>')
+      var mod=$(`<button></button>`).text(`view`).attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered", id: `${i + 1}` });
+      mod.attr('onclick', `showPrescription(${i})`).addClass('btn btn-primary')
+      td.append(td_status_comp)
+      td.append(mod);
+      tr.append(td)
+      
+
     }
     $("#details").append(tr);
     i++;
@@ -328,7 +339,22 @@ function accepetAppointment(index) {
   }
 }
 
-
+function showPrescription(index){
+  
+    $.ajax({
+      type: "GET",
+      url: `http://localhost:3005/appointment/show_prescription/${appo[index].id}`,
+      contentType: 'application/json; charset=utf-8'
+    })
+      .done((response, stat) => {
+        if (stat == 'success') {
+          if (response.message == 'prescription shown') {
+               console.log(response)
+          }
+        }
+      })
+ 
+}
 
 //feedback
 

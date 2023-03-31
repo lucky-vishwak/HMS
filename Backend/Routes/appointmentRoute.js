@@ -26,5 +26,8 @@ appointmentRoute.post("/cancelled-appointments",appointmentController.cancelledA
 appointmentRoute.post("/get-today",appointmentController.gettoday)
 
 
+//view prescription
+appointmentRoute.get('/show_prescription/:id',appointmentController.showPrescription)
+
 
 module.exports = {appointmentRoute}
