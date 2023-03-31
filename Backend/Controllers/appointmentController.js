@@ -79,6 +79,12 @@ async function gettoday(req,res){
     res.send({message:"successfully",appointments:appointments})
 }
 
+//total appointments for master admin 
+async function totalappointent(req,res){
+    let appointments=await appointmentModel.find({})
+    res.send({message:"success",appointments:appointments})
+}
+
 async function addApp(req,res){
     let appointmentobj=req.body
     const details=new appointmentModel(appointmentobj)
@@ -100,5 +106,4 @@ async function updateDoctorAppointment(req,res){
     res.send({message:"response send successfullySuccessfully"});
 }
 
-module.exports={addApp,addappointment,cancelledAppointments,completedAppointments,
-    allAppointments,getappointment,hospitalappointment,gettoday,showPrescription}
+module.exports={addApp,addappointment,cancelledAppointments,completedAppointments,allAppointments,getappointment,hospitalappointment,gettoday,showPrescription,totalappointent,updateDoctorAppointment}

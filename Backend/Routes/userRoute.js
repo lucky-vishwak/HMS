@@ -11,8 +11,6 @@ const errorHandler=require('express-async-handler')
 const upload=require('../Controllers/multer').multerObj
 
 
-//import userController
-//const upload=require('../Controllers/multer').upload
 
 var userController=require('../Controllers/userController')
 //middleware

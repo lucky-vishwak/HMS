@@ -24,13 +24,15 @@ appointmentRoute.post("/completed-appointments",errorHandler(appointmentControll
 //all cancelled appointments under specific hospitails
 appointmentRoute.post("/cancelled-appointments",errorHandler(appointmentController.cancelledAppointments));
 //today appointment for doctor
+
+//total appointmnets for master admin
+appointmentRoute.get("/total-appointments",appointmentController.totalappointent)
+
 appointmentRoute.post("/get-today",errorHandler(appointmentController.gettoday))
-
-//
-appointmentRoute.put('/update-appoint/:id',errorHandler(appointmentController.updateDoctorAppointment))
-
 
 //view prescription
 appointmentRoute.get('/show_prescription/:id',appointmentController.showPrescription)
+//
+appointmentRoute.put('/update-appoint/:id',errorHandler(appointmentController.updateDoctorAppointment))
 
 module.exports = {appointmentRoute}

@@ -35,7 +35,7 @@ let timeslots = ["10AM-11AM", "11AM-12PM", "12PM-1PM", "1PM-2PM", "2PM-3PM", "3P
 //reusing function in both edit and overview
 function toUpdateProfile() {
     doctorobj = JSON.parse(localStorage.getItem("active_user"));
-    // $(`#imageMain`).attr("src",`${doctorobj.imgurl}`)
+     $(`.imageMain`).attr("src",`${doctorobj.imgurl}`)
     $(`#specalizationMain`).text(`${doctorobj.specialization}`)
     $(`#aboutProfile`).text(`${doctorobj.about}`)
     $(`#fullNameProfile`).text(`${doctorobj.fullname}`);
@@ -64,6 +64,7 @@ function EditProfile() {
     $(`#specalizationEdit`).val(`${doctorobj.specialization}`);
     $(`#emailEdit`).val(`${doctorobj.email}`);
     $(`#phonenumberEdit`).val(`${doctorobj.phonenumber}`);
+    $("#imageEdit").attr("src",`${doctorobj.imgurl}`)
 }
 
 $("#editProfileButton").click(() => {
@@ -71,7 +72,7 @@ $("#editProfileButton").click(() => {
     <div class="row mb-3">
     <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
     <div class="col-md-8 col-lg-9">
-        <img src="assets/img/profile-img.jpg" alt="Profile" id="imageEdit">
+        <img src="" alt="Profile" id="imageEdit">
         <div class="pt-2">
         <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
         <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
@@ -82,7 +83,7 @@ $("#editProfileButton").click(() => {
     <div class="row mb-3">
     <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
     <div class="col-md-8 col-lg-9">
-        <input name="fullName" type="text" class="form-control" id="fullNameEdit" value="Kevin Anderson" disabled>
+        <input name="fullName" type="text" class="form-control" id="fullNameEdit" value="Kevin Anderson" >
     </div>
     </div>
 

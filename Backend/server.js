@@ -20,6 +20,7 @@ const app = express()
 //calling express
 //const app = express()
 
+
 //import express async-handler
 const errorHandler=require('express-async-handler')
 
@@ -71,7 +72,8 @@ app.use((req,res,next)=>{
 //      res.send({message:`${err}`})
 // })
 port=3005
-app.listen(port,()=>{
+var server = app.listen(port,()=>{
     console.log(`listening on port ${port}`)
 })
 
+module.exports = {server}

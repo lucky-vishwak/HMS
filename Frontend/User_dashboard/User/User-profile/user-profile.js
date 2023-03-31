@@ -161,11 +161,6 @@ function getEditProfile() {
 
 }
           
-$('#image').click(()=>{
-  
-  
-   
-})
 function change_details() {
   var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;  //Javascript reGex for Email Validation.
   var regPhone = /^\d{10}$/;                                         //Javascript reGex for Phone Number validation.
@@ -406,29 +401,71 @@ function accepetAppointment(index) {
       })
   }
 }
-//   const imageFiles=event.target.files[0];
-//   let name=imageFiles.name;
-//   let   formData=new FormData();
-//   formData.append('image',imageFiles,name);
-//   $.ajax({
-//     type: "get",
-//     url:"http://localhost:3005/user/uploadfile", 
-//     data:JSON.stringify(formData),
-//     processData: false,
-// }) .done((res,stat,xhr)=>{
-        
-//   if(res.message=="image updated successfully")
-//   {
-//      console.log(res)
-     
-//   }
-//   else{
-//       console.log(Error)
-//   }
-// })
-  
-// }
 
+$(document).ready(function() {
+  $('#form1').on('submit', function(event) {
+      event.preventDefault();
+      var formData=new FormData();
+      formData.append('image', $("#file")[0].files[0]);
+      //formData.append('userObj',JSON.stringify(userObj));
+      let url = "http://127.0.0.1:3005/user/uploadfile/";
+      $.ajax({
+          method: "POST",
+          url: url,
+          data: formData,
+          enctype:"multipart/form-data",
+          processData: false,
+          contentType:false,
+          cache:false
+      }).done(function(msg) {
+            alert(msg.message)
+            console.log(msg);
+      });
+  });
+});
+
+function cancelAppointment(index) {
+  let confirmation = confirm('Are You Sure?');
+  if (confirmation) {
+    $.ajax({
+      type: "PUT",
+      url: `http://localhost:3005/user/cancel-appointment`,
+      data: JSON.stringify(appo[index]),
+      contentType: 'application/json; charset=utf-8'
+    })
+      .done((response, stat) => {
+        if (stat == 'success') {
+          if (response.message == 'Appointment Successfully cancelled') {
+            alert(response.message);
+            appo = [];
+            getMyappointment();
+          }
+        }
+      })
+  }
+}
+
+function accepetAppointment(index) {
+  let confirmation = confirm('Are You Sure?');
+  console.log(appo[index])
+  if (confirmation) {
+    $.ajax({
+      type: "PUT",
+      url: `http://localhost:3005/user/accept-appointment`,
+      data: JSON.stringify(appo[index]),
+      contentType: 'application/json; charset=utf-8'
+    })
+      .done((response, stat) => {
+        if (stat == 'success') {
+          if (response.message == 'Appointment Accepted Successfully!!!') {
+            alert(response.message);
+            appo = [];
+            getMyappointment();
+          }
+        }
+      })
+  }
+}
 
 //feedback
 
@@ -467,6 +504,13 @@ function getFeedback() {
  
  </div>`
 }
+
+// $.ready(()=>{
+//   function selectFile(eventObj){
+//     this.file=eventObj.target.files[0]
+//   }
+  
+// })
 
 var login_btn = document.getElementById("login")
 var logout_btn = document.getElementById("logout")

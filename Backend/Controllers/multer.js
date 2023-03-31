@@ -1,20 +1,3 @@
-
-//  //import multer
-//  const multer=require('multer')
-//  var storage = multer.diskStorage({
-//    destination: function (req, file, cb) {
-//      cb(null, 'images')
-//    },
-//    filename: function (req, file, cb) {
-//      cb(null, (file.originalname)) //Appending extension
-//    }
-//  })
-//  var upload = multer({ storage: storage }).single('image');
- 
-
-
-// module.exports={upload}
-
 //import cloudinary
 const cloudinary=require('cloudinary').v2;
 
