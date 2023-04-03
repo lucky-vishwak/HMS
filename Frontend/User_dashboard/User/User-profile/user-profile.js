@@ -249,8 +249,10 @@ function getMyappointmentDisplay() {
  </div>`;
   let i = 0;
   for (let ele of appo) {
+    console.log(ele.doctor.username)
+    console.log(ele.status)
     let tr = $("<tr></tr>")
-    tr.append($("<td></td>").text(ele.doctor))
+    tr.append($("<td></td>").text(ele.doctor.username))
     tr.append($("<td></td>").text(ele.specialization))
     tr.append($("<td></td>").text(ele.appointmentdate))
     tr.append($("<td></td>").text(ele.timeslot))
@@ -261,7 +263,7 @@ function getMyappointmentDisplay() {
     let button_accept = $("<button></button>").text('Accept').addClass('btn btn-success').attr('onclick', `accepetAppointment(${i})`);
     td_button.append(button_cancel);
     td_button.append(button_accept);
-    if (ele.doctor != 'Not assigned' && ele.status == 'pending') {
+    if (ele.doctor.username != 'Not assigned' && ele.status == 'pending') {
       tr.append(td_button);
     }
     else if(ele.status=='completed'){
@@ -281,7 +283,6 @@ function getMyappointment() {
   }).done((response, stat) => {
     if (stat == "success") {
       if (response.message == "Success") {
-        console.log(response);
         appo=[]
         for (let ele of response.appointments) {
           appo.push(ele)
@@ -294,6 +295,7 @@ function getMyappointment() {
 
 function cancelAppointment(index) {
   let confirmation = confirm('Are You Sure?');
+  appo[index]['username']=userobj.username;
   if (confirmation) {
     $.ajax({
       type: "PUT",
@@ -315,6 +317,7 @@ function cancelAppointment(index) {
 
 function accepetAppointment(index) {
   let confirmation = confirm('Are You Sure?');
+  appo[index]['username']=userobj.username;
   console.log(appo[index])
   if (confirmation) {
     $.ajax({

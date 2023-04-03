@@ -225,7 +225,7 @@ $("#todayAppointmentButton").click(() => {
 
 let x = 0;
 function model(val) {
-    $("#fullNameToday").val(`${appointments[val].username}`)
+    $("#fullNameToday").val(`${appointments[val].patientname}`)
     $("#percerptionToday").val(`${appointments[val].prescription.description}`)
     $("#genderToday").val(`${appointments[val].prescription.temperature}`)
     $("#ageToday").val(`${appointments[val].prescription.BP}`)
@@ -240,7 +240,9 @@ $("#updatePercerption").click(() => {
             description: $("#percerptionToday").val(),
             temperature: $("#genderToday").val(),
             BP: $("#ageToday").val(),
-            status: "completed"
+            status: "completed",
+            email:appointments[x].emailaddress,
+            patientname:appointments[x].patientname
         }
         $.ajax({
             url: `http://localhost:3005/appointment/update-appoint/${appointments[x]._id}`,
@@ -249,7 +251,7 @@ $("#updatePercerption").click(() => {
             data: JSON.stringify(updateAppointment),
             success: function (response, stat) {
                 if (stat == "success") {
-                    alert("Profile Updated Successfully!!");
+                    alert("Prescription Updated Successfully!!");
                 }
             },
             error: function (xhr, textStatus, errorThrown) {

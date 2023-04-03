@@ -15,9 +15,6 @@ const { appointmentModel } = require('../Models/appointmentModel.js')
 //register
 async function register(req,res){
         try{
-            var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;  //Javascript reGex for Email Validation.
-            var regPhone = /^\d{10}$/;                                         //Javascript reGex for Phone Number validation.
-            var regName = /^[a-zA-Z\ ]+$/
             var regpass = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/
             let us=req.body;
             const adminobj=await masterAdminModel.findOne({username:us.username})
@@ -27,50 +24,22 @@ async function register(req,res){
             res.send({message:`${us.username} already existed`})
             return
             }
-            var username = us.username;
-            if (username.length < 6) {
-                res.send({ message: 'username should be minimum 6 characters' })
-                return
-            }
-            var phonenumber = us.phonenumber;
-            if (!phonenumber.match(regPhone)) {
-                res.send({ message: 'phone number should consist of 10 digits' })
-                return
-            }
-            
-            var email = us.email;
-            if (!email.match(regEmail)) {
-                res.send({ message: 'Email format is worng' })
-                return
-            }
             var pass = us.password;
             if (!pass.match(regpass)) {
                 res.send({ message: 'password should conttain Atleast one digit,Atleast one lowercase character Atleast one uppercase character Atleast one special character' })
                 return
             }
-            x = true
-            // us={...us,myappointment:[]}
-            for (const i in us) {
-                if (us[i] == '' && i!="myappointment") {
-                    console.log(i,us[i],1)
-                    res.send({ message: `${i} is not filled` })
-                    x = false
-                }
-                
-            }
-        
-            if (x == true) {
                 hashedPassword= await bcryptjs.hash(us.password,7)
                 us.password=hashedPassword
             
                 await userModel.create(us)
                 res.send({ message: "registration successful" })
-            }
+
         
         }
-        catch{
+        catch(err){
             res.status = 400
-            res.send({message: "error"})
+            res.send({message: err.message})
         }
     
 }
@@ -118,9 +87,9 @@ async function cancelAppointment(req,res){
 
     let appointmentAssignObj=req.body;
 
-    await userModel.findOneAndUpdate({username:appointmentAssignObj.username},{"$pull":{"myappointment":{id:appointmentAssignObj.id}}},{ safe: true, multi: false });
+    await userModel.findOneAndUpdate({username:appointmentAssignObj.username},{$pull:{"myappointment":{id:appointmentAssignObj.id}}},{ safe: true, multi: false });
 
-    await appointmentModel.updateOne({_id:appointmentAssignObj.id},{$set:{status:"cancelled",doctor:"Not Assigned"}})
+    await appointmentModel.updateOne({_id:appointmentAssignObj.id},{$set:{status:"cancelled",doctor:"642abd443a7befc275f25395"}})
      
     await appointmentHelperModel.deleteOne({hospitalName: appointmentAssignObj.hospitalName, doctor: appointmentAssignObj.doctor, appointmentdate: appointmentAssignObj.appointmentdate, timeslot: appointmentAssignObj.timeslot});
 

@@ -10,6 +10,7 @@ const hospitalSchema={
     password:{
         type:String
     }
+    //add field array of ref appointments
 }
 
 const hospitalModel=mongoose.model('hospital',hospitalSchema);

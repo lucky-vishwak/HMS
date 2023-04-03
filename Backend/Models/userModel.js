@@ -6,37 +6,80 @@ let userSchema =
 {
     myappointment:[appointmentSchema],
     fullname:{ 
-        type: String 
+        type: String ,
+        minlength:[6,"fullname must be more than 6 characters"],
+        validate: {
+            validator: (v) => {
+                var re = /^[a-zA-Z\ ]+$/;
+                return re.test(v)
+            },
+            message: 'Provided Name is invalid.'
+        },
+        required:true
     },
     username: { 
-        type: String 
+        type: String ,
+        minlength:[6,"username must be more than 6 characters"],
+        validate: {
+            validator: (v) => {
+                var re = /^[a-zA-Z\ ]+$/;
+                return re.test(v)
+            },
+            message: 'Provided Name is invalid.'
+        },
+        required:true
     },
     phonenumber: { 
-        type: Number 
+        type: Number ,validate: {
+            validator: (v) => {
+                var re = /^\d{10}$/;
+                return re.test(v)
+            },
+            message: 'Provided Phone Number is invalid.'
+        },
+        required:true
     },
     email: { 
-        type: String 
+        type: String ,
+        required:true,
+        validate: {
+            validator: (v) => {
+                var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;
+                return re.test(v)
+            },
+            message: 'Email format is worng'
+        }
     },
     password: { 
-        type: String 
+        type: String ,
+        required:true
     },
     date: { 
-        type: String 
+        type: String ,
+        required:true
     },
     city: { 
-        type: String 
+        type: String ,
+        required:true
     },
     pincode: { 
-        type: Number 
+        type: Number ,
+        required:true
     },
     state: { 
-        type: String 
+        type: String ,
+        required:true
     },
     gender: { 
-        type: String 
+        type: String ,
+        enum:{
+            values:["male","female"]
+        },
+        required:true
     },
      image:{
-      type:String
+      type:String,
+      required:true
     }
 
 }
@@ -44,4 +87,4 @@ let userSchema =
 //creating model
 const userModel=mongoose.model('user',userSchema)
 
-module.exports={userModel}
+module.exports={userModel,userSchema}

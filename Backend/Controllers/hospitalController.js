@@ -7,7 +7,6 @@ const doctorModel = require('./../Models/doctorModel').doctorModel;
 const appointmentHelperModel = require('./../Models/appointmenthelperModel').appointmentHelperModel;
 const appointmentModel = require('./../Models/appointmentModel').appointmentModel;
 
-
 //
 async function addHospital(req, res) {
 
@@ -58,9 +57,7 @@ async function assignDoctorToAppointments(req, res) {
             let helperObj = await appointmentHelperModel.find({ hospitalName: hospitalName, doctor: doctors[i].username, appointmentdate: appointmentAssignObj.appointmentdate, timeslot: appointmentAssignObj.timeslot });
 
             if (helperObj.length == 0) {
-
-                await appointmentModel.findOneAndUpdate({ _id: appointmentAssignObj._id }, { $set: { "doctor": doctors[i]['username']} });
-
+                await appointmentModel.findOneAndUpdate({ _id: appointmentAssignObj._id }, { $set: { "doctor":doctors[i]['_id'].toString()} });
                 let helpObj = {
                     "hospitalName": hospitalName,
                     "reason": appointmentAssignObj.problem,
@@ -68,12 +65,10 @@ async function assignDoctorToAppointments(req, res) {
                     "appointmentdate": appointmentAssignObj.appointmentdate,
                     "timeslot": appointmentAssignObj.timeslot
                 }
-
                 await appointmentHelperModel.create(helpObj);
-                await userModel.updateOne({"myappointment.id":appointmentAssignObj._id.toString()},{$set:{'myappointment.$.doctor':doctors[i]['username']}})
+                await userModel.updateOne({"myappointment.id":appointmentAssignObj._id.toString()},{$set:{'myappointment.$.doctor':doctors[i]['_id'].toString()}})
                 res.send({ message: `Successfully assigned with ${doctors[i].username}`, succ: "success", doctorName: doctors[i].username });
                 return;
-
             }
         }
 

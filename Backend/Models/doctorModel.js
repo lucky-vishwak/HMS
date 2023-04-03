@@ -47,8 +47,7 @@ const doctorSchema = {
     },
     hospitalName:{
         type:String
-    },
-   
+    }
 }
 
 //creating doctorModel
@@ -56,4 +55,4 @@ const doctorModel=mongoose.model('doctor',doctorSchema);
 
 
 //exporting doctorModel
-module.exports={doctorModel}
+module.exports={doctorModel,doctorSchema}

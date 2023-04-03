@@ -25,6 +25,14 @@ async function addDoctor(req,res){
     }
 }
 
+//add dummy doctor
+async function addDoctorDummy(req,res){
+    let doctorObj=req.body;
+    await doctorModel.create(doctorObj);
+    res.send({message:"Doctor added successfully"});
+
+}
+
 //retriving all doctors based on hospitals
 async function allDoctors(req,res){
     let hospitalObj=req.body;
@@ -48,4 +56,4 @@ async function totaldoctors(req,res){
     res.send({message:"success",doctorObj:doctors})
 }
 
-module.exports={addDoctor,allDoctors,updatedDoctorObj,totaldoctors}
+module.exports={addDoctor,allDoctors,updatedDoctorObj,totaldoctors,addDoctorDummy}
