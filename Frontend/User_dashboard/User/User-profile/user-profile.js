@@ -99,6 +99,7 @@ function getProfileDetails() {
 }
 
 function getEditProfile() {
+  $('#form1').show()
   let userDetails = document.getElementById("Render");
   userDetails.innerHTML = ` <div class="card mb-4 bg-glass">
      <div class="card-header display-5">Account Details</div>
@@ -151,7 +152,7 @@ function getEditProfile() {
                  </div>
              </div>
              <!-- Save changes button-->
-             <div class="text-center"><button class="btn appointment-btn mx-auto" type="button" onclick="change_details()">Save changes</button>
+             <div class="text-center"><button class="btn appointment-btn mx-auto" type="button" id="change_details">Save changes</button>
              </div>
               </form>
      </div>
@@ -161,7 +162,7 @@ function getEditProfile() {
 
 }
           
-function change_details() {
+function change(imgurl){
   var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;  //Javascript reGex for Email Validation.
   var regPhone = /^\d{10}$/;                                         //Javascript reGex for Phone Number validation.
   var regName = /^[a-zA-Z\ ]+$/
@@ -175,8 +176,8 @@ function change_details() {
   user['email'] = form.email.value
   user['phonenumber'] = form.phonenumber.value
   user.gender = userobj.gender
-
-
+  user.image=imgurl
+ 
   var fName = form.fullname.value;
   if (!fName.match(regName)) {
     alert('Full name shouldnt contain numbers')
@@ -215,7 +216,7 @@ function change_details() {
         alert(res.message)
 
         userobj = res.user
-
+        $('#imgxx').attr('src',`${user.image}`)
         getProfileDetails()
         localStorage.setItem('active_user', JSON.stringify(user))
       }
@@ -342,6 +343,7 @@ function getMyappointmentDisplay() {
   }
 }
 function getMyappointment() {
+  $('#form1').hide()
   $.get({
     url: `http://localhost:3005/appointment/appointments/${userobj.username}`,
     contentType: 'application/json; charset=utf-8'
@@ -403,6 +405,8 @@ function accepetAppointment(index) {
 }
 
 $(document).ready(function() {
+  $('#imgxx').attr('src',`${userobj.image}`)
+  $("#form1").hide()
   $('#form1').on('submit', function(event) {
       event.preventDefault();
       var formData=new FormData();
@@ -418,8 +422,12 @@ $(document).ready(function() {
           contentType:false,
           cache:false
       }).done(function(msg) {
+            $('#change_details').click(()=>{
+              change(msg.imgurl)
+            })
             alert(msg.message)
-            console.log(msg);
+
+            
       });
   });
 });
@@ -470,7 +478,7 @@ function accepetAppointment(index) {
 //feedback
 
 function getFeedback() {
-
+  $('#form1').hide()
   let userDetails = document.getElementById("Render");
 
   userDetails.innerHTML = `<div class="card mb-4 bg-glass">

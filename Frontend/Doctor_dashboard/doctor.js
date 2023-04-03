@@ -35,6 +35,7 @@ let timeslots = ["10AM-11AM", "11AM-12PM", "12PM-1PM", "1PM-2PM", "2PM-3PM", "3P
 //reusing function in both edit and overview
 function toUpdateProfile() {
     doctorobj = JSON.parse(localStorage.getItem("active_user"));
+    console.log(doctorobj)
      $(`.imageMain`).attr("src",`${doctorobj.imgurl}`)
     $(`#specalizationMain`).text(`${doctorobj.specialization}`)
     $(`#aboutProfile`).text(`${doctorobj.about}`)
@@ -44,10 +45,11 @@ function toUpdateProfile() {
     $(`#phonenumberProfile`).text(`${doctorobj.phonenumber}`);
     $(`#rating_avgProfile`).text(`${doctorobj.rating_avg}`)
     $(`#genderProfile`).text(`${doctorobj.gender}`)
+    $(`.imageMain`).attr(`src`,`${doctorobj.image}`)
 }
 
 $(document).ready(() => {
-
+    
     toUpdateProfile();
 })
 // overview related jquery
@@ -56,6 +58,8 @@ $("#overviewButton").click(() => {
     toUpdateProfile();
 })
 
+ 
+  
 //edit profile related jquery
 function EditProfile() {
 
@@ -64,22 +68,41 @@ function EditProfile() {
     $(`#specalizationEdit`).val(`${doctorobj.specialization}`);
     $(`#emailEdit`).val(`${doctorobj.email}`);
     $(`#phonenumberEdit`).val(`${doctorobj.phonenumber}`);
-    $("#imageEdit").attr("src",`${doctorobj.imgurl}`)
+  $("#imageMain").attr("src",`${doctorobj.image}`)
 }
+p=0
+$('#formx').on('submit', function(event) {
+    event.preventDefault();
+    var formData=new FormData();
+    console.log(formData)
+    formData.append('image', $("#file")[0].files[0]);
+    p=1
+    //formData.append('userObj',JSON.stringify(userObj));
+    let url = "http://127.0.0.1:3005/user/uploadfile/";
+    $.ajax({
+        method: "POST",
+        url: url,
+        data: formData,
+        enctype:"multipart/form-data",
+        processData: false,
+        contentType:false,
+        cache:false
+    }).done(function(msg) {
+          alert(msg.message)
+      $('#updateProfile').click(()=>{
+              change(msg.imgurl)
+            })
+          })
+        
+        
+        })
+       
 
+       
+        
 $("#editProfileButton").click(() => {
-    var x = `<form>
-    <div class="row mb-3">
-    <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
-    <div class="col-md-8 col-lg-9">
-        <img src="" alt="Profile" id="imageEdit">
-        <div class="pt-2">
-        <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-        <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
-        </div>
-    </div>
-    </div>
-
+    var x = ` 
+    <form id="hello">
     <div class="row mb-3">
     <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
     <div class="col-md-8 col-lg-9">
@@ -116,60 +139,125 @@ $("#editProfileButton").click(() => {
     </div>
 
     <div class="text-center">
-    <button type="button" class="btn btn-primary" id="updateProfile" click='change()'>Save Changes</button>
+    <button type="button" class="btn btn-primary" id="updateProfile" >Save Changes</button>
     </div>
 </form>`
     $(`#profile-edit`).append(x)
     EditProfile();
 })
+function change(img){
+   
+    userx={}
+    var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;  //Javascript reGex for Email Validation.
+    var regPhone = /^\d{10}$/;                                         //Javascript reGex for Phone Number validation.
+    var regName = /^[a-zA-Z\ ]+$/
+    var form = document.forms.hello;
 
-$("#updateProfile").click(() => {
+  var fName = form.fullName.value;
+  userx['fullname'] = form.fullName.value
+  userx['email'] = form.email.value
+  userx['phonenumber'] = form.phone.value
+  userx['about'] = form.about.value
+  userx['image']=img
+  if (!fName.match(regName)) {
+    alert('Full name shouldnt contain numbers')
+    return
+  }
 
-    let updatedDoctorObj = {};
-    console.log(doctorobj)
+  if (fName.length < 4) {
+    alert('full name should have minimum 4 characters')
+    return
 
-    updatedDoctorObj['about'] = $("#aboutEdit").val();
-    updatedDoctorObj['fullname'] = $("#fullNameedit").val();
-    updatedDoctorObj['specialization'] = $("#specalizationEdit").val();
-    updatedDoctorObj['email'] = $("#emailEdit").val();
-    updatedDoctorObj['phonenumber'] = $("#phonenumberEdit").val();
-    updatedDoctorObj['username'] = doctorobj['username']
+  }
+  var phonenumber = form.phone.value;
+  if (!phonenumber.match(regPhone)) {
+    alert('phone number should consist of 10 digits')
+    return
+  }
+  var email = form.email.value;
+  if (!email.match(regEmail)) {
+    alert('Email format is worng')
+    return
+  }
+  var about=form.about.value
+  if (about.length < 4) {
+    alert('about should have minimum 4 characters')
+    return
 
-    let flag = false;
-    for (let key in updatedDoctorObj) {
-        console.log(key, doctorobj[`${key}`])
-        if (doctorobj[`${key}`] != updatedDoctorObj[`${key}`]) {
-            flag = true;
-            break;
-        }
-    }
-    if (flag) {
-        let confirmation = confirm("Do you want to update profile?");
-        if (confirmation) {
+  }
+  $.post({
+    url: `http://localhost:3005/doctor/upadteProfile/${d}`,
+    data: JSON.stringify(userx),
+    contentType: 'application/json; charset=utf-8'
+  })
+    .done((res, stat, xhr) => {
 
-            $.ajax({
-                url: `http://localhost:3005/doctor/upadteProfile/${updatedDoctorObj.username}`,
-                type: 'PUT',
-                contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(updatedDoctorObj),
-                success: function (response, stat) {
-                    if (stat == "success") {
-                        doctorobj = { ...response.updateddoctorobj }
-                        EditProfile();
-                        alert("Profile Updated Successfully!!");
-                    }
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    console.log('Error in Operation');
-                }
-            })
-        }
-    }
-    else {
-        alert("No changes found!!!");
-    }
+      if (res.message == "changes successfully done") {
+        alert(res.message)
+        $('#imageMain').attr('src',`${res.user.imgurl}`)
+        y=res.user
+        doctorobj={...doctorobj,...y}
+        console.log(doctorobj)
+        localStorage.setItem('active_user', JSON.stringify(doctorobj))
+       
+        toUpdateProfile();
+       
+      }
+      else {
+        alert(xhr.statusText)
+      }
+    })
+ 
+}
 
-})
+
+// $("#updateProfile").click(() => {
+
+//     let updatedDoctorObj = {};
+//     console.log(doctorobj)
+
+//     updatedDoctorObj['about'] = $("#aboutEdit").val();
+//     updatedDoctorObj['fullname'] = $("#fullNameedit").val();
+//     updatedDoctorObj['specialization'] = $("#specalizationEdit").val();
+//     updatedDoctorObj['email'] = $("#emailEdit").val();
+//     updatedDoctorObj['phonenumber'] = $("#phonenumberEdit").val();
+//     updatedDoctorObj['username'] = doctorobj['username']
+
+//     let flag = false;
+//     for (let key in updatedDoctorObj) {
+//         console.log(key, doctorobj[`${key}`])
+//         if (doctorobj[`${key}`] != updatedDoctorObj[`${key}`]) {
+//             flag = true;
+//             break;
+//         }
+//     }
+//     if (flag) {
+//         let confirmation = confirm("Do you want to update profile?");
+//         if (confirmation) {
+
+//             $.ajax({
+//                 url: `http://localhost:3005/doctor/upadteProfile/${updatedDoctorObj.username}`,
+//                 type: 'PUT',
+//                 contentType: 'application/json; charset=utf-8',
+//                 data: JSON.stringify(updatedDoctorObj),
+//                 success: function (response, stat) {
+//                     if (stat == "success") {
+//                         doctorobj = { ...response.updateddoctorobj }
+//                         EditProfile();
+//                         alert("Profile Updated Successfully!!");
+//                     }
+//                 },
+//                 error: function (xhr, textStatus, errorThrown) {
+//                     console.log('Error in Operation');
+//                 }
+//             })
+//         }
+//     }
+//     else {
+//         alert("No changes found!!!");
+//     }
+
+// })
 
 
 //today related appointment jquery

@@ -48,7 +48,7 @@ const doctorSchema = {
     hospitalName:{
         type:String
     },
-    imgurl:{
+    image:{
         type:String
     }
    
