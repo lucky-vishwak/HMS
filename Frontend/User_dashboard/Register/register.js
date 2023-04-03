@@ -190,6 +190,7 @@ $('#form1').on('submit', function(event) {
                 }
                 else{
                     alert(res.status)
+                    console.log('hello')
                 }
             })
          } )

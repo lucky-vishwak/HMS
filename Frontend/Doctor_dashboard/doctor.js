@@ -35,7 +35,7 @@ let timeslots = ["10AM-11AM", "11AM-12PM", "12PM-1PM", "1PM-2PM", "2PM-3PM", "3P
 //reusing function in both edit and overview
 function toUpdateProfile() {
     doctorobj = JSON.parse(localStorage.getItem("active_user"));
-    console.log(doctorobj)
+   
      $(`.imageMain`).attr("src",`${doctorobj.imgurl}`)
     $(`#specalizationMain`).text(`${doctorobj.specialization}`)
     $(`#aboutProfile`).text(`${doctorobj.about}`)
@@ -45,7 +45,7 @@ function toUpdateProfile() {
     $(`#phonenumberProfile`).text(`${doctorobj.phonenumber}`);
     $(`#rating_avgProfile`).text(`${doctorobj.rating_avg}`)
     $(`#genderProfile`).text(`${doctorobj.gender}`)
-    $(`.imageMain`).attr(`src`,`${doctorobj.image}`)
+    $(`.imageMain`).attr(`src`,`${doctorobj.imgurl}`)
 }
 
 $(document).ready(() => {
@@ -68,41 +68,16 @@ function EditProfile() {
     $(`#specalizationEdit`).val(`${doctorobj.specialization}`);
     $(`#emailEdit`).val(`${doctorobj.email}`);
     $(`#phonenumberEdit`).val(`${doctorobj.phonenumber}`);
-  $("#imageMain").attr("src",`${doctorobj.image}`)
+  $(".imageMain").attr("src",`${doctorobj.imgurl}`)
 }
-p=0
-$('#formx').on('submit', function(event) {
-    event.preventDefault();
-    var formData=new FormData();
-    console.log(formData)
-    formData.append('image', $("#file")[0].files[0]);
-    p=1
-    //formData.append('userObj',JSON.stringify(userObj));
-    let url = "http://127.0.0.1:3005/user/uploadfile/";
-    $.ajax({
-        method: "POST",
-        url: url,
-        data: formData,
-        enctype:"multipart/form-data",
-        processData: false,
-        contentType:false,
-        cache:false
-    }).done(function(msg) {
-          alert(msg.message)
-      $('#updateProfile').click(()=>{
-              change(msg.imgurl)
-            })
-          })
-        
-        
-        })
+
+
        
 
        
         
 $("#editProfileButton").click(() => {
-    var x = ` 
-    <form id="hello">
+    var y=`<form id="hello">
     <div class="row mb-3">
     <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
     <div class="col-md-8 col-lg-9">
@@ -127,7 +102,7 @@ $("#editProfileButton").click(() => {
     <div class="row mb-3">
     <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
     <div class="col-md-8 col-lg-9">
-        <input name="phone" type="text" class="form-control" id="phonenumberEdit" value="(436) 486-3538 x29071">
+        <input name="phone" type="text" class="form-control" id="phonenumberEdit">
     </div>
     </div>
 
@@ -142,8 +117,13 @@ $("#editProfileButton").click(() => {
     <button type="button" class="btn btn-primary" id="updateProfile" >Save Changes</button>
     </div>
 </form>`
-    $(`#profile-edit`).append(x)
-    EditProfile();
+
+$('#profile-edit').append(y)
+EditProfile();
+$('#updateProfile').click(()=>{
+    change(doctorobj.imgurl)
+  })
+   
 })
 function change(img){
    
@@ -185,23 +165,20 @@ function change(img){
     return
 
   }
-  $.post({
-    url: `http://localhost:3005/doctor/upadteProfile/${d}`,
+  
+  $.ajax({
+    type: "PUT",
+    url: `http://localhost:3005/doctor/updateProfile/${doctorobj.username}`,
     data: JSON.stringify(userx),
     contentType: 'application/json; charset=utf-8'
   })
     .done((res, stat, xhr) => {
-
       if (res.message == "changes successfully done") {
         alert(res.message)
-        $('#imageMain').attr('src',`${res.user.imgurl}`)
-        y=res.user
+        y=res.updateddoctorobj
         doctorobj={...doctorobj,...y}
-        console.log(doctorobj)
         localStorage.setItem('active_user', JSON.stringify(doctorobj))
-       
-        toUpdateProfile();
-       
+        location.reload()
       }
       else {
         alert(xhr.statusText)
@@ -259,7 +236,28 @@ function change(img){
 
 // })
 
-
+$('#formx').on('submit', function(event) {
+    event.preventDefault();
+    var formData=new FormData();
+    $('#updateProfile').prop('disabled',true)
+    formData.append('image', $("#file")[0].files[0]);
+    //formData.append('userObj',JSON.stringify(userObj));
+    let url = "http://127.0.0.1:3005/user/uploadfile/";
+    $.ajax({
+        method: "POST",
+        url: url,
+        data: formData,
+        enctype:"multipart/form-data",
+        processData: false,
+        contentType:false,
+        cache:false
+    }).done(function(msg) {  
+       doctorobj.imgurl=msg.imgurl
+       $('#updateProfile').prop('disabled',false)
+          })
+        
+        
+        })
 //today related appointment jquery
 $("#todayAppointmentButton").click(() => {
     let detailsObj = {

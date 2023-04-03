@@ -73,7 +73,6 @@ function getProfileDetails() {
           </div>
         </div>
         <hr>
-     
         <div class="row">
         <div class="col-sm-3">
           <p class="mb-0">city</p>
@@ -159,10 +158,16 @@ function getEditProfile() {
            
  </div>`;
 
+ $('#change_details').click(()=>{
+   console.log("clicked")
+   change(userobj.image)
+ })
+
 
 }
           
 function change(imgurl){
+ 
   var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;  //Javascript reGex for Email Validation.
   var regPhone = /^\d{10}$/;                                         //Javascript reGex for Phone Number validation.
   var regName = /^[a-zA-Z\ ]+$/
@@ -177,7 +182,7 @@ function change(imgurl){
   user['phonenumber'] = form.phonenumber.value
   user.gender = userobj.gender
   user.image=imgurl
- 
+ console.log(user)
   var fName = form.fullname.value;
   if (!fName.match(regName)) {
     alert('Full name shouldnt contain numbers')
@@ -214,11 +219,12 @@ function change(imgurl){
 
       if (res.message == "changes successfully done") {
         alert(res.message)
-
         userobj = res.user
         $('#imgxx').attr('src',`${user.image}`)
-        getProfileDetails()
+        
         localStorage.setItem('active_user', JSON.stringify(user))
+        getProfileDetails()
+        $("#form1").hide()
       }
       else {
         alert(xhr.statusText)
@@ -404,11 +410,15 @@ function accepetAppointment(index) {
   }
 }
 
+
 $(document).ready(function() {
+ 
   $('#imgxx').attr('src',`${userobj.image}`)
   $("#form1").hide()
   $('#form1').on('submit', function(event) {
       event.preventDefault();
+      //button disable
+      $('#change_details').prop('disabled',true)
       var formData=new FormData();
       formData.append('image', $("#file")[0].files[0]);
       //formData.append('userObj',JSON.stringify(userObj));
@@ -422,15 +432,13 @@ $(document).ready(function() {
           contentType:false,
           cache:false
       }).done(function(msg) {
-            $('#change_details').click(()=>{
-              change(msg.imgurl)
-            })
-            alert(msg.message)
-
-            
+            userobj.image=msg.imgurl
+            $('#change_details').prop('disabled',false)
       });
   });
 });
+
+
 
 function cancelAppointment(index) {
   let confirmation = confirm('Are You Sure?');
