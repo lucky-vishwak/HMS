@@ -85,7 +85,8 @@ $('#form1').on('submit', function(event) {
                   $.post({
                       url:'http://localhost:3005/hospital/add-hospital',
                       data:JSON.stringify(HospitalObj),
-                      contentType:'application/json; charset=utf-8'
+                      contentType:'application/json; charset=utf-8',
+                      headers:{Authorization :localStorage.getItem('token')}
                   })
                   .done((response,stat)=>{
                       if(stat=='success'){

@@ -139,7 +139,8 @@ $('#formx').on('submit', function(event) {
         $.post({
             url:"http://localhost:3005/doctor/add-doctor", 
             data:JSON.stringify(Doctors),
-            contentType:'application/json; charset=utf-8'
+            contentType:'application/json; charset=utf-8',
+            headers:{Authorization :localStorage.getItem('token')}
         })
         .done((res,stat)=>{
             console.log(res,stat)

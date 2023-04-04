@@ -8,6 +8,9 @@ const mongoose=require('mongoose')
 const bcryptjs=require('bcryptjs')
 const {v4:uuidv4}=require("uuid")
 const app = express()
+
+require('dotenv').config()
+
 // var bodyParser = require('body-parser');
 // app.use(bodyParser.raw({limit: '500mb'}));
 // app.use(bodyParser.json({limit: '500mb'}));
@@ -71,7 +74,7 @@ app.use((req,res,next)=>{
 //      console.log(err.message)
 //      res.send({message:`${err}`})
 // })
-port=3005
+port=process.env.PORT
 var server = app.listen(port,()=>{
     console.log(`listening on port ${port}`)
 })

@@ -90,7 +90,8 @@ $(document).ready(function(){
     $.post({
       url:"http://localhost:3005/doctor/all-doctors",
       data:JSON.stringify(hospitalObj),
-      contentType:'application/json; charset=utf-8'
+      contentType:'application/json; charset=utf-8',
+      headers:{Authorization :localStorage.getItem('token')}
     })
     .done((res,stat)=>{
       //console.log(res.doctorObj)

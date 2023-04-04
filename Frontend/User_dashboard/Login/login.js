@@ -39,6 +39,7 @@ $("#submit").click(() => {
             // $("#password").val('')
          }
          else {
+            localStorage.setItem("token",response.token)
             if (response.type=="admin") {
                localStorage.setItem("active_user", `${JSON.stringify(response.masterObj)}`)
                localStorage.setItem("type","admin")

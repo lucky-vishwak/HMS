@@ -20,7 +20,8 @@ var appointments = []
 $.post({
   url: "http://localhost:3005/doctor/all-doctors",
   data: JSON.stringify({
-    name: JSON.parse(localStorage.getItem("active_user")).hospitalName
+    name: JSON.parse(localStorage.getItem("active_user")).hospitalName,
+    headers:{Authorization :localStorage.getItem('token')}
   }),
   contentType: 'application/json; charset=utf-8'
 }).done(async (res, stat) => {
@@ -29,7 +30,8 @@ $.post({
   }
 })
 $.get({
-  url: "http://localhost:3005/user/all-users"
+  url: "http://localhost:3005/user/all-users",
+  headers:{Authorization :localStorage.getItem('token')}
 }).done(async (res, stat) => {
   if (stat == "success") {
     $("#patientcount").text(`${res.userObj.length}`)
@@ -127,7 +129,8 @@ function graph_display(val) {
 $.post({
   url: "http://localhost:3005/appointment/all-appointments",
   data: JSON.stringify({
-    name: JSON.parse(localStorage.getItem("active_user")).hospitalName
+    name: JSON.parse(localStorage.getItem("active_user")).hospitalName,
+    headers:{Authorization :localStorage.getItem('token')}
   }),
   contentType: 'application/json; charset=utf-8'
 }).done(async (res, stat) => {

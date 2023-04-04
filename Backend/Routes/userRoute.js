@@ -2,13 +2,13 @@ const express=require('express')
 const multer = require('multer')
 const userRoute=express.Router()
 
-
+const verifyToken=require('../Middleware/verifyToken')
 //import express async-handler
 const errorHandler=require('express-async-handler')
 
 
 //import multerobj
-const upload=require('../Controllers/multer').multerObj
+const upload=require('../Middleware/multer').multerObj
 
 
 
@@ -25,19 +25,19 @@ userRoute.use(function(req, res, next) {
 userRoute.post('/register', errorHandler(userController.register))
 
 //update user request
-userRoute.post('/edit/:username',errorHandler(userController.updateDetails))
+userRoute.post('/edit/:username',verifyToken,errorHandler(userController.updateDetails))
 
 //all user
-userRoute.get('/all-users',errorHandler(userController.allusers))
+userRoute.get('/all-users',verifyToken,errorHandler(userController.allusers))
 
 //update user profilepic
 userRoute.post('/uploadfile',upload.single('image'),userController.updateProfilepic)
 
 //cancel appointments by specific user
-userRoute.put('/cancel-appointment',userController.cancelAppointment);
+userRoute.put('/cancel-appointment',verifyToken,userController.cancelAppointment);
 
 //accept appointments by specific user
-userRoute.put('/accept-appointment',userController.accepetAppointment);
+userRoute.put('/accept-appointment',verifyToken,userController.accepetAppointment);
 
 
 module.exports={userRoute}

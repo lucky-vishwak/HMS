@@ -35,7 +35,8 @@ function displayHospitals(hospital){
 $(document).ready(()=>{
     $.get({
         url:'http://localhost:3005/hospital/all-hospitals',
-        contentType:'application/json; charset=utf-8'
+        contentType:'application/json; charset=utf-8',
+        headers:{Authorization :localStorage.getItem('token')}
     })
     .done((response,stat)=>{
         if(response.message=='Success'){

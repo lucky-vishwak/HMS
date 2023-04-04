@@ -21,10 +21,7 @@ function getProfileDetails() {
         <p class="mb-4 display-5"> Personal Info</p>
       <div class="row">
         <div class="col-sm-3">
-          <p class="mb-0">Full Name</p>
-        </div>
-        <div class="col-sm-9">
-          <p class="text-muted mb-0">${userobj.fullname}</p>
+          <p cl.${userobj.fullname}</p>
         </div>
       </div>
       <hr>
@@ -182,7 +179,6 @@ function change(imgurl){
   user['phonenumber'] = form.phonenumber.value
   user.gender = userobj.gender
   user.image=imgurl
- console.log(user)
   var fName = form.fullname.value;
   if (!fName.match(regName)) {
     alert('Full name shouldnt contain numbers')
@@ -213,10 +209,11 @@ function change(imgurl){
   $.post({
     url: "http://localhost:3005/user/edit/:username",
     data: JSON.stringify(user),
-    contentType: 'application/json; charset=utf-8'
+    contentType: 'application/json; charset=utf-8',
+   headers:{Authorization :localStorage.getItem('token')}
   })
     .done((res, stat, xhr) => {
-
+      console.log(res)
       if (res.message == "changes successfully done") {
         alert(res.message)
         userobj = res.user
@@ -227,7 +224,7 @@ function change(imgurl){
         $("#form1").hide()
       }
       else {
-        alert(xhr.statusText)
+        alert(res.message)
       }
     })
 }
@@ -236,7 +233,8 @@ function showPrescription(index){
   $.ajax({
     type: "GET",
     url: `http://localhost:3005/appointment/show_prescription/${appo[index].id}`,
-    contentType: 'application/json; charset=utf-8'
+    contentType: 'application/json; charset=utf-8',
+   headers:{Authorization :localStorage.getItem('token')}
   })
     .done((response, stat) => {
       if (stat == 'success') {
@@ -353,7 +351,8 @@ function getMyappointment() {
   $('#form1').hide()
   $.get({
     url: `http://localhost:3005/appointment/appointments/${userobj.username}`,
-    contentType: 'application/json; charset=utf-8'
+    contentType: 'application/json; charset=utf-8',
+   headers:{Authorization :localStorage.getItem('token')}
   }).done((response, stat) => {
     if (stat == "success") {
       if (response.message == "Success") {
@@ -363,6 +362,9 @@ function getMyappointment() {
         }
         getMyappointmentDisplay(appo);
       }
+    }
+    else{
+      alert(response)
     }
   })
 }
@@ -375,7 +377,8 @@ function cancelAppointment(index) {
       type: "PUT",
       url: `http://localhost:3005/user/cancel-appointment`,
       data: JSON.stringify(appo[index]),
-      contentType: 'application/json; charset=utf-8'
+      contentType: 'application/json; charset=utf-8',
+     headers:{Authorization :localStorage.getItem('token')}
     })
       .done((response, stat) => {
         if (stat == 'success') {
@@ -398,7 +401,8 @@ function accepetAppointment(index) {
       type: "PUT",
       url: `http://localhost:3005/user/accept-appointment`,
       data: JSON.stringify(appo[index]),
-      contentType: 'application/json; charset=utf-8'
+      contentType: 'application/json; charset=utf-8',
+     headers:{Authorization :localStorage.getItem('token')}
     })
       .done((response, stat) => {
         if (stat == 'success') {
@@ -432,7 +436,8 @@ $(document).ready(function() {
           enctype:"multipart/form-data",
           processData: false,
           contentType:false,
-          cache:false
+          cache:false,
+          //Headers:{Authorization :localStorage.getItem('token')}
       }).done(function(msg) {
             userobj.image=msg.imgurl
             $('#change_details').prop('disabled',false)
@@ -450,7 +455,8 @@ function cancelAppointment(index) {
       type: "PUT",
       url: `http://localhost:3005/user/cancel-appointment`,
       data: JSON.stringify(appo[index]),
-      contentType: 'application/json; charset=utf-8'
+      contentType: 'application/json; charset=utf-8',
+     headers:{Authorization :localStorage.getItem('token')}
     })
       .done((response, stat) => {
         if (stat == 'success') {
@@ -472,7 +478,8 @@ function accepetAppointment(index) {
       type: "PUT",
       url: `http://localhost:3005/user/accept-appointment`,
       data: JSON.stringify(appo[index]),
-      contentType: 'application/json; charset=utf-8'
+      contentType: 'application/json; charset=utf-8',
+     headers:{Authorization :localStorage.getItem('token')}
     })
       .done((response, stat) => {
         if (stat == 'success') {

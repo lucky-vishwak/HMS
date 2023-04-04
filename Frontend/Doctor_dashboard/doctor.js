@@ -170,7 +170,8 @@ function change(img){
     type: "PUT",
     url: `http://localhost:3005/doctor/updateProfile/${doctorobj.username}`,
     data: JSON.stringify(userx),
-    contentType: 'application/json; charset=utf-8'
+    contentType: 'application/json; charset=utf-8',
+    headers:{Authorization :localStorage.getItem('token')}
   })
     .done((res, stat, xhr) => {
       if (res.message == "changes successfully done") {
@@ -267,7 +268,8 @@ $("#todayAppointmentButton").click(() => {
     $.post({
         url: `http://localhost:3005/appointment/get-today`,
         data: JSON.stringify(detailsObj),
-        contentType: 'application/json; charset=utf-8'
+        contentType: 'application/json; charset=utf-8',
+        headers:{Authorization :localStorage.getItem('token')}
     })
         .done((response, stat) => {
             appointments = response.appointments;
@@ -336,6 +338,7 @@ $("#updatePercerption").click(() => {
             type: 'PUT',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(updateAppointment),
+            headers:{Authorization :localStorage.getItem('token')},
             success: function (response, stat) {
                 if (stat == "success") {
                     alert("Prescription Updated Successfully!!");
@@ -355,7 +358,8 @@ $("#patientHistoryButton").click(() => {
 
     $.get({
         url: `http://localhost:3005/appointments/${doctorobj.username}`,
-        contentType: 'application/json; charset=utf-8'
+        contentType: 'application/json; charset=utf-8',
+        headers:{Authorization :localStorage.getItem('token')}
     })
         .done((response, stat) => {
             if (stat == "success") {

@@ -198,7 +198,8 @@ function nextPrev(n) {
     $.post({
       url: "http://localhost:3005/appointment/addappointment",
       data: JSON.stringify(appointmentobj),
-      contentType: 'application/json; charset=utf-8'
+      contentType: 'application/json; charset=utf-8',
+      headers:{Authorization :localStorage.getItem('token')}
     }).done(function (response, stat) {
       if (stat == "success") {
         toastFunction()
@@ -271,7 +272,8 @@ function logout() {
 //getting hospital names
 window.onload = function () {
   $.get({
-    url: "http://localhost:3005/hospital/all-hospitals"
+    url: "http://localhost:3005/hospital/all-hospitals",
+    headers:{Authorization :localStorage.getItem('token')}
   })
     .done((response, stat) => {
       for (const ele of response.hospitalsObj) {
