@@ -5,16 +5,21 @@ const userRoute=express.Router()
 
 //import express async-handler
 const errorHandler=require('express-async-handler')
+
+
 //import multerobj
-//const upload=require('../Controllers/multer')
+const upload=require('../Controllers/multer').multerObj
 
 
-//import userController
-const upload=require('../Controllers/multer').upload
 
 var userController=require('../Controllers/userController')
 //middleware
 userRoute.use(express.json())
+userRoute.use(function(req, res, next) {
+   res.header("Access-Control-Allow-Origin", "*");
+   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+   next();
+ });
 
 //register request
 userRoute.post('/register', errorHandler(userController.register))
@@ -26,9 +31,7 @@ userRoute.post('/edit/:username',errorHandler(userController.updateDetails))
 userRoute.get('/all-users',errorHandler(userController.allusers))
 
 //update user profilepic
-userRoute.post('/uploadfile/:username',upload,(req,res)=>{
-   console.log(upload)
-})
+userRoute.post('/uploadfile',upload.single('image'),userController.updateProfilepic)
 
 //cancel appointments by specific user
 userRoute.put('/cancel-appointment',userController.cancelAppointment);

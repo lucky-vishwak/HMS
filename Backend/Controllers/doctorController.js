@@ -42,11 +42,12 @@ async function allDoctors(req,res){
 }
 
 async function updatedDoctorObj(req,res){
+    
     let username=req.params.username;
     let updatedDoctorObj=req.body;
     let filter={username:username}
-    await doctorModel.updateOne(filter,{ $set :{phonenumber:updatedDoctorObj['phonenumber'],email:updatedDoctorObj['email'],about:updatedDoctorObj['about']}});
-    res.send({message:"Updated Successfully",updateddoctorobj:updatedDoctorObj});
+    await doctorModel.updateOne(filter,{ $set :{phonenumber:updatedDoctorObj['phonenumber'],email:updatedDoctorObj['email'],about:updatedDoctorObj['about'],fullname:updatedDoctorObj['fullname'],image:updatedDoctorObj['image']}});
+    res.send({message:"changes successfully done",updateddoctorobj:updatedDoctorObj});
 
 }
 

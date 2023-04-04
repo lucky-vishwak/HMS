@@ -9,6 +9,9 @@ const hospitalSchema={
     },
     password:{
         type:String
+    },
+    imgurl:{
+        type:String
     }
     //add field array of ref appointments
 }

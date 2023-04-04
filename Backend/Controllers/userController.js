@@ -5,12 +5,10 @@ const hospitalModel=require('../Models/hospitalModel.js').hospitalModel
 
 //import bcrypt
 const bcryptjs=require('bcryptjs')
-const multer=require('multer')
+//const multer=require('multer')
 const { appointmentHelperModel } = require('../Models/appointmenthelperModel.js')
 const { appointmentModel } = require('../Models/appointmentModel.js')
 
-//import multer
-//var mult=require('../Controllers/multer').upload
 
 //register
 async function register(req,res){
@@ -52,8 +50,6 @@ async function updateDetails(req,res){
 
     res.send({message:'changes successfully done','user':user})
 }
-//get profile pic
-
 
 //to get count of users
 async function allusers(req,res){
@@ -61,12 +57,11 @@ async function allusers(req,res){
     res.send({message:"Successfully retrived",userObj:users})
 }
 
-
 //upload profile pic
 async function updateProfilepic(req,res){
-    username=req.params.username
-    console.log(req.file)
-  }
+    res.send({message:"image updated successfully",imgurl:req.file.path})
+}
+  
 
 //to accept the appointments
 async function accepetAppointment(req,res){
@@ -86,7 +81,7 @@ async function accepetAppointment(req,res){
 async function cancelAppointment(req,res){
 
     let appointmentAssignObj=req.body;
-
+    
     await userModel.findOneAndUpdate({username:appointmentAssignObj.username},{$pull:{"myappointment":{id:appointmentAssignObj.id}}},{ safe: true, multi: false });
 
     await appointmentModel.updateOne({_id:appointmentAssignObj.id},{$set:{status:"cancelled",doctor:"642abd443a7befc275f25395"}})

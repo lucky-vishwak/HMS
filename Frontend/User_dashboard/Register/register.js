@@ -132,45 +132,66 @@ function datee() {
  }
 
 function validate() {
-
-    var x = true
+   
+ 
      user['state']=form.state.value
     user['date'] = form.date.value
     user['gender'] = form.Gender.value;
      user['city']=form.city.value;
-     user['pincode']=form.pincode.value;
-     user['image']='https://res.cloudinary.com/dgjsuikto/image/upload/v1680517425/HMS/image-1680517415990.jpg';
+     user['pincode']=form.pincode.value
+     
     // user['address']=form.Address.value
 
- 
+ x=true
 
 
 
     for (const i in user) {
         if (user[i] == '') {
             document.getElementById(`${i}t`).innerHTML = `<p class="alert alert-danger my-1 p-2" role="alert"> ${i} is not filled</p>`
-            x = false
+            x=false
         }
     }
     
-   
-    if (x == true) {
-        $.post({
-            url:"http://localhost:3005/user/register", 
-            data:JSON.stringify(user),
-            contentType:'application/json; charset=utf-8'
-        })
-        .done((res,stat,xhr)=>{
-            console.log(res)
-        
-            if(res.message=="registration successful")
-            {
-                window.location='../Login/login.html'
-               
-            }
-            else{
-                alert(res.status)
-            }
-        })
+   return x
+ 
 }
-}
+
+$('#form1').on('submit', function(event) {
+    event.preventDefault();
+    var formData=new FormData();
+    formData.append('image', $("#file")[0].files[0]);
+    
+    //formData.append('userObj',JSON.stringify(userObj));
+    let url = "http://127.0.0.1:3005/user/uploadfile/";
+    if(validate()){
+    $.ajax({
+        method: "POST",
+        url: url,
+        data: formData,
+        enctype:"multipart/form-data",
+        processData: false,
+        contentType:false,
+        cache:false
+    }).done(function(msg) {
+          alert(msg.message)
+          user.image= msg.imgurl
+            $.post({
+                url:"http://localhost:3005/user/register", 
+                data:JSON.stringify(user),
+                contentType:'application/json; charset=utf-8'
+            })
+            .done((res,stat,xhr)=>{
+            
+                if(res.message=="registration successful")
+                {
+                    window.location='../Login/login.html'
+                   
+                }
+                else{
+                    alert(res.status)
+                    console.log('hello')
+                }
+            })
+         } )
+        }})

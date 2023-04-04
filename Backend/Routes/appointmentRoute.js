@@ -30,6 +30,8 @@ appointmentRoute.get("/total-appointments",appointmentController.totalappointent
 
 appointmentRoute.post("/get-today",errorHandler(appointmentController.gettoday))
 
+//view prescription
+appointmentRoute.get('/show_prescription/:id',appointmentController.showPrescription)
 //
 appointmentRoute.put('/update-appoint/:id',errorHandler(appointmentController.updateDoctorAppointment))
 

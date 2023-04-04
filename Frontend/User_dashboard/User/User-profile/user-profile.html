@@ -59,6 +59,23 @@
       background: radial-gradient(#44006b, #ad1fff);
       overflow: hidden;
     }
+    /* .profile-preview-label{
+            display: block;
+            width : 45%;
+            margin-left : 25%;
+            text-transform: uppercase;
+            text-align: center;
+            background-color: #1172c2;
+            line-height: 45px;
+            color : white;
+            font-family: sans-serif;
+            cursor : pointer;
+            border-radius: 5px;
+        } */
+
+        #file{
+            display : none
+        }
 
     #radius-shape-2 {
       border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
@@ -130,12 +147,19 @@
   <section class="background-radial-gradient overflow-hidden mt-5">
     <div class="container py-5">
       <!-- nav bar of home page -->
-      <div class="row">
+      <div class="row" id="moddall">
         <div class="col-lg-4">
           <div class="card mb-4 bg-glass" >
             <div class="card-body text-center">
-             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+             <img id="imgxx" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
                 class="rounded-circle img-fluid" style="width: 150px;" onclick="getProfileDetails()">
+                <form id="form1" enctype="multipart/form-data">  
+                  <label for="file" class="profile-preview-label" id="label"><i class="fa-sharp fa-solid fa-pen-to-square"></i></label>
+                    <input  type="file" id="file" name="image" accept="image/*" />
+                  <button id="image" class="btn btn-sm btn-primary mt-1" type="submit"  > click
+                    </button> 
+                </form>
+          
               <h5 class="my-3" id="profileuser"></h5>
               <p class="text-muted mb-1" id="profilecity"></p>
               <p class="text-muted mb-4" id="profileaddress"></p>
@@ -143,10 +167,12 @@
                 <button style="text-transform: none !important;" type="button" class="btn px-4 py-2 appointment-btn"
                   onclick="getEditProfile()"><i class="fa-solid fa-pen-to-square mx-2"></i>Edit Profile</button>
               </div>
-              <div class="d-flex justify-content-center my-4">
+              <div class="d-flex justify-content-center my-4" >
                 <button style="text-transform: none !important;" type="button" class="btn appointment-btn px-4 py-2"
                   onclick="getMyappointment()"><i class="fa-regular fa-calendar-check mx-1"></i>My Appointments</button>
-              </div>
+              
+                </div>
+              
               <div class="d-flex justify-content-center ">
                 <button style="text-transform: none !important;" type="button" class="btn appointment-btn px-5 py-2"
                   onclick="getFeedback()"><i class="fa-solid fa-comment mx-1"></i>Feedback</button>
@@ -158,6 +184,8 @@
         </div>
       </div>
   </section>
+
+
 
   <footer id="footer">
 

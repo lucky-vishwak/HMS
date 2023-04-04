@@ -73,7 +73,6 @@ function getProfileDetails() {
           </div>
         </div>
         <hr>
-     
         <div class="row">
         <div class="col-sm-3">
           <p class="mb-0">city</p>
@@ -97,11 +96,9 @@ function getProfileDetails() {
     `
 
 }
-$('#file').click(()=>{
-  let   formData=new FormData();
-  formData.append('image',this.file,this.file.name)
-})
+
 function getEditProfile() {
+  $('#form1').show()
   let userDetails = document.getElementById("Render");
   userDetails.innerHTML = ` <div class="card mb-4 bg-glass">
      <div class="card-header display-5">Account Details</div>
@@ -154,18 +151,23 @@ function getEditProfile() {
                  </div>
              </div>
              <!-- Save changes button-->
-             <div class="text-center"><button class="btn appointment-btn mx-auto" type="button" onclick="change_details()">Save changes</button>
+             <div class="text-center"><button class="btn appointment-btn mx-auto" type="button" id="change_details">Save changes</button>
              </div>
               </form>
      </div>
            
  </div>`;
 
+ $('#change_details').click(()=>{
+   console.log("clicked")
+   change(userobj.image)
+ })
+
 
 }
-
-
-function change_details() {
+          
+function change(imgurl){
+ 
   var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;  //Javascript reGex for Email Validation.
   var regPhone = /^\d{10}$/;                                         //Javascript reGex for Phone Number validation.
   var regName = /^[a-zA-Z\ ]+$/
@@ -179,8 +181,8 @@ function change_details() {
   user['email'] = form.email.value
   user['phonenumber'] = form.phonenumber.value
   user.gender = userobj.gender
-
-
+  user.image=imgurl
+ console.log(user)
   var fName = form.fullname.value;
   if (!fName.match(regName)) {
     alert('Full name shouldnt contain numbers')
@@ -217,18 +219,38 @@ function change_details() {
 
       if (res.message == "changes successfully done") {
         alert(res.message)
-
         userobj = res.user
-
-        getProfileDetails()
+        $('#imgxx').attr('src',`${user.image}`)
+        
         localStorage.setItem('active_user', JSON.stringify(user))
+        getProfileDetails()
+        $("#form1").hide()
       }
       else {
         alert(xhr.statusText)
       }
     })
 }
+function showPrescription(index){
+  
+  $.ajax({
+    type: "GET",
+    url: `http://localhost:3005/appointment/show_prescription/${appo[index].id}`,
+    contentType: 'application/json; charset=utf-8'
+  })
+    .done((response, stat) => {
+      if (stat == 'success') {
+        if (response.message == 'prescription shown') {
+          var prescription=response.prescription
+          $('#fullNameToday').val(`${response.patientname}`)
+           $('#percerptionToday').val(`${prescription.description}`)
+           $('#genderToday').val(`${prescription.temperature}`)
+           $('#ageToday').val(`${prescription.BP}`)
+        }
+      }
+    })
 
+}
 function getMyappointmentDisplay() {
   let userDetails = document.getElementById("Render");
   $("#Render").html("")
@@ -257,7 +279,7 @@ function getMyappointmentDisplay() {
     tr.append($("<td></td>").text(ele.appointmentdate))
     tr.append($("<td></td>").text(ele.timeslot))
     let td_status = $("<td></td>").text(ele.status);
-    let td_status_comp=$("<td></td>").text(ele.status);
+    let td_status_comp=$("<td></td>").text(ele.status)
     let td_button = $("<td></td>").attr('id', `but${i}`);
     let button_cancel = $("<button></button>").text('Reject').addClass(`btn btn-danger mx-1`).attr('onclick', `cancelAppointment(${i})`);
     let button_accept = $("<button></button>").text('Accept').addClass('btn btn-success').attr('onclick', `accepetAppointment(${i})`);
@@ -266,17 +288,69 @@ function getMyappointmentDisplay() {
     if (ele.doctor.username != 'Not assigned' && ele.status == 'pending') {
       tr.append(td_button);
     }
-    else if(ele.status=='completed'){
-      tr.append(td_status_comp);
-    }
     else if (ele.status == 'accepted' || ele.status == 'pending') {
       tr.append(td_status);
+    }
+    else if (ele.status == 'completed') {
+      var td=$('<td></td>')
+      var mod=$(`<button>view</button>`).attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered" })    
+      $('#moddall').append(` <div class="card" id='modalhide'>
+      <div class="card-body">
+        <div class="modal fade" id="verticalycentered" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Prescription</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="row mb-3">
+                  <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Patient Name</label>
+                  <div class="col-md-8 col-lg-9">
+                     <input name="fullName" type="text" class="form-control" id="fullNameToday" value="" disabled>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="percerption" class="col-md-4 col-lg-3 col-form-label">Description</label>
+                  <div class="col-md-8 col-lg-9">
+                      <textarea name="percerption" class="form-control" id="percerptionToday" style="height: 100px" disabled></textarea>
+                  </div>
+                </div>
+                <div class="row">
+                  <label for="gender" class="col-md-4 col-lg-3 col-form-label">Temperature</label>
+                  <div class="col-md-8 col-lg-9">
+                      <input type="text" name="gender" class="form-control mb-2" id="genderToday" disabled value=""/>
+                  </div>
+                </div>
+                <div class="row">
+                  <label for="age" class="col-md-4 col-lg-3 col-form-label ">B/P</label>
+                  <div class="col-md-8 col-lg-9">
+                      <input type="text" name="age" class="form-control mb-4" id="ageToday" disabled  value=""/>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="updatePercerption">Visited</button>
+              </div>
+            </div>
+          </div>
+        </div><!-- End Vertically centered Modal-->
+
+      </div>
+    </div>`)
+      mod.attr('onclick', `showPrescription(${i})`).addClass('btn btn-primary')
+      td.append(td_status_comp)
+      td.append(mod);
+      tr.append(td)
     }
     $("#details").append(tr);
     i++;
   }
+  //$('#modalhide').hide()
 }
 function getMyappointment() {
+  $('#form1').hide()
   $.get({
     url: `http://localhost:3005/appointment/appointments/${userobj.username}`,
     contentType: 'application/json; charset=utf-8'
@@ -339,11 +413,83 @@ function accepetAppointment(index) {
 }
 
 
+$(document).ready(function() {
+ 
+  $('#imgxx').attr('src',`${userobj.image}`)
+  $("#form1").hide()
+  $('#form1').on('submit', function(event) {
+      event.preventDefault();
+      //button disable
+      $('#change_details').prop('disabled',true)
+      var formData=new FormData();
+      formData.append('image', $("#file")[0].files[0]);
+      //formData.append('userObj',JSON.stringify(userObj));
+      let url = "http://127.0.0.1:3005/user/uploadfile/";
+      $.ajax({
+          method: "POST",
+          url: url,
+          data: formData,
+          enctype:"multipart/form-data",
+          processData: false,
+          contentType:false,
+          cache:false
+      }).done(function(msg) {
+            userobj.image=msg.imgurl
+            $('#change_details').prop('disabled',false)
+      });
+  });
+});
+
+
+
+function cancelAppointment(index) {
+  let confirmation = confirm('Are You Sure?');
+  appo[index]['username']=userobj.username;
+  if (confirmation) {
+    $.ajax({
+      type: "PUT",
+      url: `http://localhost:3005/user/cancel-appointment`,
+      data: JSON.stringify(appo[index]),
+      contentType: 'application/json; charset=utf-8'
+    })
+      .done((response, stat) => {
+        if (stat == 'success') {
+          if (response.message == 'Appointment Successfully cancelled') {
+            alert(response.message);
+            appo = [];
+            getMyappointment();
+          }
+        }
+      })
+  }
+}
+
+function accepetAppointment(index) {
+  let confirmation = confirm('Are You Sure?');
+  console.log(appo[index])
+  if (confirmation) {
+    $.ajax({
+      type: "PUT",
+      url: `http://localhost:3005/user/accept-appointment`,
+      data: JSON.stringify(appo[index]),
+      contentType: 'application/json; charset=utf-8'
+    })
+      .done((response, stat) => {
+        if (stat == 'success') {
+          if (response.message == 'Appointment Accepted Successfully!!!') {
+            alert(response.message);
+            appo = [];
+            getMyappointment();
+          }
+        }
+      })
+  }
+}
 
 //feedback
 
 function getFeedback() {
-
+  $('#form1').hide()
   let userDetails = document.getElementById("Render");
 
   userDetails.innerHTML = `<div class="card mb-4 bg-glass">
@@ -378,12 +524,12 @@ function getFeedback() {
  </div>`
 }
 
-$.ready(()=>{
-  function selectFile(eventObj){
-    this.file=eventObj.target.files[0]
-  }
+// $.ready(()=>{
+//   function selectFile(eventObj){
+//     this.file=eventObj.target.files[0]
+//   }
   
-})
+// })
 
 var login_btn = document.getElementById("login")
 var logout_btn = document.getElementById("logout")

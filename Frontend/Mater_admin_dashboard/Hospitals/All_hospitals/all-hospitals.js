@@ -1,10 +1,16 @@
 function displayHospitals(hospital){
+    console.log(hospital)
     for(let i=0;i<hospital.length;i++){
       let div_col=$('<div></div>').addClass('col')
       let div_card=$('<div></div>').addClass('card').css("height","")
       let div_card_body=$('<div></div>').addClass('card-body')
       let user_img=$('<img />')
       //user_img.attr('width',"18rem")
+      console.log(hospital[i].imgurl)
+      console.log();
+      console.log();
+      console.log();
+      console.log();
       user_img.attr('src', hospital[i].imgurl);
       let div_card_info=$('<div></div>').addClass('teacher-info')
       let p_name=$('<p></p>').text(hospital[i].hospitalName).addClass('mt-2 text-bold' )

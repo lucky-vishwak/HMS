@@ -205,8 +205,12 @@ async function updateDoctorAppointment(req, res) {
     res.send({ message: "response send successfullySuccessfully" });
 }
 
-module.exports = {
-    addApp, addappointment, cancelledAppointments, completedAppointments,
-    allAppointments, totalappointent
-    , getappointment, hospitalappointment, gettoday, updateDoctorAppointment
+async function showPrescription(req,res){
+    var id=req.params.id
+    var pres=await appointmentModel.findOne({_id:id})
+    res.send({message:"prescription shown",prescription:pres.prescription,patientname:pres.patientname})
+        
 }
+
+
+module.exports={addApp,addappointment,cancelledAppointments,completedAppointments,allAppointments,getappointment,hospitalappointment,gettoday,showPrescription,totalappointent,updateDoctorAppointment}
