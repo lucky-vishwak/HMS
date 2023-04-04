@@ -63,17 +63,17 @@ function emailAdd() {
 function passwordd() {
     var pass = form1.password.value;
 
-    if (!pass.match(regpass)) {
-        document.getElementById("passwordt").innerHTML =
-            `<p class="alert alert-danger my-1 p-2" role="alert">password should confirmpasswordtain Atleast one digit,
-         Atleast one lowercase character 
-         Atleast one uppercase character 
-         Atleast one special character </p>`
-    }
-    else {
+    // if (!pass.match(regpass)) {
+    //     document.getElementById("passwordt").innerHTML =
+    //         `<p class="alert alert-danger my-1 p-2" role="alert">password should confirmpasswordtain Atleast one digit,
+    //      Atleast one lowercase character 
+    //      Atleast one uppercase character 
+    //      Atleast one special character </p>`
+    // }
+    //else {
         document.getElementById("passwordt").innerHTML = ``
         Doctors.password = pass
-    }
+   // }
 }
 
 
@@ -90,15 +90,28 @@ function confirmPasswordd() {
         Doctors.confirmpassword = conpass
     }
 }
-
- 
-function validate() {
-
-    var x = true
+$('#formx').on('submit', function(event) {
+    event.preventDefault();
+    var formData=new FormData();
+    formData.append('image', $("#file")[0].files[0]);
+    //formData.append('userObj',JSON.stringify(userObj));
+    let url = "http://127.0.0.1:3005/user/uploadfile/";
+    $.ajax({
+        method: "POST",
+        url: url,
+        data: formData,
+        enctype:"multipart/form-data",
+        processData: false,
+        contentType:false,
+        cache:false
+    }).done(function(msg) {
+          alert(msg.message)
+          var x = true
+    Doctors['imgurl']=msg.imgurl
     Doctors['join_date'] = form.admitdate.value
     Doctors['gender'] = form.gender.value;
     Doctors['join_time']=form.admittime.value;
-    Doctors['imgurl']=form.imgUrl.value;
+   
     Doctors['about']=form2.about.value;
     Doctors['specialization']=form2.specialization.value;
 
@@ -129,6 +142,12 @@ function validate() {
             }
         })
     }
+    });
+});
+ 
+function validate() {
+
+    
 }
 
 $(document).ready(()=>{

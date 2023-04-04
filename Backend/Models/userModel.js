@@ -34,7 +34,11 @@ let userSchema =
     },
     gender: { 
         type: String 
+    },
+     image:{
+      type:String
     }
+
 }
 
 //creating model

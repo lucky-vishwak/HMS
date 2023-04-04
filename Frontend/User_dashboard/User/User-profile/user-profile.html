@@ -130,12 +130,18 @@
   <section class="background-radial-gradient overflow-hidden mt-5">
     <div class="container py-5">
       <!-- nav bar of home page -->
-      <div class="row">
+      <div class="row" id="moddall">
         <div class="col-lg-4">
           <div class="card mb-4 bg-glass" >
             <div class="card-body text-center">
-              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
                 class="rounded-circle img-fluid" style="width: 150px;" onclick="getProfileDetails()">
+                <form id="form1" enctype="multipart/form-data">  
+                  <input  type="file" id="file" name="image"/>
+                  <input type="text" name="vish" value="vishal" id="vc"/>
+                  <button id="image" class="btn btn-sm btn-primary" type="submit" style="margin-left: -1rem;margin-bottom: -6rem;" ><i class="fa-sharp fa-solid fa-pen-to-square"></i></button> 
+                </form>
+          
               <h5 class="my-3" id="profileuser"></h5>
               <p class="text-muted mb-1" id="profilecity"></p>
               <p class="text-muted mb-4" id="profileaddress"></p>
@@ -143,11 +149,12 @@
                 <button style="text-transform: none !important;" type="button" class="btn px-4 py-2 appointment-btn"
                   onclick="getEditProfile()"><i class="fa-solid fa-pen-to-square mx-2"></i>Edit Profile</button>
               </div>
-              <div class="d-flex justify-content-center my-4">
+              <div class="d-flex justify-content-center my-4" >
                 <button style="text-transform: none !important;" type="button" class="btn appointment-btn px-4 py-2"
                   onclick="getMyappointment()"><i class="fa-regular fa-calendar-check mx-1"></i>My Appointments</button>
-                <!-- model code -->
-              </div>
+              
+                </div>
+              
               <div class="d-flex justify-content-center ">
                 <button style="text-transform: none !important;" type="button" class="btn appointment-btn px-5 py-2"
                   onclick="getFeedback()"><i class="fa-solid fa-comment mx-1"></i>Feedback</button>

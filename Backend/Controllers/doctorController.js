@@ -35,15 +35,17 @@ async function allDoctors(req,res){
 
 async function updatedDoctorObj(req,res){
     let username=req.params.username;
-    
     let updatedDoctorObj=req.body;
-
     let filter={username:username}
-
     await doctorModel.updateOne(filter,{ $set :{phonenumber:updatedDoctorObj['phonenumber'],email:updatedDoctorObj['email'],about:updatedDoctorObj['about']}});
-
     res.send({message:"Updated Successfully",updateddoctorobj:updatedDoctorObj});
 
 }
 
-module.exports={addDoctor,allDoctors,updatedDoctorObj}
+//total doctors for master admin
+async function totaldoctors(req,res){
+    let doctors=await doctorModel.find({})
+    res.send({message:"success",doctorObj:doctors})
+}
+
+module.exports={addDoctor,allDoctors,updatedDoctorObj,totaldoctors}

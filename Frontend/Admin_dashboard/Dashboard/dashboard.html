@@ -286,7 +286,7 @@
               <div class="card info-card revenue-card">
 
                 <div class="card-body">
-                  <h5 class="card-title">Total Patients</h5>
+                  <h5 class="card-title">Total Hospitals</h5>
 
                   <div class="d-flex align-items-center">
                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -358,14 +358,14 @@
                   <h6>Filter</h6>
                 </li>
 
-                <li><a class="dropdown-item" href="#">Today</a></li>
-                <li><a class="dropdown-item" href="#">This Month</a></li>
-                <li><a class="dropdown-item" href="#">This Year</a></li>
+                <li><a class="dropdown-item" id="15days">past 15 days</a></li>
+                <li><a class="dropdown-item" id="10days">past 10 days</a></li>
+                <li><a class="dropdown-item" id="5days">past 5 days</a></li>
               </ul>
             </div>
 
             <div class="card-body">
-              <h5 class="card-title">Reports <span>/Today</span></h5>
+              <h5 class="card-title">Reports <span id="graph_data">/past 15 days</span></h5>
 
               <!-- Line Chart -->
               <div id="reportsChart"></div>

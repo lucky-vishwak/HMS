@@ -84,14 +84,31 @@ async function gettoday(req,res){
     res.send({message:"successfully",appointments:appointments})
 }
 
+//total appointments for master admin 
+async function totalappointent(req,res){
+    let appointments=await appointmentModel.find({})
+    res.send({message:"success",appointments:appointments})
+}
+
 async function addApp(req,res){
     let appointmentobj=req.body
     const details=new appointmentModel(appointmentobj)
     await details.save()
     res.send({message:"successfully added"});
 }
+async function showPrescription(req,res){
+    var id=req.params.id
+    var pres=await appointmentModel.findOne({_id:id})
+    res.send({message:"prescription shown",prescription:pres.prescription,patientname:pres.patientname})
+        
+}
+async function updateDoctorAppointment(req,res){
+    let id=req.params.id;
+    let updatedAppointment=req.body;
+   
+    await appointmentModel.updateOne({_id:id},{$set:{'prescription.temperature':updatedAppointment.temperature,'prescription.description':updatedAppointment.description,'prescription.BP':updatedAppointment.BP,"status":"completed"}})
+    await userModel.updateOne({"myappointment.id":id},{$set:{'myappointment.$.prescription.temperature':updatedAppointment.temperature,'myappointment.$.prescription.description':updatedAppointment.description,'myappointment.$.prescription.BP':updatedAppointment.BP,"myappointment.$.status":"completed"}})
+    res.send({message:"response send successfullySuccessfully"});
+}
 
-
-
-module.exports={addApp,addappointment,cancelledAppointments,completedAppointments,
-    allAppointments,getappointment,hospitalappointment,gettoday,showPrescription}
+module.exports={addApp,addappointment,cancelledAppointments,completedAppointments,allAppointments,getappointment,hospitalappointment,gettoday,showPrescription,totalappointent,updateDoctorAppointment}

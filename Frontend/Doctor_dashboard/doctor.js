@@ -1,18 +1,18 @@
-if(JSON.parse(localStorage.getItem("active_user"))){
-    if(localStorage.getItem("type")=="doctor"){
+if (JSON.parse(localStorage.getItem("active_user"))) {
+    if (localStorage.getItem("type") == "doctor") {
         $("#username").text(localStorage.getItem("active_user"))
     }
-    else{
-        location.href="../404/404.html"
+    else {
+        location.href = "../404/404.html"
         console.log("hello");
     }
 }
-else{
-    location.href="../404/404.html"
+else {
+    location.href = "../404/404.html"
 }
-$("#logout").click(()=>{
+$("#logout").click(() => {
     localStorage.clear()
-    location.href="../User_dashboard/Login/login.html"
+    location.href = "../User_dashboard/Login/login.html"
 })
 
 
@@ -35,13 +35,15 @@ let timeslots = ["10AM-11AM", "11AM-12PM", "12PM-1PM", "1PM-2PM", "2PM-3PM", "3P
 //reusing function in both edit and overview
 function toUpdateProfile() {
     doctorobj = JSON.parse(localStorage.getItem("active_user"));
+     $(`.imageMain`).attr("src",`${doctorobj.imgurl}`)
     $(`#specalizationMain`).text(`${doctorobj.specialization}`)
-    $(`#aboutProfile`).text(`${doctorobj.about}`);
+    $(`#aboutProfile`).text(`${doctorobj.about}`)
     $(`#fullNameProfile`).text(`${doctorobj.fullname}`);
     $(`#specalizationProfile`).text(`${doctorobj.specialization}`);
     $(`#emailProfile`).text(`${doctorobj.email}`);
     $(`#phonenumberProfile`).text(`${doctorobj.phonenumber}`);
-
+    $(`#rating_avgProfile`).text(`${doctorobj.rating_avg}`)
+    $(`#genderProfile`).text(`${doctorobj.gender}`)
 }
 
 $(document).ready(() => {
@@ -62,6 +64,7 @@ function EditProfile() {
     $(`#specalizationEdit`).val(`${doctorobj.specialization}`);
     $(`#emailEdit`).val(`${doctorobj.email}`);
     $(`#phonenumberEdit`).val(`${doctorobj.phonenumber}`);
+    $("#imageEdit").attr("src",`${doctorobj.imgurl}`)
 }
 
 $("#editProfileButton").click(() => {
@@ -69,7 +72,7 @@ $("#editProfileButton").click(() => {
     <div class="row mb-3">
     <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
     <div class="col-md-8 col-lg-9">
-        <img src="assets/img/profile-img.jpg" alt="Profile" id="imageEdit">
+        <img src="" alt="Profile" id="imageEdit">
         <div class="pt-2">
         <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
         <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
@@ -80,7 +83,7 @@ $("#editProfileButton").click(() => {
     <div class="row mb-3">
     <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
     <div class="col-md-8 col-lg-9">
-        <input name="fullName" type="text" class="form-control" id="fullNameEdit" value="Kevin Anderson" disabled>
+        <input name="fullName" type="text" class="form-control" id="fullNameEdit" value="Kevin Anderson" >
     </div>
     </div>
 
@@ -183,16 +186,16 @@ $("#todayAppointmentButton").click(() => {
         .done((response, stat) => {
             appointments = response.appointments;
             $("#appointmentSlots").html("")
-            var i=0
             for (let time of timeslots) {
-                if (obj = appointments.find(x => x.timeslot === time)) {
+                var i = appointments.findIndex(x => x.timeslot === time)
+                if (i != -1) {
                     let div_col = $('<div></div>').addClass('col');
                     let div_card = $('<div></div>').addClass('card text-center');
                     let div_card_body = $('<div></div>').addClass('card-body').attr('id', 'cardTodayApp');
-                    let h5_title = $('<h5></h5>').addClass('card-title').text(`${obj.timeslot}`);
-                    let p_name = $('<p></p>').addClass('card-text d-block').text(`Name:${obj.patientname}`);
-                    let p_reason = $('<p></p>').addClass('card-text d-block').text(`Reason:${obj.problem}`);
-                    let button_view = $('<button></button>').text('View').attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered", "onclick": `model(${i})`}).addClass('btn btn-primary');
+                    let h5_title = $('<h5></h5>').addClass('card-title').text(`${appointments[i].timeslot}`);
+                    let p_name = $('<p></p>').addClass('card-text d-block').text(`Name:${appointments[i].patientname}`);
+                    let p_reason = $('<p></p>').addClass('card-text d-block').text(`Reason:${appointments[i].problem}`);
+                    let button_view = $('<button></button>').text('View').attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered", "onclick": `model(${i})` }).addClass('btn btn-primary');
                     div_card_body.append(h5_title);
                     div_card_body.append(p_name);
                     div_card_body.append(p_reason);
@@ -200,7 +203,6 @@ $("#todayAppointmentButton").click(() => {
                     div_card.append(div_card_body);
                     div_col.append(div_card);
                     $("#appointmentSlots").append(div_col);
-                    i++
                 }
                 else {
                     let div_col = $('<div></div>').addClass('col');
@@ -216,18 +218,19 @@ $("#todayAppointmentButton").click(() => {
                     div_card_body.append(button_view);
                     div_card.append(div_card_body);
                     div_col.append(div_card);
-                    $("#appointmentSlots").append(div_col);   
+                    $("#appointmentSlots").append(div_col);
                 }
             }
         })
 })
 
-
+let x = 0;
 function model(val) {
     $("#fullNameToday").val(`${appointments[val].username}`)
-    $("#percerptionToday").val(``)
-    $("#genderToday").val(`${appointments[val].gender}`)
-    $("#ageToday").val(`${appointments[val].age}`)
+    $("#percerptionToday").val(`${appointments[val].prescription.description}`)
+    $("#genderToday").val(`${appointments[val].prescription.temperature}`)
+    $("#ageToday").val(`${appointments[val].prescription.BP}`)
+    x = val;
 }
 
 $("#updatePercerption").click(() => {
@@ -235,24 +238,31 @@ $("#updatePercerption").click(() => {
         alert("percerption is not updated!!");
     else {
         let updateAppointment = {
-            percerption: $("#percerptionToday").val(),
+            description: $("#percerptionToday").val(),
+            temperature: $("#genderToday").val(),
+            BP: $("#ageToday").val(),
             status: "completed"
         }
-        $.put({
-            url: `http://localhost:3005/appointments/update-appoint`,
+        $.ajax({
+            url: `http://localhost:3005/appointment/update-appoint/${appointments[x]._id}`,
+            type: 'PUT',
+            contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(updateAppointment),
-            contentType: 'application/json; charset=utf-8'
+            success: function (response, stat) {
+                if (stat == "success") {
+                    alert("Profile Updated Successfully!!");
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log('Error in Operation');
+                console.log(xhr)
+            }
         })
-            .done((response, status) => {
-                alert(response.message);
-            })
 
     }
 })
 
 // Patient History related jquery
-
-
 $("#patientHistoryButton").click(() => {
 
     $.get({
@@ -270,11 +280,8 @@ $("#patientHistoryButton").click(() => {
                     let td_date = $('<td><td>').text(`${obj.date}`);
                     let button_view = $('<button></button>').text('View').attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered2", id: `${i + 1}` }).addClass('btn btn-primary');
                     let td_button = $('<td><td>').attr('id', '#butonModel');
-
                     td_button.append(button_view);
-
                     let tr = $('<tr></tr>');
-
                     tr.append(th_sno);
                     tr.append(td_patientName);
                     tr.append(td_reason);
@@ -297,7 +304,3 @@ $("#butonModel").click(() => {
     $("#timeHistory").val(`${patients[index - 1].time}`);
 
 })
-
-
-
-

@@ -306,13 +306,7 @@
                              </div>
                              <div id="join_timet"></div>
                            </div>
-                           <div class="col-md-6 col-lg-6 mb-2">
-                             <div class="form-outline">
-                               <label class="form-label" for="imgUrl">Image Url</label>
-                               <input type="text" id="imgUrl" name="imgUrl" class="form-control p-2" required  />
-                             </div>
-                             <div id="imgurlt"></div>
-                           </div>
+                           
      
                           </div>
                           <div class="row">
@@ -404,9 +398,18 @@
                                 </div>
                               </div>
                           </form>
-                          <div class="text-center mt-5">
-                            <button type="button" class="btn btn-primary px-5" onclick="validate()">Submit</button>   
-                        </div>
+                          <form id="formx" enctype="multipart/form-data">
+                          
+                            <div class="form-outline mt-4" >
+                              
+                              <input type="file" id="file" name="imgurl" class="form-control p-2" required  />
+                            </div>
+                            <div id="imgurlt"></div>
+                            <div class="text-center mt-3 mb-3">
+                              <button type="submit" class="btn btn-primary px-5" >Submit</button>   
+                          
+                          </div>
+                        </form>
                       </div>  
                   </div>
                    </div>

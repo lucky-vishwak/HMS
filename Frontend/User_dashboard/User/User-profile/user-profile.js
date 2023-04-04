@@ -160,8 +160,7 @@ function getEditProfile() {
 
 
 }
-
-
+          
 function change_details() {
   var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;  //Javascript reGex for Email Validation.
   var regPhone = /^\d{10}$/;                                         //Javascript reGex for Phone Number validation.
@@ -225,7 +224,26 @@ function change_details() {
       }
     })
 }
+function showPrescription(index){
+  
+  $.ajax({
+    type: "GET",
+    url: `http://localhost:3005/appointment/show_prescription/${appo[index].id}`,
+    contentType: 'application/json; charset=utf-8'
+  })
+    .done((response, stat) => {
+      if (stat == 'success') {
+        if (response.message == 'prescription shown') {
+          var prescription=response.prescription
+          $('#fullNameToday').val(`${response.patientname}`)
+           $('#percerptionToday').val(`${prescription.description}`)
+           $('#genderToday').val(`${prescription.temperature}`)
+           $('#ageToday').val(`${prescription.BP}`)
+        }
+      }
+    })
 
+}
 function getMyappointmentDisplay() {
   let userDetails = document.getElementById("Render");
   $("#Render").html("")
@@ -266,7 +284,52 @@ function getMyappointmentDisplay() {
     }
     else if (ele.status == 'completed') {
       var td=$('<td></td>')
-      var mod=$(`<button></button>`).text(`view`).attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered", id: `${i + 1}` });
+      var mod=$(`<button>view</button>`).attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered" })
+      $('#moddall').append(` <div class="card">
+      <div class="card-body">
+        <div class="modal fade" id="verticalycentered" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Prescription</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="row mb-3">
+                  <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Patient Name</label>
+                  <div class="col-md-8 col-lg-9">
+                     <input name="fullName" type="text" class="form-control" id="fullNameToday" value="" disabled>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="percerption" class="col-md-4 col-lg-3 col-form-label">Description</label>
+                  <div class="col-md-8 col-lg-9">
+                      <textarea name="percerption" class="form-control" id="percerptionToday" style="height: 100px" disabled></textarea>
+                  </div>
+                </div>
+                <div class="row">
+                  <label for="gender" class="col-md-4 col-lg-3 col-form-label">Temperature</label>
+                  <div class="col-md-8 col-lg-9">
+                      <input type="text" name="gender" class="form-control mb-2" id="genderToday" disabled value=""/>
+                  </div>
+                </div>
+                <div class="row">
+                  <label for="age" class="col-md-4 col-lg-3 col-form-label ">B/P</label>
+                  <div class="col-md-8 col-lg-9">
+                      <input type="text" name="age" class="form-control mb-4" id="ageToday" disabled  value=""/>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="updatePercerption">Visited</button>
+              </div>
+            </div>
+          </div>
+        </div><!-- End Vertically centered Modal-->
+
+      </div>
+    </div>`)
       mod.attr('onclick', `showPrescription(${i})`).addClass('btn btn-primary')
       td.append(td_status_comp)
       td.append(mod);
@@ -285,7 +348,7 @@ function getMyappointment() {
   }).done((response, stat) => {
     if (stat == "success") {
       if (response.message == "Success") {
-        console.log(response);
+       
         appo=[]
         for (let ele of response.appointments) {
           appo.push(ele)
@@ -295,6 +358,71 @@ function getMyappointment() {
     }
   })
 }
+
+function cancelAppointment(index) {
+  let confirmation = confirm('Are You Sure?');
+  if (confirmation) {
+    $.ajax({
+      type: "PUT",
+      url: `http://localhost:3005/user/cancel-appointment`,
+      data: JSON.stringify(appo[index]),
+      contentType: 'application/json; charset=utf-8'
+    })
+      .done((response, stat) => {
+        if (stat == 'success') {
+          if (response.message == 'Appointment Successfully cancelled') {
+            alert(response.message);
+            appo = [];
+            getMyappointment();
+          }
+        }
+      })
+  }
+}
+
+function accepetAppointment(index) {
+  let confirmation = confirm('Are You Sure?');
+ 
+  if (confirmation) {
+    $.ajax({
+      type: "PUT",
+      url: `http://localhost:3005/user/accept-appointment`,
+      data: JSON.stringify(appo[index]),
+      contentType: 'application/json; charset=utf-8'
+    })
+      .done((response, stat) => {
+        if (stat == 'success') {
+          if (response.message == 'Appointment Accepted Successfully!!!') {
+            alert(response.message);
+            appo = [];
+            getMyappointment();
+          }
+        }
+      })
+  }
+}
+
+$(document).ready(function() {
+  $('#form1').on('submit', function(event) {
+      event.preventDefault();
+      var formData=new FormData();
+      formData.append('image', $("#file")[0].files[0]);
+      //formData.append('userObj',JSON.stringify(userObj));
+      let url = "http://127.0.0.1:3005/user/uploadfile/";
+      $.ajax({
+          method: "POST",
+          url: url,
+          data: formData,
+          enctype:"multipart/form-data",
+          processData: false,
+          contentType:false,
+          cache:false
+      }).done(function(msg) {
+            alert(msg.message)
+            console.log(msg);
+      });
+  });
+});
 
 function cancelAppointment(index) {
   let confirmation = confirm('Are You Sure?');
@@ -339,23 +467,6 @@ function accepetAppointment(index) {
   }
 }
 
-function showPrescription(index){
-  
-    $.ajax({
-      type: "GET",
-      url: `http://localhost:3005/appointment/show_prescription/${appo[index].id}`,
-      contentType: 'application/json; charset=utf-8'
-    })
-      .done((response, stat) => {
-        if (stat == 'success') {
-          if (response.message == 'prescription shown') {
-               console.log(response)
-          }
-        }
-      })
- 
-}
-
 //feedback
 
 function getFeedback() {
@@ -394,6 +505,12 @@ function getFeedback() {
  </div>`
 }
 
+// $.ready(()=>{
+//   function selectFile(eventObj){
+//     this.file=eventObj.target.files[0]
+//   }
+  
+// })
 
 var login_btn = document.getElementById("login")
 var logout_btn = document.getElementById("logout")

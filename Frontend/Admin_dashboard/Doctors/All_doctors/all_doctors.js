@@ -1,6 +1,7 @@
 function search(){
    // var s=document.getElementById('x').value.toUpperCase()
-  var x=$('.card')
+  var x=$('.pp')
+
   var s=$('#x').val().toUpperCase()
   var spec=$('#sel').val().toUpperCase()
   if(spec=='SPECIALIZATION'){
@@ -11,15 +12,15 @@ function search(){
 function sea(x,s,spec){
   q=0
   
-  
   for ( i=0;i<x.length;i++) {
+    console.log(x)
       var val=$('.card-title')[i].innerText.toUpperCase()
       var p=$('.card')[i].innerText.toUpperCase() 
       if(p.indexOf(spec)>-1){
       
       if(val.indexOf(s)>-1){
        
-          x[i].style.display=""
+        x[i].style.display='block'
       }
       else{
         x[i].style.display='none'
@@ -46,7 +47,7 @@ function displayDoctors(doctor){
 
  
   for(let i=0;i<doctor.length;i++){
-    let div_col=$('<div></div>').addClass('col')
+    let div_col=$('<div></div>').addClass('col pp')
     let div_card=$('<div></div>').addClass('card').css("height","")
     let div_card_body=$('<div></div>').addClass('card-body')
     let user_img=$('<img />')
@@ -73,8 +74,8 @@ $(document).ready(function(){
   var x=`<select class="form-select" id='sel' aria-label="Default select example">
   <option selected>specialization</option>
   <option value="surgeory">Surgeory</option>
-  <option value="dentist">Dentist Chekup</option>
-                            <option value="bodycheckup">Body Chekup</option>
+  <option value="dentist">Dentist Checkup</option>
+                            <option value="bodycheckup">Body Checkup</option>
                             <option value="gynecologist">Gynecologist Chekup</option>
                             <option value="otherservices">General physician</option>
 </select>`
@@ -119,7 +120,7 @@ $("#logout").click(()=>{
 $('#hell').click(()=>{
    $('#y').fadeToggle()
   $(`#sel`).click(()=>{
-    var x=$('.card') 
+    var x=$('.pp') 
     $('#x').val('')
     let s=$('#x').val().toUpperCase()
     var spec=$('#sel').val().toUpperCase()

@@ -1,25 +1,37 @@
 const express=require('express')
+const multer = require('multer')
 const userRoute=express.Router()
 
 
-const multer=require('multer')
-//import multer
-const upload=require('../Controllers/multer').upload
+//import express async-handler
+const errorHandler=require('express-async-handler')
 
-//import userController
-const userController=require('../Controllers/userController')
 
+//import multerobj
+const upload=require('../Controllers/multer').multerObj
+
+
+
+var userController=require('../Controllers/userController')
 //middleware
 userRoute.use(express.json())
+userRoute.use(function(req, res, next) {
+   res.header("Access-Control-Allow-Origin", "*");
+   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+   next();
+ });
 
 //register request
-userRoute.post('/register', userController.register)
+userRoute.post('/register', errorHandler(userController.register))
 
 //update user request
-userRoute.post('/edit/:username',userController.updateDetails)
+userRoute.post('/edit/:username',errorHandler(userController.updateDetails))
 
 //all user
-userRoute.get('/all-users',userController.allusers)
+userRoute.get('/all-users',errorHandler(userController.allusers))
+
+//update user profilepic
+userRoute.post('/uploadfile',upload.single('image'),userController.updateProfilepic)
 
 //cancel appointments by specific user
 userRoute.put('/cancel-appointment',userController.cancelAppointment);

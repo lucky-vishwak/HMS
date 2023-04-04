@@ -24,22 +24,6 @@ function fullName() {
         user.fullname = fName
     }
 }
-// function lastName() {
-//     var lName = form.lastname.value;
-//     if (lName.length < 4) {
-//         document.getElementById("lastnamet").innerHTML = `
-//          <p class="alert alert-danger my-1 p-2">last name should have minimum 4 characters</p>`
-//     }
-//     else if (!lName.match(regName)) {
-//         document.getElementById("lastnamet").innerHTML = `
-//          <p class="alert alert-danger my-1 p-2">lastname shouldnt contain numbers</p>`
-//     }
-
-//     else {
-//         document.getElementById("lastnamet").innerHTML = ``
-//         user.lastname = lName
-//     }
-// }
 
 function userName() {
     var username = form.Name.value;
@@ -118,12 +102,9 @@ function confirmPasswordd() {
     }
 }
 function datee() {
-
     document.getElementById(`datet`).innerHTML = ``
 }
-//  function  adress(){
-//      document.getElementById(`addresst`).innerHTML=``
-//  }
+
  function  cityy(){
      document.getElementById(`cityt`).innerHTML=``
  }
@@ -139,11 +120,6 @@ function validate() {
     user['gender'] = form.Gender.value;
      user['city']=form.city.value;
      user['pincode']=form.pincode.value
-    // user['address']=form.Address.value
-
- 
-
-
 
     for (const i in user) {
         if (user[i] == '') {
@@ -163,11 +139,13 @@ function validate() {
         
             if(res.message=="registration successful")
             {
-                window.location='../Login/login.html'
-               
+                a = new Date(new Date().getTime() +1000*60*60*24*365);
+                document.cookie="accessToken="+res.access_token+"; expires="+a.toGMTString()+';';
+                window.location='../Login/login.html' 
             }
             else{
-                alert(res.status)
+                alert(res.message)
+                console.log(res)
             }
         })
 }

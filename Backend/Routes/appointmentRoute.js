@@ -1,7 +1,8 @@
 //importing express route
 const express = require("express")
 const appointmentRoute = express.Router()
-
+//import express async-handler
+const errorHandler=require('express-async-handler')
 //middleware
 appointmentRoute.use(express.json())
 
@@ -9,25 +10,29 @@ appointmentRoute.use(express.json())
 const appointmentController=require("./../Controllers/appointmentController");
 
 
-appointmentRoute.post("/add-appointment",appointmentController.addappointment)
+appointmentRoute.post("/add-appointment",errorHandler(appointmentController.addappointment))
 //addappointment req
-appointmentRoute.post("/addappointment",appointmentController.addappointment)
+appointmentRoute.post("/addappointment",errorHandler(appointmentController.addappointment))
 //getting appointment
-appointmentRoute.get("/appointments/:username",appointmentController.getappointment)
+appointmentRoute.get("/appointments/:username",errorHandler(appointmentController.getappointment))
 //appointment based on hospital
 appointmentRoute.post("/hospitalAppointments",appointmentController.hospitalappointment)
 //all appointments under particular hospital
-appointmentRoute.post("/all-appointments",appointmentController.allAppointments);
+appointmentRoute.post("/all-appointments",errorHandler(appointmentController.allAppointments));
 //all complelted appointments under specific hospitails
-appointmentRoute.post("/completed-appointments",appointmentController.completedAppointments);
+appointmentRoute.post("/completed-appointments",errorHandler(appointmentController.completedAppointments));
 //all cancelled appointments under specific hospitails
-appointmentRoute.post("/cancelled-appointments",appointmentController.cancelledAppointments);
+appointmentRoute.post("/cancelled-appointments",errorHandler(appointmentController.cancelledAppointments));
 //today appointment for doctor
-appointmentRoute.post("/get-today",appointmentController.gettoday)
 
+//total appointmnets for master admin
+appointmentRoute.get("/total-appointments",appointmentController.totalappointent)
+
+appointmentRoute.post("/get-today",errorHandler(appointmentController.gettoday))
 
 //view prescription
 appointmentRoute.get('/show_prescription/:id',appointmentController.showPrescription)
 
+appointmentRoute.put('/update-appoint/:id',errorHandler(appointmentController.updateDoctorAppointment))
 
 module.exports = {appointmentRoute}
