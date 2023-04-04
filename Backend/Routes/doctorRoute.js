@@ -9,7 +9,7 @@ doctorRoute.post("/add-doctor",errorHandler(doctorController.addDoctor));
 
 doctorRoute.post('/all-doctors',errorHandler(doctorController.allDoctors));
 
-doctorRoute.put('/upadteProfile/:username',errorHandler(doctorController.updatedDoctorObj));
+doctorRoute.put('/updateProfile/:username',errorHandler(doctorController.updatedDoctorObj));
 
 doctorRoute.get('/total-doctors',doctorController.totaldoctors);
 

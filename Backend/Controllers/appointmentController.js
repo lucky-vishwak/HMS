@@ -111,12 +111,6 @@ async function addApp(req, res) {
     await details.save()
     res.send({ message: "successfully added" });
 }
-async function showPrescription(req,res){
-    var id=req.params.id
-    var pres=await appointmentModel.findOne({_id:id})
-    res.send({message:"prescription shown",prescription:pres.prescription,patientname:pres.patientname})
-        
-}
 
 async function updateDoctorAppointment(req, res) {
     let id = req.params.id;
@@ -125,7 +119,7 @@ async function updateDoctorAppointment(req, res) {
     var mailOptions = {
         from: 'aarogya@gmail.com',
         to: updatedAppointment["email"],
-        subject: 'Sending Email using Node.js',
+        subject: 'Prescription From Aarogya',
         html: `
         <html lang="en">
         <head>
@@ -209,8 +203,12 @@ async function updateDoctorAppointment(req, res) {
     res.send({ message: "response send successfullySuccessfully" });
 }
 
-module.exports = {
-    addApp, addappointment, cancelledAppointments, completedAppointments,
-    allAppointments, totalappointent
-    , getappointment, hospitalappointment, gettoday, updateDoctorAppointment
+async function showPrescription(req,res){
+    var id=req.params.id
+    var pres=await appointmentModel.findOne({_id:id})
+    res.send({message:"prescription shown",prescription:pres.prescription,patientname:pres.patientname})
+        
 }
+
+
+module.exports={addApp,addappointment,cancelledAppointments,completedAppointments,allAppointments,getappointment,hospitalappointment,gettoday,showPrescription,totalappointent,updateDoctorAppointment}

@@ -73,7 +73,6 @@ function getProfileDetails() {
           </div>
         </div>
         <hr>
-     
         <div class="row">
         <div class="col-sm-3">
           <p class="mb-0">city</p>
@@ -99,6 +98,7 @@ function getProfileDetails() {
 }
 
 function getEditProfile() {
+  $('#form1').show()
   let userDetails = document.getElementById("Render");
   userDetails.innerHTML = ` <div class="card mb-4 bg-glass">
      <div class="card-header display-5">Account Details</div>
@@ -151,17 +151,23 @@ function getEditProfile() {
                  </div>
              </div>
              <!-- Save changes button-->
-             <div class="text-center"><button class="btn appointment-btn mx-auto" type="button" onclick="change_details()">Save changes</button>
+             <div class="text-center"><button class="btn appointment-btn mx-auto" type="button" id="change_details">Save changes</button>
              </div>
               </form>
      </div>
            
  </div>`;
 
+ $('#change_details').click(()=>{
+   console.log("clicked")
+   change(userobj.image)
+ })
+
 
 }
           
-function change_details() {
+function change(imgurl){
+ 
   var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;  //Javascript reGex for Email Validation.
   var regPhone = /^\d{10}$/;                                         //Javascript reGex for Phone Number validation.
   var regName = /^[a-zA-Z\ ]+$/
@@ -175,8 +181,8 @@ function change_details() {
   user['email'] = form.email.value
   user['phonenumber'] = form.phonenumber.value
   user.gender = userobj.gender
-
-
+  user.image=imgurl
+ console.log(user)
   var fName = form.fullname.value;
   if (!fName.match(regName)) {
     alert('Full name shouldnt contain numbers')
@@ -213,11 +219,12 @@ function change_details() {
 
       if (res.message == "changes successfully done") {
         alert(res.message)
-
         userobj = res.user
-
-        getProfileDetails()
+        $('#imgxx').attr('src',`${user.image}`)
+        
         localStorage.setItem('active_user', JSON.stringify(user))
+        getProfileDetails()
+        $("#form1").hide()
       }
       else {
         alert(xhr.statusText)
@@ -264,8 +271,8 @@ function getMyappointmentDisplay() {
  </div>`;
   let i = 0;
   for (let ele of appo) {
-    console.log(ele.doctor.username)
-    console.log(ele.status)
+    console.log(ele)
+    // console.log(ele.status)
     let tr = $("<tr></tr>")
     tr.append($("<td></td>").text(ele.doctor.username))
     tr.append($("<td></td>").text(ele.specialization))
@@ -286,8 +293,8 @@ function getMyappointmentDisplay() {
     }
     else if (ele.status == 'completed') {
       var td=$('<td></td>')
-      var mod=$(`<button>view</button>`).attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered" })
-      $('#moddall').append(` <div class="card">
+      var mod=$(`<button>view</button>`).attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered" })    
+      $('#moddall').append(` <div class="card" id='modalhide'>
       <div class="card-body">
         <div class="modal fade" id="verticalycentered" tabindex="-1">
           <div class="modal-dialog modal-dialog-centered">
@@ -336,24 +343,20 @@ function getMyappointmentDisplay() {
       td.append(td_status_comp)
       td.append(mod);
       tr.append(td)
-      
-
     }
     $("#details").append(tr);
     i++;
   }
+  //$('#modalhide').hide()
 }
 function getMyappointment() {
+  $('#form1').hide()
   $.get({
     url: `http://localhost:3005/appointment/appointments/${userobj.username}`,
     contentType: 'application/json; charset=utf-8'
   }).done((response, stat) => {
     if (stat == "success") {
       if (response.message == "Success") {
-<<<<<<< HEAD
-       
-=======
->>>>>>> 4149ff396946186d71197423c4d97f3820359eb2
         appo=[]
         for (let ele of response.appointments) {
           appo.push(ele)
@@ -388,12 +391,8 @@ function cancelAppointment(index) {
 
 function accepetAppointment(index) {
   let confirmation = confirm('Are You Sure?');
-<<<<<<< HEAD
- 
-=======
   appo[index]['username']=userobj.username;
   console.log(appo[index])
->>>>>>> 4149ff396946186d71197423c4d97f3820359eb2
   if (confirmation) {
     $.ajax({
       type: "PUT",
@@ -413,9 +412,16 @@ function accepetAppointment(index) {
   }
 }
 
+
 $(document).ready(function() {
+  $(".chat").hide();
+ 
+  $('#imgxx').attr('src',`${userobj.image}`)
+  $("#form1").hide()
   $('#form1').on('submit', function(event) {
       event.preventDefault();
+      //button disable
+      $('#change_details').prop('disabled',true)
       var formData=new FormData();
       formData.append('image', $("#file")[0].files[0]);
       //formData.append('userObj',JSON.stringify(userObj));
@@ -429,14 +435,17 @@ $(document).ready(function() {
           contentType:false,
           cache:false
       }).done(function(msg) {
-            alert(msg.message)
-            console.log(msg);
+            userobj.image=msg.imgurl
+            $('#change_details').prop('disabled',false)
       });
   });
 });
 
+
+
 function cancelAppointment(index) {
   let confirmation = confirm('Are You Sure?');
+  appo[index]['username']=userobj.username;
   if (confirmation) {
     $.ajax({
       type: "PUT",
@@ -481,47 +490,10 @@ function accepetAppointment(index) {
 //feedback
 
 function getFeedback() {
-
-  let userDetails = document.getElementById("Render");
-
-  userDetails.innerHTML = `<div class="card mb-4 bg-glass">
-     <div class="card-header display-5">Feedback form</div>
-     <div class="card-body">
-         <form>
-             <div class="form-group p-2">
-               <label for="exampleFormControlTextarea1 my-1">How likely you would like to recommand us to your friends?</label>
-               <div class="rating-input-wrapper d-flex justify-content-between my-2">
-                 <label><input type="radio" name="rating" class="mx-1" /><span class="border rounded px-3 py-2">1</span></label>
-                 <label><input type="radio" name="rating" class="mx-1" /><span class="border rounded px-3 py-2">2</span></label>
-                 <label><input type="radio" name="rating" class="mx-1" /><span class="border rounded px-3 py-2">3</span></label>
-                 <label><input type="radio" name="rating" class="mx-1" /><span class="border rounded px-3 py-2">4</span></label>
-                 <label><input type="radio" name="rating" class="mx-1" /><span class="border rounded px-3 py-2">5</span></label>
-               </div>
-               <div class="rating-labels d-flex justify-content-between my-3">
-                 <label>Very unlikely</label>
-                 <label>Very likely</label>
-               </div>
-             </div>
-             <div class="form-group my-2">
-               <label for="input-one">What made you leave us so early?</label>
-               <input type="text" class="form-control" id="input-one" placeholder="">
-             </div>
-             <div class="form-group my-3">
-               <label for="input-two">Would you like to say something?</label>
-               <textarea class="form-control" id="input-two" rows="3"></textarea>
-             </div>
-           </form>
-     </div>
- 
- </div>`
-}
-
-// $.ready(()=>{
-//   function selectFile(eventObj){
-//     this.file=eventObj.target.files[0]
-//   }
+  $('#form1').hide();
+  $("#Render").hide();
   
-// })
+}
 
 var login_btn = document.getElementById("login")
 var logout_btn = document.getElementById("logout")
@@ -542,4 +514,8 @@ function appoint() {
 
 function logout() {
   localStorage.clear()
+}
+
+function getCompletedAppointments(){
+  
 }

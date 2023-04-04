@@ -59,6 +59,23 @@
       background: radial-gradient(#44006b, #ad1fff);
       overflow: hidden;
     }
+    /* .profile-preview-label{
+            display: block;
+            width : 45%;
+            margin-left : 25%;
+            text-transform: uppercase;
+            text-align: center;
+            background-color: #1172c2;
+            line-height: 45px;
+            color : white;
+            font-family: sans-serif;
+            cursor : pointer;
+            border-radius: 5px;
+        } */
+
+        #file{
+            display : none
+        }
 
     #radius-shape-2 {
       border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
@@ -134,12 +151,13 @@
         <div class="col-lg-4">
           <div class="card mb-4 bg-glass" >
             <div class="card-body text-center">
-             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+             <img id="imgxx" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
                 class="rounded-circle img-fluid" style="width: 150px;" onclick="getProfileDetails()">
                 <form id="form1" enctype="multipart/form-data">  
-                  <input  type="file" id="file" name="image"/>
-                  <input type="text" name="vish" value="vishal" id="vc"/>
-                  <button id="image" class="btn btn-sm btn-primary" type="submit" style="margin-left: -1rem;margin-bottom: -6rem;" ><i class="fa-sharp fa-solid fa-pen-to-square"></i></button> 
+                  <label for="file" class="profile-preview-label" id="label"><i class="fa-sharp fa-solid fa-pen-to-square"></i></label>
+                    <input  type="file" id="file" name="image" accept="image/*" />
+                  <button id="image" class="btn btn-sm btn-primary mt-1" type="submit"  > click
+                    </button> 
                 </form>
           
               <h5 class="my-3" id="profileuser"></h5>
@@ -158,14 +176,121 @@
               <div class="d-flex justify-content-center ">
                 <button style="text-transform: none !important;" type="button" class="btn appointment-btn px-5 py-2"
                   onclick="getFeedback()"><i class="fa-solid fa-comment mx-1"></i>Feedback</button>
+                  
               </div>
             </div>
           </div>
         </div>
         <div class="col-lg-8" id="Render">
+          
+        </div>
+        <div class="col-lg-8" id="Render2"  >
+          <div class="row">
+            <div class="col-md-12">
+      
+              <div class="card" id="chat3" style="border-radius: 15px;">
+                <div class="card-body">
+      
+                  <div class="row">
+                    <div class="col-5 mb-4 mb-md-0" id="scollable">
+      
+                      <div class="p-3">
+      
+                        <div class="input-group rounded mb-3">
+                          <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+                            aria-describedby="search-addon" />
+                          <span class="input-group-text border-0" id="search-addon">
+                            <i class="fas fa-search"></i>
+                          </span>
+                        </div>
+      
+                        <div data-mdb-perfect-scrollbar="true" style="position: relative; height: 400px">
+                          <ul class="list-unstyled mb-0">
+                            <!-- list of doctors he visited -->
+                            <li class="p-2 border-bottom">
+                              <a href="#!" class="d-flex justify-content-between">
+                                <div class="d-flex flex-row">
+                                  <div>
+                                    <img
+                                      src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                      alt="avatar" class="d-flex align-self-center me-3" width="60">
+                                    <span class="badge bg-success badge-dot"></span>
+                                  </div>
+                                  <div class="pt-1">
+                                    <p class="fw-bold mb-0">Marie Horwitz</p>
+                                    <p class="small text-muted">Hello, Are you there?</p>
+                                  </div>
+                                </div>
+                                <div class="pt-1">
+                                  <p class="small text-muted mb-1">Just now</p>
+                                  <span class="badge bg-danger rounded-pill float-end">3</span>
+                                </div>
+                              </a>
+                            </li>
+                            
+                          </ul>
+                        </div>
+      
+                      </div>
+      
+                    </div>
+      
+                    <div class="col-7" >
+      
+                      <div class="pt-3 pe-3" id="scollable2" style="position: relative; height: 400px">
+      
+
+                        <!-- conversations -->
+                        <div class="d-flex flex-row justify-content-start">
+                          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+                            alt="avatar 1" style="width: 45px; height: 100%;">
+                          <div>
+                            <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7;">Lorem ipsum
+                              dolor
+                              sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                              dolore
+                              magna aliqua.</p>
+                            <p class="small ms-3 mb-3 rounded-3 text-muted float-end">12:00 PM | Aug 13</p>
+                          </div>
+                        </div>
+      
+                        <div class="d-flex flex-row justify-content-end">
+                          <div>
+                            <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">Ut enim ad minim veniam,
+                              quis
+                              nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                            <p class="small me-3 mb-3 rounded-3 text-muted">12:00 PM | Aug 13</p>
+                          </div>
+                          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                            alt="avatar 1" style="width: 45px; height: 100%;">
+                        </div>
+      
+      
+                      </div>
+      
+                      <div class="text-muted d-flex justify-content-end align-items-end pe-3 pt-3 mt-2 ">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+                          alt="avatar 3" style="width: 40px; height: 100%;">
+                        <input type="text" class="form-control form-control-lg" id="exampleFormControlInput2"
+                          placeholder="Type message">
+                        <a class="ms-1 text-muted" href="#!"><i class="fas fa-paperclip"></i></a>
+                        <a class="ms-3 text-muted" href="#!"><i class="fas fa-smile"></i></a>
+                        <a class="ms-3" href="#!"><i class="fas fa-paper-plane"></i></a>
+                      </div>
+      
+                    </div>
+                  </div>
+      
+                </div>
+              </div>
+      
+            </div>
+          </div>
         </div>
       </div>
   </section>
+
+
 
   <footer id="footer">
 

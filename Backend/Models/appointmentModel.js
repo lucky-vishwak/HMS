@@ -81,7 +81,7 @@ let appointmentSchema = {
     doctor: {
         type: mongoose.Schema.Types.ObjectId,
         ref:doctorModel,
-        default: "642abd443a7befc275f25395",
+        default: "642bd6a06f82101e24188caa",
         require: true
     },
     problem: {
