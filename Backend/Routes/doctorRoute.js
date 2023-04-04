@@ -14,4 +14,6 @@ doctorRoute.put('/upadteProfile/:username',errorHandler(doctorController.updated
 doctorRoute.get('/total-doctors',doctorController.totaldoctors);
 
 
+doctorRoute.post('/add-dummy',doctorController.addDoctorDummy);
+
 module.exports={doctorRoute}

@@ -119,7 +119,13 @@ function validate() {
     user['date'] = form.date.value
     user['gender'] = form.Gender.value;
      user['city']=form.city.value;
-     user['pincode']=form.pincode.value
+     user['pincode']=form.pincode.value;
+     user['image']='https://res.cloudinary.com/dgjsuikto/image/upload/v1680517425/HMS/image-1680517415990.jpg';
+    // user['address']=form.Address.value
+
+ 
+
+
 
     for (const i in user) {
         if (user[i] == '') {
@@ -136,6 +142,7 @@ function validate() {
             contentType:'application/json; charset=utf-8'
         })
         .done((res,stat,xhr)=>{
+            console.log(res)
         
             if(res.message=="registration successful")
             {

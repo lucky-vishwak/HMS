@@ -48,7 +48,7 @@ const doctorSchema = {
     hospitalName:{
         type:String
     },
-    imgurl:{
+    image:{
         type:String
     }
    
@@ -59,4 +59,4 @@ const doctorModel=mongoose.model('doctor',doctorSchema);
 
 
 //exporting doctorModel
-module.exports={doctorModel}
+module.exports={doctorModel,doctorSchema}

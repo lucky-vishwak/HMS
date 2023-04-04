@@ -13,6 +13,7 @@ const hospitalSchema={
     imgurl:{
         type:String
     }
+    //add field array of ref appointments
 }
 
 const hospitalModel=mongoose.model('hospital',hospitalSchema);

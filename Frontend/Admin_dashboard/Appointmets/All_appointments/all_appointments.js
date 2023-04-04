@@ -32,7 +32,7 @@ $.post({
                 let td_date=$("<td></td>").text(`${appointments[i].appointmentdate}`);
                 let td_time=$("<td></td>").text(`${appointments[i].timeslot}`);
                 let td_specalization=$("<td></td>").text(`${appointments[i].specialization}`);
-                let td_doctor=$("<td></td>").text(`${appointments[i].doctor}`);
+                let td_doctor=$("<td></td>").text(`${appointments[i].doctor.username}`);
                 let td_status=$("<td></td>").text(`${appointments[i].status}`);
             
                 tr.append(td_name);
