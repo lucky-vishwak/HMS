@@ -8,17 +8,7 @@ const mongoose=require('mongoose')
 const bcryptjs=require('bcryptjs')
 const {v4:uuidv4}=require("uuid")
 const app = express()
-// var bodyParser = require('body-parser');
-// app.use(bodyParser.raw({limit: '500mb'}));
-// app.use(bodyParser.json({limit: '500mb'}));
-// app.use(bodyParser.urlencoded({ 
-//     extended: false,
-//     parameterLimit: 10000000000,
-//     bodyLimit:10000000 // experiment with this parameter and tweak
-// }));
 
-//calling express
-//const app = express()
 
 
 //import express async-handler

@@ -117,8 +117,9 @@ $("#editProfileButton").click(() => {
     <button type="button" class="btn btn-primary" id="updateProfile" >Save Changes</button>
     </div>
 </form>`
-
+$("#profile-edit").html('')
 $('#profile-edit').append(y)
+
 EditProfile();
 $('#updateProfile').click(()=>{
     change(doctorobj.imgurl)

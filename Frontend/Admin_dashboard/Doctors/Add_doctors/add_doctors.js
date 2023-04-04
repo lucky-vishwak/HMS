@@ -103,6 +103,7 @@ $("#specialization").change(()=>{
 
 
 $('#formx').on('submit', function(event) {
+    console.log()
     event.preventDefault();
     var formData=new FormData();
     formData.append('image', $("#file")[0].files[0]);
@@ -123,10 +124,9 @@ $('#formx').on('submit', function(event) {
     Doctors['join_date'] = form.admitdate.value
     Doctors['gender'] = form.gender.value;
     Doctors['join_time']=form.admittime.value;
-   
     Doctors['about']=form2.about.value;
     Doctors['specialization']=form2.specialization.value;
-
+    Doctors['username']=$("#username").val()
     for (const i in Doctors) {
         if (Doctors[i] == '') {
             console.log(i);
@@ -159,10 +159,11 @@ $('#formx').on('submit', function(event) {
  
 
 $(document).ready(()=>{
-    var today = new Date().toISOString().split('T')[0];
-    $("#admitdate").attr('min', today);
-    $("#admitdate").val(today)
-    var time = today.getHours() + ":" + today.getMinutes();
+    var today=new Date()
+    var today1=today.toISOString().split('T')[0];
+    $("#admitdate").attr('min', today1);
+    $("#admitdate").val(today1)
+    var time = ("0"+today.getHours()).slice(-2)+ ":" +("0"+today.getMinutes()).slice(-2);
     $("#admittime").val(time)
 })
 

@@ -121,7 +121,7 @@ async function updateDoctorAppointment(req, res) {
     var mailOptions = {
         from: 'aarogya@gmail.com',
         to: updatedAppointment["email"],
-        subject: 'Sending Email using Node.js',
+        subject: 'Prescription From Aarogya',
         html: `
         <html lang="en">
         <head>

@@ -271,8 +271,8 @@ function getMyappointmentDisplay() {
  </div>`;
   let i = 0;
   for (let ele of appo) {
-    console.log(ele.doctor.username)
-    console.log(ele.status)
+    console.log(ele)
+    // console.log(ele.status)
     let tr = $("<tr></tr>")
     tr.append($("<td></td>").text(ele.doctor.username))
     tr.append($("<td></td>").text(ele.specialization))
