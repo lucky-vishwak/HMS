@@ -6,8 +6,7 @@ const masterAdminModel = require('./../Models/adminModel').masterAdminModel;
 const doctorModel = require('./../Models/doctorModel').doctorModel;
 const appointmentHelperModel = require('./../Models/appointmenthelperModel').appointmentHelperModel;
 const appointmentModel = require('./../Models/appointmentModel').appointmentModel;
-
-//
+const rating={5:200,4:180,3:160,2:150,1:150}
 async function addHospital(req, res) {
 
     let hospitalObj = req.body;
@@ -52,12 +51,11 @@ async function assignDoctorToAppointments(req, res) {
         res.send({ message: "No doctor under this specalisation" });
     }
     else {
-
         for (let i = 0; i < doctors.length; i++) {
+            let amount=rating[Math.ceil(doctors[i].rating_avg)]
             let helperObj = await appointmentHelperModel.find({ hospitalName: hospitalName, doctor: doctors[i].username, appointmentdate: appointmentAssignObj.appointmentdate, timeslot: appointmentAssignObj.timeslot });
-
             if (helperObj.length == 0) {
-                await appointmentModel.findOneAndUpdate({ _id: appointmentAssignObj._id }, { $set: { "doctor":doctors[i]['_id'].toString()} });
+                await appointmentModel.findOneAndUpdate({ _id: appointmentAssignObj._id }, { $set: { "doctor":doctors[i]['_id'].toString(),amount:amount} });
                 let helpObj = {
                     "hospitalName": hospitalName,
                     "reason": appointmentAssignObj.problem,
@@ -66,15 +64,12 @@ async function assignDoctorToAppointments(req, res) {
                     "timeslot": appointmentAssignObj.timeslot
                 }
                 await appointmentHelperModel.create(helpObj);
-                await userModel.updateOne({"myappointment.id":appointmentAssignObj._id.toString()},{$set:{'myappointment.$.doctor':doctors[i]['_id'].toString()}})
+                await userModel.updateOne({"myappointment.id":appointmentAssignObj._id.toString()},{$set:{'myappointment.$.doctor':doctors[i]['_id'].toString(),'myappointment.$.amount':amount}})
                 res.send({ message: `Successfully assigned with ${doctors[i].username}`, succ: "success", doctorName: doctors[i].username });
                 return;
             }
         }
-
         res.send({ message: "No doctor available!!" })
     }
-
 }
-
 module.exports = { addHospital, allHospitals, assignDoctorToAppointments }

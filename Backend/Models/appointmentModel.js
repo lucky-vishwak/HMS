@@ -114,6 +114,10 @@ let appointmentSchema = {
     payment:{
         type:mongoose.Schema.Types.ObjectId,
         ref:paymentModel
+    },
+    amount:{
+        type:String,
+        default:"150"
     }
 }
 

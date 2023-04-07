@@ -282,8 +282,8 @@ function getMyappointmentDisplay() {
     let td_status = $("<td></td>").text(ele.status);
     let td_status_comp = $("<td></td>").text(ele.status)
     let td_button = $("<td></td>").attr('id', `but${i}`);
-    let button_cancel = $("<button ></button>").text('Reject').addClass(`btn btn-danger mx-1`).attr('onclick', `cancelAppointment(${i})`).css('text-transform', 'none');
-    let button_accept = $("<button></button>").html(`Pay <span>&#8377;</span>${300}`).addClass('btn btn-success').attr('onclick', `accepetAppointment(${i})`).css('text-transform', 'none');
+    let button_cancel = $("<button ></button>").text('Reject').addClass(`btn appointment-btn mx-0`).attr('onclick', `cancelAppointment(${i})`).css({'text-transform':'none','background-color':'red'});
+    let button_accept = $("<button></button>").html(`Pay <span>&#8377;</span>${ele.amount}`).addClass('btn appointment-btn mx-1').attr('onclick', `create_orderID(${i})`).css({'text-transform':'none','background-color':'green'});
     td_button.append(button_cancel);
     td_button.append(button_accept);
     if (ele.doctor.username != 'Not assigned' && ele.status == 'pending') {
@@ -349,35 +349,14 @@ function getMyappointmentDisplay() {
     $("#details").append(tr);
     i++;
   }
-  //$('#modalhide').hide()
 }
 
 function getMyappointment() {
-  get_data_of_appointments()
   $("#Render").show()
   $("#Render2").hide()
   $('#form1').hide()
+  get_data_of_appointments()
   getMyappointmentDisplay(appo);
-
-
-  //creating orderid every time on click of myappointment button for payment
-  var settings = {
-    "url": "http://localhost:3005/create/orderId",
-    "method": "POST",
-    "timeout": 0,
-    "headers": {
-      "Content-Type": "application/json"
-    },
-    "data": JSON.stringify({
-      "amount": "3000"
-    }),
-  };
-  //creates new orderId everytime
-  $.ajax(settings).done(function (response) {
-    orderId = response.orderId;
-    console.log(orderId);
-    $("button").show();
-  });
 }
 
 $(document).ready(function () {
@@ -408,6 +387,7 @@ $(document).ready(function () {
   });
   get_data_of_appointments()
 });
+
 
 function get_data_of_appointments() {
   //geting appointment details
@@ -450,21 +430,21 @@ function cancelAppointment(index) {
   }
 }
 
-function accepetAppointment(index) {
 
+function making_payment(orderId, index) {
   //add checkout parameters for payment
   var options = {
     "key": "rzp_test_kCyirXhSlfREHP", // Enter the Key ID generated from the Dashboard
-    "amount": "3000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "amount": appo[index].amount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
     "currency": "INR",
     "name": "Aarogya",
-    "description": "Buy some item",
+    "description": `Booking appointment for ${appo[index].doctor.username}`,
     "image": "../../assets/icons/heart-beat.png",
     "order_id": orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
     "handler": function (response) {
-      alert(response.razorpay_payment_id);
-      alert(response.razorpay_order_id);
-      alert(response.razorpay_signature)
+      //alert(response.razorpay_payment_id);
+      //alert(response.razorpay_order_id);
+      //alert(response.razorpay_signature)
       var settings = {
         "url": "http://localhost:3005/api/payment/verify",
         "method": "POST",
@@ -472,10 +452,11 @@ function accepetAppointment(index) {
         "headers": {
           "Content-Type": "application/json"
         },
-        "data": JSON.stringify({ response }),
+        "data": JSON.stringify({ response, appo_id: appo[index].id, user_id: userobj._id }),
       }
       $.ajax(settings).done((response) => {
-        alert(JSON.stringify(response))
+        //alert(JSON.stringify(response))
+        accept_appointment(index, response.signatureIsValid)
       })
     },
     "theme": {
@@ -493,12 +474,12 @@ function accepetAppointment(index) {
     alert(response.error.metadata.payment_id);
   });
   rzp1.open();
-  e.preventDefault();
-  ////hellloo-----------------
-  console.log("hello")
-  return
-  let confirmation = confirm('Are You Sure?');
-  console.log(appo[index])
+  //e.preventDefault();
+}
+
+//updating stauts to accepted 
+function accept_appointment(index, confirmation) {
+  //console.log(appo[index])
   if (confirmation) {
     $.ajax({
       type: "PUT",
@@ -519,6 +500,30 @@ function accepetAppointment(index) {
   }
 }
 
+//creating order_id for payment
+function create_orderID(index) {
+  //creating orderid every time on click of myappointment button for payment
+  var settings = {
+    "url": "http://localhost:3005/create/orderId",
+    "method": "POST",
+    "timeout": 0,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "data": JSON.stringify({
+      "amount": appo[index].amount * 100
+    }),
+  };
+
+  //creates new orderId everytime
+  $.ajax(settings).done(function (response) {
+    orderId = response.orderId;
+    console.log(orderId);
+    making_payment(orderId, index)
+    $("button").show();
+  });
+}
+
 //For Chat Window
 function getChat() {
   console.log(appo)
@@ -529,7 +534,6 @@ function getChat() {
   if (!appo) {
     $("#doctors_list").append(`<li style="display:flex; justify-content:center;">No Doctors</li>`)
   }
-  //https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp
   const appo1 = appo.filter((value, index, self) => self.indexOf(value) === index)
   $("#doctors_list").html("")
   for (const ele of appo1) {
@@ -560,22 +564,22 @@ function getChat() {
 }
 
 
-function sendMessage(ind){
-     let message=$("#sendmessage").val();
+function sendMessage(ind) {
+  let message = $("#sendmessage").val();
 
-     let messageObj={
-        senderID:userobj._id,
-        message:message,
-     }
-     $.post({
-      url:"http://localhost:3005/chat/send-message",
-      data:JSON.stringify(messageObj),
-      contentType:"application/json; charset=utf-8"
-     }).done((res,stat)=>{
-      if(stat=='success'){
-        window.location.href='#';
-      }
-     })
+  let messageObj = {
+    senderID: userobj._id,
+    message: message,
+  }
+  $.post({
+    url: "http://localhost:3005/chat/send-message",
+    data: JSON.stringify(messageObj),
+    contentType: "application/json; charset=utf-8"
+  }).done((res, stat) => {
+    if (stat == 'success') {
+      window.location.href = '#';
+    }
+  })
 
 }
 
@@ -589,6 +593,7 @@ if (localStorage.getItem("active_user")) {
 else {
   logout_btn.innerHTML = ``
 }
+
 function appoint() {
   if (localStorage.getItem("type") == "") {
     window.location.href = "../../Login/login.html"

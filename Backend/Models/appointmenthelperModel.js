@@ -16,9 +16,6 @@ let appointmentHelperSchema = {
     },
     reason:{
         type:String
-    },
-    specialization:{
-        type:String
     } 
 }
 

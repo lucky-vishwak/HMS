@@ -125,3 +125,7 @@ input:focus{
     padding: 16px;
     text-align: center;
   }
+
+  .checked{
+    color: orange;
+  }

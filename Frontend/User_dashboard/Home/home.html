@@ -76,10 +76,10 @@
             <ul>
               <li><a class="nav-link scrollto" href="#services">Services</a></li>
               <li><a class="nav-link scrollto" href="#departments">Departments</a></li>
-              <li><a class="nav-link scrollto" href="#doctors">Doctors</a></li>
+              <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
             </ul>
           </li>
-          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+          <li><a class="nav-link scrollto" href="#doctors">Doctors</a></li>
           <li id="login"><a class="nav-link scrollto" href="../Login/login.html">Login/Signup</a></li>
           <li class="dropdown" id="logout"><a href="#"><span>My Profile</span><i class="bi bi-chevron-down"></i></a>
             <ul>
@@ -447,96 +447,159 @@
             academic degree, consequently the usual academic requirements of a doctorate are waived.</p>
         </div>
 
-        <div class="row">
-
-          <div class="col-lg-6">
-            <div class="member d-flex align-items-start">
-              <div class="pic"><a onclick="document.getElementById('id01').style.display='block'"><img
-                    src="../assets/img/doctors/doctors-1.jpg" class="img-fluid" alt=""></a></div>
-              <div class="member-info">
-                <h4>Walter White</h4>
-                <span>Chief Medical Officer</span>
-                <p>Top Doctor in Aarogya</p>
-                <div class="social">
-                  <a href=""><i class="ri-twitter-fill"></i></a>
-                  <a href=""><i class="ri-facebook-fill"></i></a>
-                  <a href=""><i class="ri-instagram-fill"></i></a>
-                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div id="id01" class="modal">
-            <span onclick="document.getElementById('id01').style.display='none'" class="close"
-              title="Close Modal">×</span>
-            <form class="modal-content" action="/action_page.php">
-              <div class="containermodel">
-                <h1>Delete Account</h1>
-                <p>Are you sure you want to delete your account?</p>
-
-                <div class="clearfix">
-                  <button type="button" onclick="document.getElementById('id01').style.display='none'"
-                    class="cancelbtn">Cancel</button>
-                  <button type="button" onclick="document.getElementById('id01').style.display='none'"
-                    class="deletebtn">Delete</button>
-                </div>
-              </div>
-            </form>
-          </div>
-
-          <div class="col-lg-6 mt-4 mt-lg-0">
-            <div class="member d-flex align-items-start">
-              <div class="pic"><img src="../assets/img/doctors/doctors-2.jpg" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>Sarah Jhonson</h4>
-                <span>Anesthesiologist</span>
-                <p>Vice Presint in Aarogya</p>
-                <div class="social">
-                  <a href=""><i class="ri-twitter-fill"></i></a>
-                  <a href=""><i class="ri-facebook-fill"></i></a>
-                  <a href=""><i class="ri-instagram-fill"></i></a>
-                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-6 mt-4">
-            <div class="member d-flex align-items-start">
-              <div class="pic"><img src="../assets/img/doctors/doctors-3.jpg" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>William Anderson</h4>
-                <span>Cardiology</span>
-                <p>Cheif Surgeon in Aarogya</p>
-                <div class="social">
-                  <a href=""><i class="ri-twitter-fill"></i></a>
-                  <a href=""><i class="ri-facebook-fill"></i></a>
-                  <a href=""><i class="ri-instagram-fill"></i></a>
-                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-6 mt-4">
-            <div class="member d-flex align-items-start">
-              <div class="pic"><img src="../assets/img/doctors/doctors-4.jpg" class="img-fluid" alt=""></div>
-              <div class="member-info">
-                <h4>Amanda Jepson</h4>
-                <span>Neurosurgeon</span>
-                <p>Memeber of core team</p>
-                <div class="social">
-                  <a href=""><i class="ri-twitter-fill"></i></a>
-                  <a href=""><i class="ri-facebook-fill"></i></a>
-                  <a href=""><i class="ri-instagram-fill"></i></a>
-                  <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
+        <div class="row" id="doctors_list">
         </div>
+
+        <!--model-->
+        <div id="id01" class="modal">
+          <div class="body d-flex py-3 my-5">
+            <div class="container-xxl">
+              <div class="row g-3">
+                <div class="col-xl-12 col-lg-12 col-md-12 ">
+                  <div class="card teacher-card  mb-3">
+                    <div class="card-body d-flex teacher-fulldeatil">
+                      <div class="profile-teacher pe-xl-4 pe-md-2 pe-sm-4 pe-4 text-center w220">
+                        <a href="#">
+                          <img id="modal_img" alt="user image"
+                            class="avatar xl rounded-circle img-thumbnail shadow-sm" style="height: 40vh; width: 40vw;">
+                        </a>
+                        <div class="about-info d-flex align-items-center mt-3 justify-content-center flex-column">
+                          <span class="text-muted small" id="modal_username"></span>
+                        </div>
+                      </div>
+                      <div class="teacher-info border-start ps-xl-4 ps-md-4 ps-sm-4 ps-4 w-100">
+                        <h6 class="mb-0 mt-2  fw-bold d-block fs-6" id="modal_fullname"></h6>
+                        <span class="py-1 fw-bold small-11 mb-0 mt-1 text-muted" id="modal_special_hos"></span>
+                        <p class="mt-2" id="modal_about"></p>
+                        <div class="row g-2 pt-2">
+                          <div class="col-xl-5">
+                            <div class="d-flex align-items-center">
+                              <i class="fa fa-phone"></i>
+                              <span class="ms-2" id="modal_phone"></span>
+                            </div>
+                          </div>
+                          <div class="col-xl-5">
+                            <div class="d-flex align-items-center">
+                              <i class="fa fa-envelope"></i>
+                              <span class="ms-2" id="modal_email"></span>
+                            </div>
+                          </div>
+                          <div class="col-xl-5">
+                            <div class="d-flex align-items-center">
+                              <i class="fa fa-edit"></i>
+                              <span class="ms-2" id="modal_join"></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-6"></div>
+                      <div class="col-6 justify-content-center p-3">
+                        <button type="button" onclick="document.getElementById('id01').style.display='none'"
+                          class="btn appointment-btn">Close-Profile</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- Row End -->
+              <div class="row g-3 mb-3">
+                <div class="col-xl-12">
+                  <div class="card">
+                    <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
+                      <h6 class="mb-0 fw-bold ">Rating</h6>
+                    </div>
+                    <div class="card-body">
+                      <div class="row clearfix g-3">
+                        <div class="col-lg-12 col-md-12">
+                          <div class="feedback-info sticky-top">
+                            <div class="card">
+                              <div class="card-body">
+                                <h2 class=" display-6 fw-bold mb-0" id="modal_rate"></h2>
+                                <small class="text-muted" id="modal_rate_count"></small>
+                                <div class="d-flex align-items-center">
+                                  <span class="mb-2 me-3">
+                                    <span class="fa fa-star" id="0"></span>
+                                    <span class="fa fa-star" id="1"></span>
+                                    <span class="fa fa-star" id="2"></span>
+                                    <span class="fa fa-star" id="3"></span>
+                                    <span class="fa fa-star" id="4"></span>
+                                  </span>
+                                </div>
+                                <div class="progress-count mt-2">
+                                  <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <h6 class="mb-0 fw-bold d-flex align-items-center">5
+                                      <span class="px-2 my-1 fa fa-star checked"></span>
+                                    </h6>
+                                    <span class="small text-muted" id="modal_5"></span>
+                                  </div>
+                                  <div class="progress" style="height: 10px;">
+                                    <div class="progress-bar light-success-bg" role="progressbar" id="modal_5_pro"
+                                      aria-valuenow="92" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                                </div>
+                                <div class="progress-count mt-2">
+                                  <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <h6 class="mb-0 fw-bold d-flex align-items-center">4
+                                      <span class="px-2 my-1 fa fa-star checked"></span>
+                                    </h6>
+                                    <span class="small text-muted" id="modal_4"></span>
+                                  </div>
+                                  <div class="progress" style="height: 10px;">
+                                    <div class="progress-bar bg-info-light" role="progressbar" id="modal_4_pro"
+                                      aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                                </div>
+                                <div class="progress-count mt-2">
+                                  <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <h6 class="mb-0 fw-bold d-flex align-items-center">3
+                                      <span class="px-2 my-1 fa fa-star checked"></span>
+                                    </h6>
+                                    <span class="small text-muted" id="modal_3"></span>
+                                  </div>
+                                  <div class="progress" style="height: 10px;">
+                                    <div class="progress-bar bg-lightyellow" role="progressbar" id="modal_3_pro"
+                                      aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                                </div>
+                                <div class="progress-count mt-2">
+                                  <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <h6 class="mb-0 fw-bold d-flex align-items-center">2
+                                      <span class="px-2 my-1 fa fa-star checked"></span>
+                                    </h6>
+                                    <span class="small text-muted" id="modal_2"></span>
+                                  </div>
+                                  <div class="progress" style="height: 10px;">
+                                    <div class="progress-bar light-danger-bg " role="progressbar" id="modal_2_pro"
+                                      aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                                </div>
+                                <div class="progress-count mt-2">
+                                  <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <h6 class="mb-0 fw-bold d-flex align-items-center">1
+                                      <span class="px-2 my-1 fa fa-star checked"></span>
+                                    </h6>
+                                    <span class="small text-muted" id="modal_1"></span>
+                                  </div>
+                                  <div class="progress" style="height: 10px;">
+                                    <div class="progress-bar bg-careys-pink" role="progressbar" id="modal_1_pro"
+                                      aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div><!-- Row End -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
 
       </div>
     </section><!-- End Doctors Section -->
@@ -594,7 +657,8 @@
                 <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
               </div>
               <div class="form-group mt-3">
-                <textarea class="form-control" name="message" id="message" rows="5" placeholder="Message" required></textarea>
+                <textarea class="form-control" name="message" id="message" rows="5" placeholder="Message"
+                  required></textarea>
               </div>
               <div class="text-center"><button type="submit" id="sendMessage">Send Message</button></div>
             </form>
