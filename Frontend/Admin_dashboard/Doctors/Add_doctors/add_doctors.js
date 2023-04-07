@@ -63,17 +63,17 @@ function emailAdd() {
 function passwordd() {
     var pass = form1.password.value;
 
-    // if (!pass.match(regpass)) {
-    //     document.getElementById("passwordt").innerHTML =
-    //         `<p class="alert alert-danger my-1 p-2" role="alert">password should confirmpasswordtain Atleast one digit,
-    //      Atleast one lowercase character 
-    //      Atleast one uppercase character 
-    //      Atleast one special character </p>`
-    // }
-    //else {
+    if (!pass.match(regpass)) {
+        document.getElementById("passwordt").innerHTML =
+            `<p class="alert alert-danger my-1 p-2" role="alert">password should confirmpasswordtain Atleast one digit,
+         Atleast one lowercase character 
+         Atleast one uppercase character 
+         Atleast one special character </p>`
+    }
+    else {
         document.getElementById("passwordt").innerHTML = ``
         Doctors.password = pass
-   // }
+   }
 }
 
 
@@ -127,6 +127,7 @@ $('#formx').on('submit', function(event) {
     Doctors['about']=form2.about.value;
     Doctors['specialization']=form2.specialization.value;
     Doctors['username']=$("#username").val()
+    console.log(Doctors);
     for (const i in Doctors) {
         if (Doctors[i] == '') {
             console.log(i);

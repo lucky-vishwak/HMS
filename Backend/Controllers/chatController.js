@@ -18,10 +18,11 @@ async function createConversation(req,res){
 async function sendMessage(req,res){
 
     let ConversationObj=req.body;
+
     await ConversationModel.findOneAndUpdate({ user1 :{$in:[ConversationObj.senderId,ConversationObj.reciverId]}},{ user2 :{$in:[ConversationObj.senderId,ConversationObj.reciverId]}}, {
         $push: {
             messages: {
-                sender_id:ConversationObj.senderId,
+                sender_id:ConversationObj.senderID,
                 message:ConversationObj.message
             }
         }

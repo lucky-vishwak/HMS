@@ -6,7 +6,7 @@ chatRoute.use(express.json())
 
 chatRoute.post('/add-conversation',chatController.createConversation);
 
-chatRoute.post('/add-message',chatController.sendMessage);
+chatRoute.post('/send-message',chatController.sendMessage);
 
 chatRoute.post('get-chat',chatController.getConversationParticularUser);
 

@@ -8,7 +8,9 @@ const mongoose=require('mongoose')
 const bcryptjs=require('bcryptjs')
 const {v4:uuidv4}=require("uuid")
 const app = express()
+const path=require("path")
 
+require("dotenv").config()
 
 
 //import express async-handler
@@ -23,7 +25,7 @@ app.use(session({
 }))
 
 //connected to database
-mongoose.connect('mongodb+srv://hms:hms@cluster0.dvzgdxk.mongodb.net/hms').then(
+mongoose.connect(process.env.MONGOURL).then(
     console.log('connected to database')
 )
 
@@ -39,6 +41,7 @@ const hospitalRoute = require("./Routes/hospitalRoute.js").hospitalRoute
 const loginRoute=require('./Routes/loginRoute').loginRoute;
 const contactRoute = require("./Routes/contactRoute.js").contactRoute
 const chatRoute  = require("./Routes/chatRoute.js").chatRoute
+const paymentRoute=require("./Routes/paymentRoute.js").paymentRoute
 
 
 //API Routers
@@ -50,6 +53,8 @@ app.use('/hospital',hospitalRoute);
 app.use('/admin',adminRoute)
 app.use('/contact',contactRoute);
 app.use('/chat',chatRoute);
+app.use('/create',paymentRoute)
+app.use('/api',paymentRoute)
 
 
 
@@ -64,7 +69,7 @@ app.use((req,res,next)=>{
 //      console.log(err.message)
 //      res.send({message:`${err}`})
 // })
-port=3005
+port=process.env.PORT || 3005
 var server = app.listen(port,()=>{
     console.log(`listening on port ${port}`)
 })

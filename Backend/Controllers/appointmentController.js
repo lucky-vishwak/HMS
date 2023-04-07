@@ -17,6 +17,7 @@ const doctorModel=require("../Models/doctorModel").doctorModel
 //addappointment controller
 async function addappointment(req, res) {
     let appointmentobj = req.body
+    console.log(appointmentobj)
     const details = new appointmentModel(appointmentobj)
     await userModel.findOneAndUpdate({ username: `${appointmentobj.username}` }, {
         $push: {
@@ -41,12 +42,6 @@ async function addappointment(req, res) {
     await details.save();
     res.send(appointmentobj)
 }
-async function showPrescription(req,res){
-    var id=req.params.id
-    var pres=await appointmentModel.findOne({_id:id})
-    res.send({message:"prescription shown",prescription:pres.prescription})
-        
-}
 
 //getting appointment for specific users
 async function getappointment(req, res) {
@@ -55,12 +50,11 @@ async function getappointment(req, res) {
     res.send({ message: "Success", appointments: result.myappointment })
 }
 
-
 //to get hospital appointments with sorted by date
 async function hospitalappointment(req, res) {
     let hospitalObj = req.body;
     // let assignedAppointments=await appointmentModel.find({ hospitalName: hospitalObj.name })
-    let appointments = await appointmentModel.find({ hospitalName: hospitalObj.name }).sort([['appointmentdate', 1], ['timeslot', 1]]).populate('doctor');
+    let appointments = await appointmentModel.find({ hospitalName: hospitalObj.name,status:{$in:["pending","accepted"]} }).sort([['appointmentdate', 1], ['timeslot', 1]]).populate('doctor');
 
    //console.log(appointments);
     const [assignedAppointments, notAssignedAppointments] =appointments.reduce(([assigned, notAssigned], appointmentObj) => ((appointmentObj.doctor.username != "Not assigned") ? [[...assigned, appointmentObj], notAssigned] : [assigned, [...notAssigned, appointmentObj]]), [[], []]);
@@ -105,6 +99,7 @@ async function totalappointent(req, res) {
     res.send({ message: "success", appointments: appointments })
 }
 
+//demo
 async function addApp(req, res) {
     let appointmentobj = req.body
     const details = new appointmentModel(appointmentobj)
@@ -112,6 +107,7 @@ async function addApp(req, res) {
     res.send({ message: "successfully added" });
 }
 
+//update doctor
 async function updateDoctorAppointment(req, res) {
     let id = req.params.id;
     let updatedAppointment = req.body;
@@ -203,12 +199,11 @@ async function updateDoctorAppointment(req, res) {
     res.send({ message: "response send successfullySuccessfully" });
 }
 
+//show prescription
 async function showPrescription(req,res){
     var id=req.params.id
     var pres=await appointmentModel.findOne({_id:id})
-    res.send({message:"prescription shown",prescription:pres.prescription,patientname:pres.patientname})
-        
+    res.send({message:"prescription shown",prescription:pres.prescription,patientname:pres.patientname})     
 }
-
 
 module.exports={addApp,addappointment,cancelledAppointments,completedAppointments,allAppointments,getappointment,hospitalappointment,gettoday,showPrescription,totalappointent,updateDoctorAppointment}

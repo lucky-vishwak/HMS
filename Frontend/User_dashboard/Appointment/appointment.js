@@ -194,6 +194,7 @@ function nextPrev(n) {
       "username": JSON.parse(localStorage.getItem("active_user")).username,
       "emailaddress": JSON.parse(localStorage.getItem("active_user")).email,
       "phonenumber": JSON.parse(localStorage.getItem("active_user")).phonenumber,
+      "userid":JSON.parse(localStorage.getItem("active_user"))._id
     }
     $.post({
       url: "http://localhost:3005/appointment/addappointment",

@@ -1,10 +1,14 @@
 //impoting mongoose
 const mongoose = require('mongoose')
 const doctorModel=require("./doctorModel").doctorModel
+const paymentModel=require("./paymentModel").paymentModel
 
 let ObjectId = mongoose.Schema.ObjectId;
 //declaring appointment schema
 let appointmentSchema = {
+    userid:{
+        type:String
+    },
     id: {
         type: String
     },
@@ -106,6 +110,10 @@ let appointmentSchema = {
             'description': "",
             'BP': ""
         }
+    },
+    payment:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:paymentModel
     }
 }
 

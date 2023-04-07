@@ -10,16 +10,15 @@ const MessageSchema={
 }
 
 const ConversationSchmea={
-    user1:{
+    user:{
         type:String
     },
-    user2:{
-        type2:String
+    doctor:{
+        type:String
     },
     messages:[MessageSchema]
 }
 
 const ConversationModel=new mongoose.model("coversation",ConversationSchmea);
 
-
-module.exports={ConversationModel,MessageModel};
+module.exports={ConversationModel};

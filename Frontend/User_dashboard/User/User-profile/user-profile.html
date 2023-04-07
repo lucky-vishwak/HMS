@@ -147,7 +147,7 @@
   <section class="background-radial-gradient overflow-hidden mt-5">
     <div class="container py-5">
       <!-- nav bar of home page -->
-      <div class="row" id="moddall">
+      <div class="row">
         <div class="col-lg-4">
           <div class="card mb-4 bg-glass" >
             <div class="card-body text-center">
@@ -175,24 +175,23 @@
               
               <div class="d-flex justify-content-center ">
                 <button style="text-transform: none !important;" type="button" class="btn appointment-btn px-5 py-2"
-                  onclick="getFeedback()"><i class="fa-solid fa-comment mx-1"></i>Feedback</button>
+                  onclick="getChat()"><i class="fa-solid fa-comment mx-1"></i>Chat</button>
                   
               </div>
             </div>
           </div>
         </div>
         <div class="col-lg-8" id="Render">
-          
         </div>
-        <div class="col-lg-8" id="Render2"  >
+        <div class="col-lg-8" id="Render2">
           <div class="row">
             <div class="col-md-12">
       
-              <div class="card" id="chat3" style="border-radius: 15px;">
+              <div class="card bg-glass" id="chat3" style="border-radius: 15px;">
                 <div class="card-body">
       
                   <div class="row">
-                    <div class="col-5 mb-4 mb-md-0" id="scollable">
+                    <div class="col-md-5 mb-4 mb-md-0" id="scollable">
       
                       <div class="p-3">
       
@@ -205,9 +204,9 @@
                         </div>
       
                         <div data-mdb-perfect-scrollbar="true" style="position: relative; height: 400px">
-                          <ul class="list-unstyled mb-0">
+                          <ul id="doctors_list" class="list-unstyled mb-0">
                             <!-- list of doctors he visited -->
-                            <li class="p-2 border-bottom">
+                            <!-- <li class="p-2 border-bottom">
                               <a href="#!" class="d-flex justify-content-between">
                                 <div class="d-flex flex-row">
                                   <div>
@@ -218,15 +217,11 @@
                                   </div>
                                   <div class="pt-1">
                                     <p class="fw-bold mb-0">Marie Horwitz</p>
-                                    <p class="small text-muted">Hello, Are you there?</p>
+                                    <p class="small text-muted">Just Now</p>
                                   </div>
                                 </div>
-                                <div class="pt-1">
-                                  <p class="small text-muted mb-1">Just now</p>
-                                  <span class="badge bg-danger rounded-pill float-end">3</span>
-                                </div>
                               </a>
-                            </li>
+                            </li> -->
                             
                           </ul>
                         </div>
@@ -235,7 +230,7 @@
       
                     </div>
       
-                    <div class="col-7" >
+                    <div class="col-md-7" >
       
                       <div class="pt-3 pe-3" id="scollable2" style="position: relative; height: 400px">
       
@@ -271,11 +266,11 @@
                       <div class="text-muted d-flex justify-content-end align-items-end pe-3 pt-3 mt-2 ">
                         <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
                           alt="avatar 3" style="width: 40px; height: 100%;">
-                        <input type="text" class="form-control form-control-lg" id="exampleFormControlInput2"
+                        <input type="text" class="form-control form-control-md" id="sendmessage"
                           placeholder="Type message">
-                        <a class="ms-1 text-muted" href="#!"><i class="fas fa-paperclip"></i></a>
-                        <a class="ms-3 text-muted" href="#!"><i class="fas fa-smile"></i></a>
-                        <a class="ms-3" href="#!"><i class="fas fa-paper-plane"></i></a>
+                        <!-- <a class="ms-1 text-muted" href="#!"><i class="fas fa-paperclip"></i></a>
+                        <a class="ms-3 text-muted" href="#!"><i class="fas fa-smile"></i></a> -->
+                        <a class="ms-3 btn appointment-btn" href="#!" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></a>
                       </div>
       
                     </div>
@@ -287,6 +282,8 @@
             </div>
           </div>
         </div>
+      </div>
+      <div id="moddall">
       </div>
   </section>
 
@@ -363,7 +360,7 @@
     </div>
   </footer><!-- End Footer -->
   <!-- End Footer -->
-  
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <!-- MDB -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>

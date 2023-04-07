@@ -81,7 +81,6 @@ let userSchema =
       type:String,
       required:true
     }
-
 }
 
 //creating model

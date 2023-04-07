@@ -11,6 +11,7 @@ const jwt = require("jsonwebtoken")
 
 const { appointmentHelperModel } = require('../Models/appointmenthelperModel.js')
 const { appointmentModel } = require('../Models/appointmentModel.js')
+const { ConversationModel } = require('../Models/ChatModel.js')
 
 
 //register
@@ -87,6 +88,10 @@ async function accepetAppointment(req,res){
 
     await appointmentModel.updateOne({_id:appointmentAssignObj.id},{$set:{status:"accepted"}});
 
+    let conversationObj=await ConversationModel.findOne({user:appointmentAssignObj._id,doctor:appointmentAssignObj.doctor._id});
+     
+    
+
     res.send({message:"Appointment Accepted Successfully!!!"});
 }
 
@@ -95,12 +100,13 @@ async function accepetAppointment(req,res){
 async function cancelAppointment(req,res){
 
     let appointmentAssignObj=req.body;
+    console.log(appointmentAssignObj)
     
     await userModel.findOneAndUpdate({username:appointmentAssignObj.username},{$pull:{"myappointment":{id:appointmentAssignObj.id}}},{ safe: true, multi: false });
 
     await appointmentModel.updateOne({_id:appointmentAssignObj.id},{$set:{status:"cancelled",doctor:"642bd6a06f82101e24188caa"}})
      
-    await appointmentHelperModel.deleteOne({hospitalName: appointmentAssignObj.hospitalName, doctor: appointmentAssignObj.doctor, appointmentdate: appointmentAssignObj.appointmentdate, timeslot: appointmentAssignObj.timeslot});
+    await appointmentHelperModel.deleteOne({hospitalName: appointmentAssignObj.hospitalName, doctor: appointmentAssignObj.doctor.username, appointmentdate: appointmentAssignObj.appointmentdate, timeslot: appointmentAssignObj.timeslot});
 
     res.send({message:"Appointment Successfully cancelled"});
 }

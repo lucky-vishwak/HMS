@@ -45,6 +45,7 @@ $("#submit").click(() => {
                window.location.href="../../Mater_admin_dashboard/master_admin_dashboard/master_admin_dashboard.html"
             }
             else if (response.type=="user") {
+               console.log(response.userObj)
                localStorage.setItem("active_user", `${JSON.stringify(response.userObj)}`)
                localStorage.setItem("type","user")
                window.location.href="../User/User-profile/user-profile.html"
@@ -56,7 +57,6 @@ $("#submit").click(() => {
                window.location.href="../../Doctor_dashboard/doctor.html"
             }
             else if(response.type=="hospital"){
-
                localStorage.setItem("active_user", `${JSON.stringify(response.hospitalObj)}`)
                localStorage.setItem("type","hospital")
                window.location.href = "../../Admin_dashboard/Dashboard/dashboard.html"
