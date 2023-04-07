@@ -1,21 +1,19 @@
 let appo = [];
 if (localStorage.getItem("active_user")) {
-  var userobj = JSON.parse(localStorage.getItem("active_user"))
-}
-else {
-  location.href = "../../../404/404.html"
+  var userobj = JSON.parse(localStorage.getItem("active_user"));
+} else {
+  location.href = "../../../404/404.html";
 }
 
 function getProfileDetails() {
-
-  let profileuser = document.getElementById("profileuser")
-  let profilecity = document.getElementById("profilecity")
+  let profileuser = document.getElementById("profileuser");
+  let profilecity = document.getElementById("profilecity");
   //let profileaddress=document.getElementById("profileaddress")
-  profileuser.innerText = userobj.username
-  profilecity.innerText = userobj.city
+  profileuser.innerText = userobj.username;
+  profilecity.innerText = userobj.city;
   //profileaddress.innerText=userobj.address
 
-  let userDetails = document.getElementById("Render")
+  let userDetails = document.getElementById("Render");
   userDetails.innerHTML = `<div class="card mb-4 bg-glass">
     <div class="card-body">
         <p class="mb-4 display-5"> Personal Info</p>
@@ -90,12 +88,11 @@ function getProfileDetails() {
       </div>
     </div>
     
-    `
-
+    `;
 }
 
 function getEditProfile() {
-  $('#form1').show()
+  $("#form1").show();
   let userDetails = document.getElementById("Render");
   userDetails.innerHTML = ` <div class="card mb-4 bg-glass">
      <div class="card-header display-5">Account Details</div>
@@ -155,103 +152,94 @@ function getEditProfile() {
            
  </div>`;
 
- $('#change_details').click(()=>{
-   console.log("clicked")
-   change(userobj.image)
- })
-
-
+  $("#change_details").click(() => {
+    console.log("clicked");
+    change(userobj.image);
+  });
 }
-          
-function change(imgurl){
- 
-  var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;  //Javascript reGex for Email Validation.
-  var regPhone = /^\d{10}$/;                                         //Javascript reGex for Phone Number validation.
-  var regName = /^[a-zA-Z\ ]+$/
-  user = {}
+
+function change(imgurl) {
+  var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g; //Javascript reGex for Email Validation.
+  var regPhone = /^\d{10}$/; //Javascript reGex for Phone Number validation.
+  var regName = /^[a-zA-Z\ ]+$/;
+  user = {};
   var form = document.forms.x;
-  user['state'] = form.state.value
-  user['date'] = form.date.value
-  user['city'] = form.city.value;
-  user['username'] = form.username.value
-  user['fullname'] = form.fullname.value
-  user['email'] = form.email.value
-  user['phonenumber'] = form.phonenumber.value
-  user.gender = userobj.gender
-  user.image=imgurl
+  user["state"] = form.state.value;
+  user["date"] = form.date.value;
+  user["city"] = form.city.value;
+  user["username"] = form.username.value;
+  user["fullname"] = form.fullname.value;
+  user["email"] = form.email.value;
+  user["phonenumber"] = form.phonenumber.value;
+  user.gender = userobj.gender;
+  user.image = imgurl;
   var fName = form.fullname.value;
   if (!fName.match(regName)) {
-    alert('Full name shouldnt contain numbers')
-    return
+    alert("Full name shouldnt contain numbers");
+    return;
   }
 
   if (fName.length < 4) {
-    alert('full name should have minimum 4 characters')
-    return
-
+    alert("full name should have minimum 4 characters");
+    return;
   }
   var phonenumber = form.phonenumber.value;
   if (!phonenumber.match(regPhone)) {
-    alert('phone number should consist of 10 digits')
-    return
+    alert("phone number should consist of 10 digits");
+    return;
   }
   var email = form.email.value;
   if (!email.match(regEmail)) {
-    alert('Email format is worng')
-    return
+    alert("Email format is worng");
+    return;
   }
   for (const i in user) {
-    if (user[i] == '') {
-      alert(`${i} is not filled`)
-      return
+    if (user[i] == "") {
+      alert(`${i} is not filled`);
+      return;
     }
   }
   $.post({
     url: "http://localhost:3005/user/edit/:username",
     data: JSON.stringify(user),
-    contentType: 'application/json; charset=utf-8',
-   headers:{Authorization :localStorage.getItem('token')}
-  })
-    .done((res, stat, xhr) => {
-      console.log(res)
-      if (res.message == "changes successfully done") {
-        alert(res.message)
-        userobj = res.user
-        $('#imgxx').attr('src',`${user.image}`)
-        
-        localStorage.setItem('active_user', JSON.stringify(user))
-        getProfileDetails()
-        $("#form1").hide()
-      }
-      else {
-        alert(res.message)
-      }
-    })
+    contentType: "application/json; charset=utf-8",
+    headers: { Authorization: localStorage.getItem("token") },
+  }).done((res, stat, xhr) => {
+    console.log(res);
+    if (res.message == "changes successfully done") {
+      alert(res.message);
+      userobj = res.user;
+      $("#imgxx").attr("src", `${user.image}`);
+
+      localStorage.setItem("active_user", JSON.stringify(user));
+      getProfileDetails();
+      $("#form1").hide();
+    } else {
+      alert(res.message);
+    }
+  });
 }
-function showPrescription(index){
-  
+function showPrescription(index) {
   $.ajax({
     type: "GET",
     url: `http://localhost:3005/appointment/show_prescription/${appo[index].id}`,
-    contentType: 'application/json; charset=utf-8',
-   headers:{Authorization :localStorage.getItem('token')}
-  })
-    .done((response, stat) => {
-      if (stat == 'success') {
-        if (response.message == 'prescription shown') {
-          var prescription=response.prescription
-          $('#fullNameToday').val(`${response.patientname}`)
-           $('#percerptionToday').val(`${prescription.description}`)
-           $('#genderToday').val(`${prescription.temperature}`)
-           $('#ageToday').val(`${prescription.BP}`)
-        }
+    contentType: "application/json; charset=utf-8",
+    headers: { Authorization: localStorage.getItem("token") },
+  }).done((response, stat) => {
+    if (stat == "success") {
+      if (response.message == "prescription shown") {
+        var prescription = response.prescription;
+        $("#fullNameToday").val(`${response.patientname}`);
+        $("#percerptionToday").val(`${prescription.description}`);
+        $("#genderToday").val(`${prescription.temperature}`);
+        $("#ageToday").val(`${prescription.BP}`);
       }
-    })
-
+    }
+  });
 }
 function getMyappointmentDisplay() {
   let userDetails = document.getElementById("Render");
-  $("#Render").html("")
+  $("#Render").html("");
   userDetails.innerHTML = `<div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 700px">
      <table class="table table-striped mb-0 bg-glass">
        <thead style="background-color: #1c5cbd;">
@@ -267,32 +255,38 @@ function getMyappointmentDisplay() {
        </tbody>
      </table>
  </div>`;
+
   let i = 0;
   for (let ele of appo) {
-    console.log(ele.doctor.username)
-    console.log(ele.status)
-    let tr = $("<tr></tr>")
-    tr.append($("<td></td>").text(ele.doctor.username))
-    tr.append($("<td></td>").text(ele.specialization))
-    tr.append($("<td></td>").text(ele.appointmentdate))
-    tr.append($("<td></td>").text(ele.timeslot))
+    let tr = $("<tr></tr>");
+    tr.append($("<td></td>").text(ele.doctor.username));
+    tr.append($("<td></td>").text(ele.specialization));
+    tr.append($("<td></td>").text(ele.appointmentdate));
+    tr.append($("<td></td>").text(ele.timeslot));
     let td_status = $("<td></td>").text(ele.status);
-    let td_status_comp=$("<td></td>").text(ele.status)
-    let td_button = $("<td></td>").attr('id', `but${i}`);
-    let button_cancel = $("<button></button>").text('Reject').addClass(`btn btn-danger mx-1`).attr('onclick', `cancelAppointment(${i})`);
-    let button_accept = $("<button></button>").text('Accept').addClass('btn btn-success').attr('onclick', `accepetAppointment(${i})`);
+    let td_status_comp = $("<td></td>").text(ele.status);
+    let td_button = $("<td></td>").attr("id", `but${i}`);
+    let button_cancel = $("<button></button>")
+      .text("Reject")
+      .addClass(`btn btn-danger mx-1`)
+      .attr("onclick", `cancelAppointment(${i})`);
+    let button_accept = $("<button></button>")
+      .text("Accept")
+      .addClass("btn btn-success")
+      .attr("onclick", `accepetAppointment(${i})`);
     td_button.append(button_cancel);
     td_button.append(button_accept);
-    if (ele.doctor.username != 'Not assigned' && ele.status == 'pending') {
+    if (ele.doctor.username != "Not assigned" && ele.status == "pending") {
       tr.append(td_button);
-    }
-    else if (ele.status == 'accepted' || ele.status == 'pending') {
+    } else if (ele.status == "accepted" || ele.status == "pending") {
       tr.append(td_status);
-    }
-    else if (ele.status == 'completed') {
-      var td=$('<td></td>')
-      var mod=$(`<button>view</button>`).attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered" })    
-      $('#moddall').append(` <div class="card" id='modalhide'>
+    } else if (ele.status == "completed") {
+      var td = $("<td></td>");
+      var mod = $(`<button>view</button>`).attr({
+        "data-bs-toggle": "modal",
+        "data-bs-target": "#verticalycentered",
+      });
+      $("#moddall").append(` <div class="card" id='modalhide'>
       <div class="card-body">
         <div class="modal fade" id="verticalycentered" tabindex="-1">
           <div class="modal-dialog modal-dialog-centered">
@@ -326,6 +320,20 @@ function getMyappointmentDisplay() {
                       <input type="text" name="age" class="form-control mb-4" id="ageToday" disabled  value=""/>
                   </div>
                 </div>
+                <div class="row">
+                <label for="age" class="col-md-4 col-lg-4 col-form-label ">${
+                  ele.doctor.fullname
+                }</label>
+                <div class="col-md-7 col-lg-7">
+                <div id="rating">
+                <span class="star"><i class="bi bi-star" id='star1'></i></span>
+                <span class="star"><i class="bi bi-star" id='star2'></i></span>
+                <span class="star"><i class="bi bi-star" id='star3'></i></span>
+                <span class="star"><i class="bi bi-star" id='star4'></i></span>
+                <span class="star"><i class="bi bi-star" id='star5'></i></span>
+                </div>
+              </div>
+              
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -336,167 +344,217 @@ function getMyappointmentDisplay() {
         </div><!-- End Vertically centered Modal-->
 
       </div>
-    </div>`)
-      mod.attr('onclick', `showPrescription(${i})`).addClass('btn btn-primary')
-      td.append(td_status_comp)
+    </div>`);
+
+      mod.attr("onclick", `showPrescription(${i})`).addClass("btn btn-primary");
+      td.append(td_status_comp);
       td.append(mod);
-      tr.append(td)
+      tr.append(td);
+      var btn = $(".star>.bi");
+      console.log(btn);
+
+      if (ele.rating == 0) {
+        if (btn.length == 5) {
+          for (let i = 0; i < btn.length; i++) {
+            console.log(btn[i]);
+            btn[i].addEventListener("mouseover",rating)
+            btn[i].addEventListener("click", () => {
+              console.log(i);
+              let rate = {
+                username: ele.doctor.username,
+                ratingIndex: i,
+                rating: ele.doctor.rating,
+                appoid: ele.id,
+                userid: userobj._id,
+              };
+
+              $.post({
+                url: "http://localhost:3005/doctor/ratedoctor",
+                data: JSON.stringify(rate),
+                contentType: 'application/json; charset=utf-8',
+               headers:{Authorization :localStorage.getItem('token')}
+              })
+                .done((res, stat, xhr) => {
+                  if (res.message ="successful") {
+                    alert("thanks for giving the rating")
+                     ele.rating=i
+                   // $('#change_details').prop('disabled',true)
+                  }
+                  else {
+                    alert(res.message)
+                  }
+                })
+            });
+          }
+        }
+      } else {
+        for (let i = 0; i <=ele.rating; i++) {
+          $(`#star${i+1}`).removeClass("bi-star").addClass("bi-star-fill");
+        }
+      }
     }
     $("#details").append(tr);
     i++;
   }
   //$('#modalhide').hide()
 }
+
+function rating(event) {
+  let val = parseInt(event.target.id[4])
+  console.log()
+  for (let i = 1; i <= 5; i++) {
+    if (i <= val) {
+      $(`#star${i}`).removeClass("bi-star").addClass("bi-star-fill");
+    } else {
+      $(`#star${i}`).removeClass("bi-star-fill").addClass("bi-star");
+      // if(!$(`#star${i}`).hasClass('bi-star')){
+
+      // }
+    }
+  }
+}
+
 function getMyappointment() {
-  $('#form1').hide()
+  $("#form1").hide();
   $.get({
     url: `http://localhost:3005/appointment/appointments/${userobj.username}`,
-    contentType: 'application/json; charset=utf-8',
-   headers:{Authorization :localStorage.getItem('token')}
+    contentType: "application/json; charset=utf-8",
+    headers: { Authorization: localStorage.getItem("token") },
   }).done((response, stat) => {
     if (stat == "success") {
       if (response.message == "Success") {
-        appo=[]
+        appo = [];
         for (let ele of response.appointments) {
-          appo.push(ele)
+          appo.push(ele);
         }
         getMyappointmentDisplay(appo);
       }
+    } else {
+      alert(response);
     }
-    else{
-      alert(response)
-    }
-  })
+  });
 }
 
 function cancelAppointment(index) {
-  let confirmation = confirm('Are You Sure?');
-  appo[index]['username']=userobj.username;
+  let confirmation = confirm("Are You Sure?");
+  appo[index]["username"] = userobj.username;
   if (confirmation) {
     $.ajax({
       type: "PUT",
       url: `http://localhost:3005/user/cancel-appointment`,
       data: JSON.stringify(appo[index]),
-      contentType: 'application/json; charset=utf-8',
-     headers:{Authorization :localStorage.getItem('token')}
-    })
-      .done((response, stat) => {
-        if (stat == 'success') {
-          if (response.message == 'Appointment Successfully cancelled') {
-            alert(response.message);
-            appo = [];
-            getMyappointment();
-          }
+      contentType: "application/json; charset=utf-8",
+      headers: { Authorization: localStorage.getItem("token") },
+    }).done((response, stat) => {
+      if (stat == "success") {
+        if (response.message == "Appointment Successfully cancelled") {
+          alert(response.message);
+          appo = [];
+          getMyappointment();
         }
-      })
+      }
+    });
   }
 }
 
 function accepetAppointment(index) {
-  let confirmation = confirm('Are You Sure?');
-  appo[index]['username']=userobj.username;
-  console.log(appo[index])
+  let confirmation = confirm("Are You Sure?");
+  appo[index]["username"] = userobj.username;
+  console.log(appo[index]);
   if (confirmation) {
     $.ajax({
       type: "PUT",
       url: `http://localhost:3005/user/accept-appointment`,
       data: JSON.stringify(appo[index]),
-      contentType: 'application/json; charset=utf-8',
-     headers:{Authorization :localStorage.getItem('token')}
-    })
-      .done((response, stat) => {
-        if (stat == 'success') {
-          if (response.message == 'Appointment Accepted Successfully!!!') {
-            alert(response.message);
-            appo = [];
-            getMyappointment();
-          }
+      contentType: "application/json; charset=utf-8",
+      headers: { Authorization: localStorage.getItem("token") },
+    }).done((response, stat) => {
+      if (stat == "success") {
+        if (response.message == "Appointment Accepted Successfully!!!") {
+          alert(response.message);
+          appo = [];
+          getMyappointment();
         }
-      })
+      }
+    });
   }
 }
 
-
-$(document).ready(function() {
- 
-  $('#imgxx').attr('src',`${userobj.image}`)
-  $("#form1").hide()
-  $('#form1').on('submit', function(event) {
-      event.preventDefault();
-      //button disable
-      $('#change_details').prop('disabled',true)
-      var formData=new FormData();
-      formData.append('image', $("#file")[0].files[0]);
-      //formData.append('userObj',JSON.stringify(userObj));
-      let url = "http://127.0.0.1:3005/user/uploadfile/";
-      $.ajax({
-          method: "POST",
-          url: url,
-          data: formData,
-          enctype:"multipart/form-data",
-          processData: false,
-          contentType:false,
-          cache:false,
-          //Headers:{Authorization :localStorage.getItem('token')}
-      }).done(function(msg) {
-            userobj.image=msg.imgurl
-            $('#change_details').prop('disabled',false)
-      });
+$(document).ready(function () {
+  $("#imgxx").attr("src", `${userobj.image}`);
+  $("#form1").hide();
+  $("#form1").on("submit", function (event) {
+    event.preventDefault();
+    //button disable
+    $("#change_details").prop("disabled", true);
+    var formData = new FormData();
+    formData.append("image", $("#file")[0].files[0]);
+    //formData.append('userObj',JSON.stringify(userObj));
+    let url = "http://127.0.0.1:3005/user/uploadfile/";
+    $.ajax({
+      method: "POST",
+      url: url,
+      data: formData,
+      enctype: "multipart/form-data",
+      processData: false,
+      contentType: false,
+      cache: false,
+      //Headers:{Authorization :localStorage.getItem('token')}
+    }).done(function (msg) {
+      userobj.image = msg.imgurl;
+      $("#change_details").prop("disabled", false);
+    });
   });
 });
 
-
-
 function cancelAppointment(index) {
-  let confirmation = confirm('Are You Sure?');
-  appo[index]['username']=userobj.username;
+  let confirmation = confirm("Are You Sure?");
+  appo[index]["username"] = userobj.username;
   if (confirmation) {
     $.ajax({
       type: "PUT",
       url: `http://localhost:3005/user/cancel-appointment`,
       data: JSON.stringify(appo[index]),
-      contentType: 'application/json; charset=utf-8',
-     headers:{Authorization :localStorage.getItem('token')}
-    })
-      .done((response, stat) => {
-        if (stat == 'success') {
-          if (response.message == 'Appointment Successfully cancelled') {
-            alert(response.message);
-            appo = [];
-            getMyappointment();
-          }
+      contentType: "application/json; charset=utf-8",
+      headers: { Authorization: localStorage.getItem("token") },
+    }).done((response, stat) => {
+      if (stat == "success") {
+        if (response.message == "Appointment Successfully cancelled") {
+          alert(response.message);
+          appo = [];
+          getMyappointment();
         }
-      })
+      }
+    });
   }
 }
 
 function accepetAppointment(index) {
-  let confirmation = confirm('Are You Sure?');
-  console.log(appo[index])
+  let confirmation = confirm("Are You Sure?");
+  console.log(appo[index]);
   if (confirmation) {
     $.ajax({
       type: "PUT",
       url: `http://localhost:3005/user/accept-appointment`,
       data: JSON.stringify(appo[index]),
-      contentType: 'application/json; charset=utf-8',
-     headers:{Authorization :localStorage.getItem('token')}
-    })
-      .done((response, stat) => {
-        if (stat == 'success') {
-          if (response.message == 'Appointment Accepted Successfully!!!') {
-            alert(response.message);
-            appo = [];
-            getMyappointment();
-          }
+      contentType: "application/json; charset=utf-8",
+      headers: { Authorization: localStorage.getItem("token") },
+    }).done((response, stat) => {
+      if (stat == "success") {
+        if (response.message == "Appointment Accepted Successfully!!!") {
+          alert(response.message);
+          appo = [];
+          getMyappointment();
         }
-      })
+      }
+    });
   }
 }
 
 //feedback
 
 function getFeedback() {
-  $('#form1').hide()
+  $("#form1").hide();
   let userDetails = document.getElementById("Render");
 
   userDetails.innerHTML = `<div class="card mb-4 bg-glass">
@@ -528,33 +586,31 @@ function getFeedback() {
            </form>
      </div>
  
- </div>`
+ </div>`;
 }
 
 // $.ready(()=>{
 //   function selectFile(eventObj){
 //     this.file=eventObj.target.files[0]
 //   }
-  
+
 // })
 
-var login_btn = document.getElementById("login")
-var logout_btn = document.getElementById("logout")
+var login_btn = document.getElementById("login");
+var logout_btn = document.getElementById("logout");
 if (localStorage.getItem("active_user")) {
-  login_btn.innerHTML = ``
-}
-else {
-  logout_btn.innerHTML = ``
+  login_btn.innerHTML = ``;
+} else {
+  logout_btn.innerHTML = ``;
 }
 function appoint() {
   if (localStorage.getItem("type") == "") {
-    window.location.href = "../../Login/login.html"
-  }
-  else {
-    window.location.href = "../../Appointment/appointment.html"
+    window.location.href = "../../Login/login.html";
+  } else {
+    window.location.href = "../../Appointment/appointment.html";
   }
 }
 
 function logout() {
-  localStorage.clear()
+  localStorage.clear();
 }

@@ -15,6 +15,8 @@ doctorRoute.put('/updateProfile/:username',verifyToken,errorHandler(doctorContro
 
 doctorRoute.get('/total-doctors',verifyToken,doctorController.totaldoctors);
 
+doctorRoute.post('/ratedoctor',verifyToken,doctorController.rateDoctor);
+
 
 doctorRoute.post('/add-dummy',verifyToken,doctorController.addDoctorDummy);
 

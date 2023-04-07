@@ -106,6 +106,10 @@ let appointmentSchema = {
             'description': "",
             'BP': ""
         }
+    },
+    rating:{
+        type:Number,
+        default:0
     }
 }
 

@@ -24,8 +24,36 @@
   color: #777;
 }
 
+/* .checked{
+  all:unset
+} */
 
+/* #rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  display: flex;
+  justify-content: space-evenly;
+ 
+}
+#rating > span {
+  font-size: 1.7rem;
+  /* padding-left: 20px; */
+  /* cursor: pointer;
+  width: 3rem;
+  
+}
+#rating > span:hover:before,
+#rating > span:hover ~ span:before {
+   content: "\2605";
+   position: absolute;
+   color: orange;
+} */ 
 
-
-
+.bi-star-fill{
+  color : orange
+}
+#rating{
+  display:flex;
+  justify-content: space-evenly;
+}
 

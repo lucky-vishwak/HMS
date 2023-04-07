@@ -37,4 +37,6 @@ appointmentRoute.get('/show_prescription/:id',verifyToken,appointmentController.
 //
 appointmentRoute.put('/update-appoint/:id',verifyToken,errorHandler(appointmentController.updateDoctorAppointment))
 
+appointmentRoute.get('/allAppointmentsOfDoctor/:id',verifyToken,appointmentController.allAppointmentsOfDoctor)
+
 module.exports = {appointmentRoute}

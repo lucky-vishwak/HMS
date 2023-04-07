@@ -293,3 +293,18 @@ function toastFunction() {
     location.href = "../User/User-profile/user-profile.html"
   }, 3000);
 }
+
+
+
+function Emergency(){
+  var em=document.getElementById('sel').value
+  if(em=='specialization'){
+    alert('enter the specialization')
+  }
+  else{
+    $.post({url: "http://localhost:3005/",
+    headers:{Authorization :localStorage.getItem('token')}}).done((response,stat)=>{
+      
+    })
+  }
+}
