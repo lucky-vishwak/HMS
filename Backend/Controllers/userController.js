@@ -77,6 +77,19 @@ async function updateProfilepic(req,res){
     res.send({message:"image updated successfully",imgurl:req.file.path})
 }
   
+async function push(req,res){
+    let obj=req.body;
+    let Obj=await ConversationModel.findOne({user:obj.user,doctor:obj.doctor});
+
+    if(Obj==null){
+        let conversationObj={
+            user:obj.user,
+            doctor:obj.doctor
+        }
+        await ConversationModel.create(conversationObj);
+    }
+    res.send({message:"successfully done"})
+}
 
 //to accept the appointments
 async function accepetAppointment(req,res){
@@ -88,10 +101,16 @@ async function accepetAppointment(req,res){
 
     await appointmentModel.updateOne({_id:appointmentAssignObj.id},{$set:{status:"accepted"}});
 
-    let conversationObj=await ConversationModel.findOne({user:appointmentAssignObj._id,doctor:appointmentAssignObj.doctor._id});
-     
-    
+    let Obj=await ConversationModel.findOne({user:appointmentAssignObj.userid,doctor:appointmentAssignObj.doctor._id});
 
+    if(Obj==null){
+        let conversationObj={
+            user:appointmentAssignObj.userid,
+            doctor:appointmentAssignObj.doctor._id
+        }
+        await ConversationModel.create(conversationObj);
+    }
+    
     res.send({message:"Appointment Accepted Successfully!!!"});
 }
 
@@ -111,4 +130,4 @@ async function cancelAppointment(req,res){
     res.send({message:"Appointment Successfully cancelled"});
 }
 
-module.exports={register,updateDetails,allusers,accepetAppointment,cancelAppointment,updateProfilepic}
+module.exports={register,updateDetails,allusers,accepetAppointment,cancelAppointment,updateProfilepic,push}

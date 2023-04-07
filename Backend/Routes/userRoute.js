@@ -39,6 +39,8 @@ userRoute.put('/cancel-appointment',userController.cancelAppointment);
 //accept appointments by specific user
 userRoute.put('/accept-appointment',userController.accepetAppointment);
 
+userRoute.post('/post-data',userController.push)
+
 
 
 

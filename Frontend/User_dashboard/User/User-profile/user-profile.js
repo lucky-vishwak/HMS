@@ -518,45 +518,88 @@ function accepetAppointment(index) {
       })
   }
 }
+let All_messages=[];
+
+//for chat conversation window
+function displayChat(ind){
+  let conversation=All_messages[ind]['messages'];
+  console.log(conversation);
+  $("#conversationsWindow").html("");
+  for(let msg of conversation){
+    if(msg.sender_id!==All_messages[ind].user.toString()){
+      $("#conversationsWindow").append(`<div class="d-flex flex-row justify-content-start">
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+            alt="avatar 1" style="width: 45px; height: 100%;">
+          <div>
+            <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7;">${msg.message}</p>
+            <p class="small ms-3 mb-3 rounded-3 text-muted float-end">${msg.createdAt}</p>
+          </div>
+        </div>`)
+    }
+    else{
+      $("#conversationsWindow").append(`<div class="d-flex flex-row justify-content-end">
+          <div>
+            <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">${msg.message}</p>
+            <p class="small me-3 mb-3 rounded-3 text-muted">${msg.createdAt}</p>
+          </div>
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+            alt="avatar 1" style="width: 45px; height: 100%;">
+        </div>`)
+
+    }
+  }
+  $("#conversat").html('');
+  $("#conversat").append(`<a class="ms-3 btn appointment-btn" href="#!" onclick="sendMessage(${ind})"><i class="fas fa-paper-plane"></i></a>
+  `)
+}
 
 //For Chat Window
+
 function getChat() {
-  console.log(appo)
   $("#moddall").html("")
   $('#form1').hide();
   $("#Render").hide();
   $("#Render2").show();
   if (!appo) {
-    $("#doctors_list").append(`<li style="display:flex; justify-content:center;">No Doctors</li>`)
+    $("#doctors_list").append(`<li style="display:flex; justify-content:center;">No Doctors to chat</li>`)
   }
-  //https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp
-  const appo1 = appo.filter((value, index, self) => self.indexOf(value) === index)
   $("#doctors_list").html("")
-  for (const ele of appo1) {
-    if (ele.status == "completed") {
-      $("#doctors_list").append(`<li class="p-2 border-bottom">
-  <a href="#!" class="d-flex justify-content-between">
-    <div class="d-flex flex-row">
-      <div>
-        <img
-        class="rounded-circle img-fluid"
-          src="${ele.doctor.imgurl}"
-          alt="avatar" class="d-flex align-self-center me-3" width="60">
-        <span class="badge bg-success badge-dot"></span>
-      </div>
-      <div class="pt-1 px-2">
-        <p class="fw-bold mb-0">${ele.doctor.fullname}</p>
-        <p class="small text-muted">Just Now</p>
-      </div>
-    </div>
-    <!-- <div class="pt-1">
-      <p class="small text-muted mb-1">Just now</p>
-      <span class="badge bg-danger rounded-pill float-end">3</span>
-    </div> -->
-  </a>
-</li>`)
-    }
+  let conversationObj={
+    user:userobj._id
   }
+  $.post({
+    url: "http://localhost:3005/chat/get-chat",
+    data: JSON.stringify(conversationObj),
+    contentType: 'application/json; charset=utf-8'
+  }).done((res,stat)=>{
+     if(stat=='success')
+     {
+        All_messages=res.conversations;
+        for(let i=0;i<All_messages.length;i++){
+          $("#doctors_list").append(`<li class="p-2 border-bottom">
+                  <div onclick="displayChat(${i})">
+                    <img
+                    class="rounded-circle img-fluid"
+                      src="${All_messages[i]['doctor']['imgurl']}"
+                      alt="avatar" class="d-flex align-self-center me-3" width="60">
+                    <span class="badge bg-success badge-dot"></span>
+                  </div>
+                  <div class="pt-1 px-2">
+                    <p class="fw-bold mb-0">${All_messages[i]['doctor']['fullname']}</p>
+                    <p class="small text-muted">Just Now</p>
+                  </div>
+                </div>
+              </a>
+            </li>`)
+            if(i===0){
+              displayChat(0);
+              console.log("First Time call");
+            }
+        }
+     }
+  })  
+
+
 }
 
 
@@ -564,7 +607,8 @@ function sendMessage(ind){
      let message=$("#sendmessage").val();
 
      let messageObj={
-        senderID:userobj._id,
+        senderID:All_messages[ind].user,
+        doctor:All_messages[ind].doctor._id,
         message:message,
      }
      $.post({
@@ -573,10 +617,9 @@ function sendMessage(ind){
       contentType:"application/json; charset=utf-8"
      }).done((res,stat)=>{
       if(stat=='success'){
-        window.location.href='#';
+        $("#sendmessage").val('');
       }
      })
-
 }
 
 
