@@ -67,9 +67,11 @@ $("#sendMessage").click(() => {
 $("document").ready(() => {
     console.log("hello")
     $.get({
-        url: "http://localhost:3005/doctor/total-doctors"
+        url: "http://localhost:3005/doctor/total-doctors",
+        headers: { Authorization: localStorage.getItem("token") }
     })
         .done((res) => {
+            console.log(res)
             doctors = res.doctorObj
             display_doctors(doctors)
         })

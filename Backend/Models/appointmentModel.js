@@ -118,6 +118,10 @@ let appointmentSchema = {
     amount:{
         type:String,
         default:"150"
+    },
+    rating:{
+        type:Number,
+        default:0
     }
 }
 

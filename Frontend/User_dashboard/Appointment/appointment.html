@@ -151,7 +151,7 @@
                 </h5>
                 <div class="card-body px-4 py-2 px-md-5">
                   <div class="d-flex justify-content-center">
-                    <button style="background-color: rgb(255, 170, 170) !important;" class="btn appointment-btn" onclick="hello()">Emergency Appointment</button>
+                    <button style="background-color: rgb(255, 170, 170) !important;" class="btn appointment-btn" onclick="document.getElementById('id01').style.display='block'">Emergency Appointment</button>
                   </div>
                   <form id="signUpForm" action="#!">
                     <!-- start step indicators -->
@@ -249,8 +249,35 @@
     </section>
     <!-- End Breadcrumbs Section -->
   </main>
+  <div id="id01" class="modal">
+    <span onclick="document.getElementById('id01').style.display='none'" class="close"
+      title="Close Modal">×</span>
+    <form class="modal-content" action="/action_page.php">
+      <div class="containermodel">
+        <form id="formx">
+        <select class="form-select mb-2" id='sel' aria-label="Default select example">
+          <option selected>specialization</option>
+          <option value="surgeory">Surgeory</option>
+          <option value="dentist">Dentist Checkup</option>
+                                    <option value="bodycheckup">Body Checkup</option>
+                                    <option value="gynecologist">Gynecologist Chekup</option>
+                                    <option value="otherservices">General physician</option>
+        </select>
+        <p class="alert alert-danger">If it is not an emergency appointment you will face serious consequences</p>
+
+        <div class="clearfix">
+          <button type="button" class="btn btn-danger" onclick="document.getElementById('id01').style.display='none'"
+            class="cancelbtn">Cancel</button>
+          <button type="button" class="btn btn-primary" onclick="Emergency()"
+            >Emergency</button>
+        </div>
+      </form>
+      </div>
+    </form>
+  </div>
   <!-- End #main -->
   <!-- ======= Footer ======= -->
+ 
   <footer id="footer">
 
     <div class="footer-top">

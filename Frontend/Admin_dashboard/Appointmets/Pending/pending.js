@@ -45,7 +45,8 @@ $(document).ready(() => {
   $.post({
     url: "http://localhost:3005/appointment/hospitalAppointments",
     data: JSON.stringify(hospitalObj),
-    contentType: 'application/json; charset=utf-8'
+    contentType: 'application/json; charset=utf-8',
+    headers:{Authorization :localStorage.getItem('token')}
   })
     .done((response, stat) => {
       if (stat == 'success') {
@@ -99,7 +100,8 @@ function assignDoctor(index) {
     type: "PUT",
     url: `http://localhost:3005/hospital/assign-doctor/${JSON.parse(localStorage.getItem("active_user")).hospitalName}`,
     data: JSON.stringify(appointmentsNotAssigned[index]),
-    contentType: 'application/json; charset=utf-8'
+    contentType: 'application/json; charset=utf-8',
+    headers:{Authorization :localStorage.getItem('token')}
   })
     .done((response, stat) => {
       if (stat == 'success') {

@@ -18,7 +18,8 @@ $("#logout").click(() => {
 })
 
 $.get({
-    url: "http://localhost:3005/doctor/total-doctors"
+    url: "http://localhost:3005/doctor/total-doctors",
+    headers:{Authorization :localStorage.getItem('token')}
 }).done(async (res, stat) => {
     if (stat == "success") {
         $("#doctorcount").text(`${res.doctorObj.length}`)
@@ -27,7 +28,8 @@ $.get({
 
 
 $.get({
-    url: "http://localhost:3005/hospital/all-hospitals"
+    url: "http://localhost:3005/hospital/all-hospitals",
+    headers:{Authorization :localStorage.getItem('token')}
 }).done(async (res, stat) => {
     let hospitals=res.hospitalsObj
     if (stat == "success") {
@@ -199,7 +201,8 @@ function graph_display_compare(val){
 }
 
 $.get({
-    url: "http://localhost:3005/appointment/total-appointments"
+    url: "http://localhost:3005/appointment/total-appointments",
+    headers:{Authorization :localStorage.getItem('token')}
 }).done(async (res, stat) => {
     appointments = res.appointments
     graph_display(15)

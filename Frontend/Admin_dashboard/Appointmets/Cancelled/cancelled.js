@@ -20,7 +20,8 @@ $(document).ready(()=>{
   $.post({
       url:"http://localhost:3005/appointment/cancelled-appointments",
       data:JSON.stringify(hospitalObj),
-      contentType:'application/json; charset=utf-8'
+      contentType:'application/json; charset=utf-8',
+      headers:{Authorization :localStorage.getItem('token')}
   })
   .done((response,stat)=>{
       $("#title").hide();

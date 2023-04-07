@@ -1,30 +1,25 @@
 let appo = [];
 if (localStorage.getItem("active_user")) {
-  var userobj = JSON.parse(localStorage.getItem("active_user"))
-}
-else {
-  location.href = "../../../404/404.html"
+  var userobj = JSON.parse(localStorage.getItem("active_user"));
+} else {
+  location.href = "../../../404/404.html";
 }
 
 function getProfileDetails() {
-
-  let profileuser = document.getElementById("profileuser")
-  let profilecity = document.getElementById("profilecity")
+  let profileuser = document.getElementById("profileuser");
+  let profilecity = document.getElementById("profilecity");
   //let profileaddress=document.getElementById("profileaddress")
-  profileuser.innerText = userobj.username
-  profilecity.innerText = userobj.city
+  profileuser.innerText = userobj.username;
+  profilecity.innerText = userobj.city;
   //profileaddress.innerText=userobj.address
 
-  let userDetails = document.getElementById("Render")
+  let userDetails = document.getElementById("Render");
   userDetails.innerHTML = `<div class="card mb-4 bg-glass">
     <div class="card-body">
         <p class="mb-4 display-5"> Personal Info</p>
       <div class="row">
         <div class="col-sm-3">
-          <p class="mb-0">Full Name</p>
-        </div>
-        <div class="col-sm-9">
-          <p class="text-muted mb-0">${userobj.fullname}</p>
+          <p cl.${userobj.fullname}</p>
         </div>
       </div>
       <hr>
@@ -93,8 +88,7 @@ function getProfileDetails() {
       </div>
     </div>
     
-    `
-
+    `;
 }
 
 function getEditProfile() {
@@ -160,65 +154,59 @@ function getEditProfile() {
            
  </div>`;
 
-  $('#change_details').click(() => {
-    console.log("clicked")
-    change(userobj.image)
-  })
-
-
+  $("#change_details").click(() => {
+    console.log("clicked");
+    change(userobj.image);
+  });
 }
 
 function change(imgurl) {
-
-  var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;  //Javascript reGex for Email Validation.
-  var regPhone = /^\d{10}$/;                                         //Javascript reGex for Phone Number validation.
-  var regName = /^[a-zA-Z\ ]+$/
-  user = {}
+  var regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g; //Javascript reGex for Email Validation.
+  var regPhone = /^\d{10}$/; //Javascript reGex for Phone Number validation.
+  var regName = /^[a-zA-Z\ ]+$/;
+  user = {};
   var form = document.forms.x;
-  user['state'] = form.state.value
-  user['date'] = form.date.value
-  user['city'] = form.city.value;
-  user['username'] = form.username.value
-  user['fullname'] = form.fullname.value
-  user['email'] = form.email.value
-  user['phonenumber'] = form.phonenumber.value
-  user.gender = userobj.gender
-  user.image = imgurl
-  console.log(user)
+  user["state"] = form.state.value;
+  user["date"] = form.date.value;
+  user["city"] = form.city.value;
+  user["username"] = form.username.value;
+  user["fullname"] = form.fullname.value;
+  user["email"] = form.email.value;
+  user["phonenumber"] = form.phonenumber.value;
+  user.gender = userobj.gender;
+  user.image = imgurl;
   var fName = form.fullname.value;
   if (!fName.match(regName)) {
-    alert('Full name shouldnt contain numbers')
-    return
+    alert("Full name shouldnt contain numbers");
+    return;
   }
 
   if (fName.length < 4) {
-    alert('full name should have minimum 4 characters')
-    return
-
+    alert("full name should have minimum 4 characters");
+    return;
   }
   var phonenumber = form.phonenumber.value;
   if (!phonenumber.match(regPhone)) {
-    alert('phone number should consist of 10 digits')
-    return
+    alert("phone number should consist of 10 digits");
+    return;
   }
   var email = form.email.value;
   if (!email.match(regEmail)) {
-    alert('Email format is worng')
-    return
+    alert("Email format is worng");
+    return;
   }
   for (const i in user) {
-    if (user[i] == '') {
-      alert(`${i} is not filled`)
-      return
+    if (user[i] == "") {
+      alert(`${i} is not filled`);
+      return;
     }
   }
   $.post({
     url: "http://localhost:3005/user/edit/:username",
     data: JSON.stringify(user),
-    contentType: 'application/json; charset=utf-8'
-  })
-    .done((res, stat, xhr) => {
-
+    contentType: "application/json; charset=utf-8",
+    headers: { Authorization: localStorage.getItem("token") },
+  }).done((res, stat, xhr) => {
       if (res.message == "changes successfully done") {
         alert(res.message)
         userobj = res.user
@@ -229,34 +217,33 @@ function change(imgurl) {
         $("#form1").hide()
       }
       else {
-        alert(xhr.statusText)
+        alert(res.message)
       }
-    })
-}
+    });
+  }
 
 function showPrescription(index) {
   $.ajax({
     type: "GET",
     url: `http://localhost:3005/appointment/show_prescription/${appo[index].id}`,
-    contentType: 'application/json; charset=utf-8'
-  })
-    .done((response, stat) => {
-      if (stat == 'success') {
-        if (response.message == 'prescription shown') {
-          var prescription = response.prescription
-          $('#fullNameToday').val(`${response.patientname}`)
-          $('#percerptionToday').val(`${prescription.description}`)
-          $('#genderToday').val(`${prescription.temperature}`)
-          $('#ageToday').val(`${prescription.BP}`)
-        }
+    contentType: "application/json; charset=utf-8",
+    headers: { Authorization: localStorage.getItem("token") },
+  }).done((response, stat) => {
+    if (stat == "success") {
+      if (response.message == "prescription shown") {
+        var prescription = response.prescription;
+        $("#fullNameToday").val(`${response.patientname}`);
+        $("#percerptionToday").val(`${prescription.description}`);
+        $("#genderToday").val(`${prescription.temperature}`);
+        $("#ageToday").val(`${prescription.BP}`);
       }
-    })
-
+    }
+  });
 }
 
 function getMyappointmentDisplay() {
   let userDetails = document.getElementById("Render");
-  $("#Render").html("")
+  $("#Render").html("");
   userDetails.innerHTML = `<div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 700px">
      <table class="table table-striped mb-0 bg-glass">
        <thead style="background-color: #1c5cbd;">
@@ -272,6 +259,7 @@ function getMyappointmentDisplay() {
        </tbody>
      </table>
  </div>`;
+
   let i = 0;
   for (let ele of appo) {
     let tr = $("<tr></tr>")
@@ -286,10 +274,9 @@ function getMyappointmentDisplay() {
     let button_accept = $("<button></button>").html(`Pay <span>&#8377;</span>${ele.amount}`).addClass('btn appointment-btn mx-1').attr('onclick', `create_orderID(${i})`).css({'text-transform':'none','background-color':'green'});
     td_button.append(button_cancel);
     td_button.append(button_accept);
-    if (ele.doctor.username != 'Not assigned' && ele.status == 'pending') {
+    if (ele.doctor.username != "Not assigned" && ele.status == "pending") {
       tr.append(td_button);
-    }
-    else if (ele.status == 'accepted' || ele.status == 'pending') {
+    } else if (ele.status == "accepted" || ele.status == "pending") {
       tr.append(td_status);
     }
     else if (ele.status == 'completed') {
@@ -330,6 +317,20 @@ function getMyappointmentDisplay() {
                       <input type="text" name="age" class="form-control mb-4" id="ageToday" disabled  value=""/>
                   </div>
                 </div>
+                <div class="row">
+                <label for="age" class="col-md-4 col-lg-4 col-form-label ">${
+                  ele.doctor.fullname
+                }</label>
+                <div class="col-md-7 col-lg-7">
+                <div id="rating">
+                <span class="star"><i class="bi bi-star" id='star1'></i></span>
+                <span class="star"><i class="bi bi-star" id='star2'></i></span>
+                <span class="star"><i class="bi bi-star" id='star3'></i></span>
+                <span class="star"><i class="bi bi-star" id='star4'></i></span>
+                <span class="star"><i class="bi bi-star" id='star5'></i></span>
+                </div>
+              </div>
+              
               </div>
               <div class="modal-footer">
                 <button type="button" style="text-transform: none !important;" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -344,7 +345,46 @@ function getMyappointmentDisplay() {
       mod.attr('onclick', `showPrescription(${i})`).addClass('btn appointment-btn')
       td.append(td_status_comp)
       td.append(mod);
-      tr.append(td)
+      tr.append(td);
+      var btn = $(".star>.bi");
+
+      if (ele.rating == 0) {
+        if (btn.length == 5) {
+          for (let i = 0; i < btn.length; i++) {
+            btn[i].addEventListener("mouseover",rating)
+            btn[i].addEventListener("click", () => {
+              let rate = {
+                username: ele.doctor.username,
+                ratingIndex: i,
+                rating: ele.doctor.rating,
+                appoid: ele.id,
+                userid: userobj._id,
+              };
+
+              $.post({
+                url: "http://localhost:3005/doctor/ratedoctor",
+                data: JSON.stringify(rate),
+                contentType: 'application/json; charset=utf-8',
+               headers:{Authorization :localStorage.getItem('token')}
+              })
+                .done((res, stat, xhr) => {
+                  if (res.message ="successful") {
+                    alert("thanks for giving the rating")
+                     ele.rating=i
+                   // $('#change_details').prop('disabled',true)
+                  }
+                  else {
+                    alert(res.message)
+                  }
+                })
+            });
+          }
+        }
+      } else {
+        for (let i = 0; i <=ele.rating; i++) {
+          $(`#star${i+1}`).removeClass("bi-star").addClass("bi-star-fill");
+        }
+      }
     }
     $("#details").append(tr);
     i++;
@@ -389,22 +429,41 @@ $(document).ready(function () {
 });
 
 
-function get_data_of_appointments() {
+function get_data_of_appointments(){
   //geting appointment details
   $.get({
     url: `http://localhost:3005/appointment/appointments/${userobj.username}`,
-    contentType: 'application/json; charset=utf-8'
+    contentType: "application/json; charset=utf-8",
+    headers: { Authorization: localStorage.getItem("token") },
   }).done((response, stat) => {
     if (stat == "success") {
       if (response.message == "Success") {
         appo = []
         for (let ele of response.appointments) {
-          appo.push(ele)
+          appo.push(ele);
         }
       }
+    } else {
+      alert(response);
     }
-  })
+  });
 }
+
+//For rating
+function rating(event) {
+  let val = parseInt(event.target.id[4])
+  for (let i = 1; i <= 5; i++) {
+    if (i <= val) {
+      $(`#star${i}`).removeClass("bi-star").addClass("bi-star-fill");
+    } else {
+      $(`#star${i}`).removeClass("bi-star-fill").addClass("bi-star");
+      // if(!$(`#star${i}`).hasClass('bi-star')){
+
+      // }
+    }
+  }
+}
+
 
 
 function cancelAppointment(index) {
@@ -415,18 +474,17 @@ function cancelAppointment(index) {
       type: "PUT",
       url: `http://localhost:3005/user/cancel-appointment`,
       data: JSON.stringify(appo[index]),
-      contentType: 'application/json; charset=utf-8'
-    })
-      .done((response, stat) => {
-        if (stat == 'success') {
-          if (response.message == 'Appointment Successfully cancelled') {
-            alert(response.message);
-            appo = [];
-            get_data_of_appointments();
-            getMyappointment();
-          }
+      contentType: "application/json; charset=utf-8",
+      headers: { Authorization: localStorage.getItem("token") },
+    }).done((response, stat) => {
+      if (stat == "success") {
+        if (response.message == "Appointment Successfully cancelled") {
+          alert(response.message);
+          appo = [];
+          getMyappointment();
         }
-      })
+      }
+    });
   }
 }
 
@@ -450,7 +508,8 @@ function making_payment(orderId, index) {
         "method": "POST",
         "timeout": 0,
         "headers": {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": localStorage.getItem("token")
         },
         "data": JSON.stringify({ response, appo_id: appo[index].id, user_id: userobj._id }),
       }
@@ -480,23 +539,24 @@ function making_payment(orderId, index) {
 //updating stauts to accepted 
 function accept_appointment(index, confirmation) {
   //console.log(appo[index])
+  console.log(confirmation)
   if (confirmation) {
     $.ajax({
       type: "PUT",
       url: `http://localhost:3005/user/accept-appointment`,
       data: JSON.stringify(appo[index]),
-      contentType: 'application/json; charset=utf-8'
-    })
-      .done((response, stat) => {
-        if (stat == 'success') {
-          if (response.message == 'Appointment Accepted Successfully!!!') {
-            alert(response.message);
-            appo = [];
-            get_data_of_appointments();
-            getMyappointment();
-          }
+      contentType: "application/json; charset=utf-8",
+      headers: { Authorization: localStorage.getItem("token") },
+    }).done((response, stat) => {
+      if (stat == "success") {
+        if (response.message == "Appointment Accepted Successfully!!!") {
+          alert(response.message);
+          appo = [];
+          get_data_of_appointments()
+          getMyappointment();
         }
-      })
+      }
+    });
   }
 }
 
@@ -508,7 +568,8 @@ function create_orderID(index) {
     "method": "POST",
     "timeout": 0,
     "headers": {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Authorization": localStorage.getItem("token")
     },
     "data": JSON.stringify({
       "amount": appo[index].amount * 100
@@ -526,7 +587,6 @@ function create_orderID(index) {
 
 //For Chat Window
 function getChat() {
-  console.log(appo)
   $("#moddall").html("")
   $('#form1').hide();
   $("#Render").hide();
@@ -564,45 +624,58 @@ function getChat() {
 }
 
 
-function sendMessage(ind) {
-  let message = $("#sendmessage").val();
+function getFeedback() {
+  $("#form1").hide();
+  let userDetails = document.getElementById("Render");
 
-  let messageObj = {
-    senderID: userobj._id,
-    message: message,
-  }
-  $.post({
-    url: "http://localhost:3005/chat/send-message",
-    data: JSON.stringify(messageObj),
-    contentType: "application/json; charset=utf-8"
-  }).done((res, stat) => {
-    if (stat == 'success') {
-      window.location.href = '#';
-    }
-  })
-
+  userDetails.innerHTML = `<div class="card mb-4 bg-glass">
+     <div class="card-header display-5">Feedback form</div>
+     <div class="card-body">
+         <form>
+             <div class="form-group p-2">
+               <label for="exampleFormControlTextarea1 my-1">How likely you would like to recommand us to your friends?</label>
+               <div class="rating-input-wrapper d-flex justify-content-between my-2">
+                 <label><input type="radio" name="rating" class="mx-1" /><span class="border rounded px-3 py-2">1</span></label>
+                 <label><input type="radio" name="rating" class="mx-1" /><span class="border rounded px-3 py-2">2</span></label>
+                 <label><input type="radio" name="rating" class="mx-1" /><span class="border rounded px-3 py-2">3</span></label>
+                 <label><input type="radio" name="rating" class="mx-1" /><span class="border rounded px-3 py-2">4</span></label>
+                 <label><input type="radio" name="rating" class="mx-1" /><span class="border rounded px-3 py-2">5</span></label>
+               </div>
+               <div class="rating-labels d-flex justify-content-between my-3">
+                 <label>Very unlikely</label>
+                 <label>Very likely</label>
+               </div>
+             </div>
+             <div class="form-group my-2">
+               <label for="input-one">What made you leave us so early?</label>
+               <input type="text" class="form-control" id="input-one" placeholder="">
+             </div>
+             <div class="form-group my-3">
+               <label for="input-two">Would you like to say something?</label>
+               <textarea class="form-control" id="input-two" rows="3"></textarea>
+             </div>
+           </form>
+     </div>
+ 
+ </div>`;
 }
 
-
-//checking routes
-var login_btn = document.getElementById("login")
-var logout_btn = document.getElementById("logout")
+var login_btn = document.getElementById("login");
+var logout_btn = document.getElementById("logout");
 if (localStorage.getItem("active_user")) {
-  login_btn.innerHTML = ``
-}
-else {
-  logout_btn.innerHTML = ``
+  login_btn.innerHTML = ``;
+} else {
+  logout_btn.innerHTML = ``;
 }
 
 function appoint() {
   if (localStorage.getItem("type") == "") {
-    window.location.href = "../../Login/login.html"
-  }
-  else {
-    window.location.href = "../../Appointment/appointment.html"
+    window.location.href = "../../Login/login.html";
+  } else {
+    window.location.href = "../../Appointment/appointment.html";
   }
 }
 
 function logout() {
-  localStorage.clear()
+  localStorage.clear();
 }

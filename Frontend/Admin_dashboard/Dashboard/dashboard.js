@@ -22,14 +22,16 @@ $.post({
   data: JSON.stringify({
     name: JSON.parse(localStorage.getItem("active_user")).hospitalName
   }),
-  contentType: 'application/json; charset=utf-8'
+  contentType: 'application/json; charset=utf-8',
+  headers:{Authorization :localStorage.getItem('token')}
 }).done(async (res, stat) => {
   if (stat == "success") {
     $("#doctorcount").text(`${res.doctorObj.length}`)
   }
 })
 $.get({
-  url: "http://localhost:3005/user/all-users"
+  url: "http://localhost:3005/user/all-users",
+  headers:{Authorization :localStorage.getItem('token')}
 }).done(async (res, stat) => {
   if (stat == "success") {
     $("#patientcount").text(`${res.userObj.length}`)
@@ -129,7 +131,8 @@ $.post({
   data: JSON.stringify({
     name: JSON.parse(localStorage.getItem("active_user")).hospitalName
   }),
-  contentType: 'application/json; charset=utf-8'
+  contentType: 'application/json; charset=utf-8',
+  headers:{Authorization :localStorage.getItem('token')}
 }).done(async (res, stat) => {
   appointments = res.appointments
   graph_display(15)

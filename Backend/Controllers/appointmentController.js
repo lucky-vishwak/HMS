@@ -53,6 +53,7 @@ async function getappointment(req, res) {
 //to get hospital appointments with sorted by date
 async function hospitalappointment(req, res) {
     let hospitalObj = req.body;
+    console.log("hi");
     // let assignedAppointments=await appointmentModel.find({ hospitalName: hospitalObj.name })
     let appointments = await appointmentModel.find({ hospitalName: hospitalObj.name,status:{$in:["pending","accepted"]} }).sort([['appointmentdate', 1], ['timeslot', 1]]).populate('doctor');
 
@@ -65,8 +66,17 @@ async function hospitalappointment(req, res) {
 //to get all appointments
 async function allAppointments(req, res) {
     let hospitalObj = req.body;
+    console.log(hospitalObj)
     let appointments = await appointmentModel.find({ hospitalName: hospitalObj.name }).populate('doctor');
     res.send({ message: "Success", appointments: appointments });
+}
+
+//to get appointments of doctor
+async function allAppointmentsOfDoctor(req,res){
+    let doctid=req.params.id;
+   
+    var pres=await appointmentModel.find({doctor:doctid})
+    res.send({message:'all prescriptions shown',hist:pres})
 }
 
 //completed appointments
@@ -206,4 +216,5 @@ async function showPrescription(req,res){
     res.send({message:"prescription shown",prescription:pres.prescription,patientname:pres.patientname})     
 }
 
-module.exports={addApp,addappointment,cancelledAppointments,completedAppointments,allAppointments,getappointment,hospitalappointment,gettoday,showPrescription,totalappointent,updateDoctorAppointment}
+
+module.exports={addApp,addappointment,cancelledAppointments,completedAppointments,allAppointments,getappointment,hospitalappointment,gettoday,showPrescription,totalappointent,updateDoctorAppointment,allAppointmentsOfDoctor}

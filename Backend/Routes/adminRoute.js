@@ -5,6 +5,8 @@ const adminRoute=express.Router()
 //middleware
 adminRoute.use(express.json())
 
+const verifyToken=require('../Middleware/verifyToken')
+
 //import express async-handler
 const errorHandler=require('express-async-handler')
 
@@ -13,7 +15,7 @@ const adminController=require("./../Controllers/adminController")
 
 
 //post call for adding admin
-adminRoute.post("/addadmin",errorHandler(adminController.addAdmin))
+adminRoute.post("/addadmin",verifyToken,errorHandler(adminController.addAdmin))
 
 
 

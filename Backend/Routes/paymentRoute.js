@@ -1,14 +1,14 @@
 const express = require("express")
 const paymentRoute = express.Router()
 paymentRoute.use(express.json())
-
+const verifyToken=require('../Middleware/verifyToken')
 //controllers
 const paymentcontroller=require("../Controllers/paymentcontrollers")
 
 
 
-paymentRoute.post('/orderId',paymentcontroller.create_orderId)
-paymentRoute.post('/payment/verify',paymentcontroller.verify_payment)
+paymentRoute.post('/orderId',verifyToken,paymentcontroller.create_orderId)
+paymentRoute.post('/payment/verify',verifyToken,paymentcontroller.verify_payment)
 
 
 

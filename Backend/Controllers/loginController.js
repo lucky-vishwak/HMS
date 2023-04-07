@@ -7,6 +7,10 @@ hospitalModel=require('../Models/hospitalModel.js').hospitalModel
 //import bcryptjsconst 
 const bcryptjs=require('bcryptjs')
 
+//import jwt
+const jwt=require('jsonwebtoken')
+
+require("dotenv").config();
 
 
 //login controller
@@ -18,8 +22,11 @@ async function  login(req,res){
     const hospitalObj=await hospitalModel.findOne({username:userreq.username})
     if(adminobj!=null){   
         let resultOfUser=await bcryptjs.compare(userreq.password,adminobj.password)
-        if(resultOfUser!=false){      
-            res.send({message:"success",masterObj:adminobj,type:"admin"})
+        if(resultOfUser!=false){   
+
+            let token=   jwt.sign({username:userreq.username},process.env.SECRETKEY,{expiresIn:"2d"}) 
+            token="Bearer"+" "+token
+            res.send({message:"success",token:token,masterObj:adminobj,type:"admin"})
             return
         }
         }
@@ -27,8 +34,9 @@ async function  login(req,res){
      
         let resultOfUser=await bcryptjs.compare(userreq.password,userobj.password)
         if(resultOfUser!=false){
-        
-            res.send({message:"success",userObj:userobj,type:"user"})
+            let token=jwt.sign({username:userreq.username},process.env.SECRETKEY) 
+            token="Bearer"+" "+token
+            res.send({message:"success",token:token,userObj:userobj,type:"user"})
             return
         }
             
@@ -36,7 +44,9 @@ async function  login(req,res){
     if(doctorobj!=null){
     //     let resultOfUser=await bcryptjs.compare(userreq.password,doctorobj.password)
     //    if(resultOfUser!=false){
-            res.send({message:"success",doctorObj:doctorobj,type:"doctor"})
+        token=jwt.sign({username:userreq.username},process.env.SECRETKEY)
+        token="Bearer"+" "+token
+            res.send({message:"success",token:token,doctorObj:doctorobj,type:"doctor"})
             return
     //    }
      
@@ -45,7 +55,9 @@ async function  login(req,res){
     if(hospitalObj!=null){
         // let resultOfUser=await bcryptjs.compare(userreq.password,hospitalObj.password)
         //  if(resultOfUser!=false){
-            res.send({message:"success",hospitalObj:hospitalObj,type:"hospital"})
+            token=jwt.sign({username:userreq.username},process.env.SECRETKEY)
+            token="Bearer"+" "+token
+            res.send({message:"success",token:token,hospitalObj:hospitalObj,type:"hospital"})
              return
     //}
        
