@@ -1,24 +1,28 @@
 const mongoose=require('mongoose');
+const { doctorModel } = require('./doctorModel');
+const userModel=require('./userModel').userModel
 
-const MessageSchema={
+const MessageSchema=new mongoose.Schema({
     sender_id:{
         type:String
     },
     message:{
         type:String
-    }
-}
+    },
+},{timestamps: true })
 
 const ConversationSchmea={
     user:{
-        type:String
+        type:mongoose.Schema.Types.ObjectId,
+        ref:userModel
     },
     doctor:{
-        type:String
+        type:mongoose.Schema.Types.ObjectId,
+        ref:doctorModel
     },
     messages:[MessageSchema]
 }
 
-const ConversationModel=new mongoose.model("coversation",ConversationSchmea);
+const ConversationModel=new mongoose.model("conversation",ConversationSchmea);
 
 module.exports={ConversationModel};

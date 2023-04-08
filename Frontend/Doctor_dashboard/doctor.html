@@ -28,6 +28,7 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="doctor.css">
 
 </head>
 
@@ -213,6 +214,10 @@
                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-history" id="patientHistoryButton">Patient History</button>
                     </li>
 
+                    <li class="nav-item">
+                      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#chatWindow" id="chatButton">Chat</button>
+                      </li>
+
                 </ul>
                 <div class="tab-content pt-2">
 
@@ -325,8 +330,6 @@
                           </div>
                     </div>
 
-
-
                     <div class="tab-pane fade pt-3" id="profile-history">
                         <div class="row">
                             <div class="col-lg-12">
@@ -397,49 +400,57 @@
                           </div>
                     </div>
 
-                    <div class="card">
-                      <div class="card-body">
-                        <div class="modal fade" id="verticalycentered2" tabindex="-1">
-                          <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title">More Details</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="tab-pane fade pt-3" id="chatWindow">
+                      <div class="row">
+                        <div class="col-md-12">
+                  
+                          <div class="card bg-glass" id="chat3" style="border-radius: 15px;">
+                            <div class="card-body">
+                  
+                              <div class="row">
+                                <div class="col-md-5 mb-4 mb-md-0" id="scollable">
+                  
+                                  <div class="p-3">
+                  
+                                    <div class="input-group rounded mb-3">
+                                      <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+                                        aria-describedby="search-addon" />
+                                      <span class="input-group-text border-0" id="search-addon">
+                                        <i class="fas fa-search"></i>
+                                      </span>
+                                    </div>
+                  
+                                    <div data-mdb-perfect-scrollbar="true" style="position: relative; height: 400px">
+                                      <ul id="doctors_list" class="list-unstyled mb-0">
+                                        <!-- list of doctors he visited -->
+                                      </ul>
+                                    </div>
+                  
+                                  </div>
+                  
+                                </div>
+                  
+                                <div class="col-md-7" >
+                  
+                                  <div class="pt-3 pe-3" id="conversationsWindow" style="position: relative; height: 400px">
+                  
+                                  </div>
+                                  <div class="text-muted d-flex justify-content-end align-items-end pe-3 pt-3 mt-2 ">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+                                      alt="avatar 3" style="width: 40px; height: 100%;">
+                                    <input type="text" class="form-control form-control-md" id="sendmessage"
+                                      placeholder="Type message">
+                                      <div id="conversat">
+                                      </div>
+                                  </div>
+                  
+                                </div>
                               </div>
-                              <div class="modal-body">
-                                <div class="row mb-3">
-                                  <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
-                                  <div class="col-md-8 col-lg-9">
-                                     <input name="fullName" type="text" class="form-control" id="fullNameToday" value="" disabled>
-                                  </div>
-                                </div>
-                                <div class="row mb-3">
-                                  <label for="percerption" class="col-md-4 col-lg-3 col-form-label">Description</label>
-                                  <div class="col-md-8 col-lg-9">
-                                      <textarea name="percerption" class="form-control" id="percerptionToday" style="height: 100px"></textarea>
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <label for="gender" class="col-md-4 col-lg-3 col-form-label">Temperature</label>
-                                  <div class="col-md-8 col-lg-9">
-                                      <input type="text" name="gender" class="form-control mb-2" id="genderToday"  value=""/>
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <label for="age" class="col-md-4 col-lg-3 col-form-label ">B/P</label>
-                                  <div class="col-md-8 col-lg-9">
-                                      <input type="text" name="age" class="form-control mb-4" id="ageToday"   value=""/>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" id="updatePercerption">Visited</button>
-                              </div>
+                  
                             </div>
                           </div>
-                        </div><!-- End Vertically centered Modal-->
-          
+                  
+                        </div>
                       </div>
                     </div>
 

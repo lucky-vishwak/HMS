@@ -15,7 +15,7 @@
   margin-top: -.75rem;
   }
 
-  #scollable ,#scollable2{
+  #scollable ,#conversationsWindow{
       overflow-y: scroll;
       overflow-x: hidden;
   }

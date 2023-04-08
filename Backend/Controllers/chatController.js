@@ -4,7 +4,7 @@ const ConversationModel=require('./../Models/ChatModel').ConversationModel;
 async function createConversation(req,res){
     let ConversationObj=req.body;
     
-    let Obj=await ConversationModel.findOneAndUpdate({ user1 :{$in:[ConversationObj.senderId,ConversationObj.reciverId]}},{ user2 :{$in:[ConversationObj.senderId,ConversationObj.reciverId]}});
+    let Obj=await ConversationModel.findOneAndUpdate({ user :{$in:[ConversationObj.senderId,ConversationObj.reciverId]}},{ doctor :{$in:[ConversationObj.senderId,ConversationObj.reciverId]}});
 
     if(Obj==null){
         await ConversationModel.create(ConversationObj);
@@ -19,7 +19,7 @@ async function sendMessage(req,res){
 
     let ConversationObj=req.body;
 
-    await ConversationModel.findOneAndUpdate({ user1 :{$in:[ConversationObj.senderId,ConversationObj.reciverId]}},{ user2 :{$in:[ConversationObj.senderId,ConversationObj.reciverId]}}, {
+    await ConversationModel.findOneAndUpdate({user:ConversationObj.senderID,doctor:ConversationObj.doctor}, {
         $push: {
             messages: {
                 sender_id:ConversationObj.senderID,
@@ -32,14 +32,42 @@ async function sendMessage(req,res){
 
 }
 
+async function sendMessageByDoctor(req,res){
+
+    let ConversationObj=req.body;
+
+    await ConversationModel.findOneAndUpdate({doctor:ConversationObj.senderID,user:ConversationObj.user}, {
+        $push: {
+            messages: {
+                sender_id:ConversationObj.senderID,
+                message:ConversationObj.message
+            }
+        }
+    })
+
+    res.send({message:"Success"});
+
+}
+
+
 async function getConversationParticularUser(req,res){
 
     let obj=req.body;
 
-    let conversations=await ConversationModel.find({$or:{user1:obj.userId,user2:obj.userId}});
+    let conversations=await ConversationModel.find({user:obj.user}).populate('doctor');
 
     res.send({message:"success",conversations:conversations});
-
 }
 
-module.exports={createConversation,sendMessage,getConversationParticularUser};
+async function getConversationParticularDoctor(req,res){
+
+    let obj=req.body;
+
+    let conversations=await ConversationModel.find({doctor:obj.doctor}).populate('user');
+
+    res.send({message:"success",conversations:conversations});
+}
+
+
+
+module.exports={createConversation,sendMessage,getConversationParticularUser,getConversationParticularDoctor,sendMessageByDoctor};

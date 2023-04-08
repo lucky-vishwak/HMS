@@ -207,43 +207,77 @@ function change(imgurl) {
     contentType: "application/json; charset=utf-8",
     headers: { Authorization: localStorage.getItem("token") },
   }).done((res, stat, xhr) => {
-      if (res.message == "changes successfully done") {
-        alert(res.message)
-        userobj = res.user
-        $('#imgxx').attr('src', `${user.image}`)
+    if (res.message == "changes successfully done") {
+      alert(res.message)
+      userobj = res.user
+      $('#imgxx').attr('src', `${user.image}`)
 
-        localStorage.setItem('active_user', JSON.stringify(user))
-        getProfileDetails()
-        $("#form1").hide()
-      }
-      else {
-        alert(res.message)
-      }
-    });
-  }
-
-function showPrescription(index) {
-  $.ajax({
-    type: "GET",
-    url: `http://localhost:3005/appointment/show_prescription/${appo[index].id}`,
-    contentType: "application/json; charset=utf-8",
-    headers: { Authorization: localStorage.getItem("token") },
-  }).done((response, stat) => {
-    if (stat == "success") {
-      if (response.message == "prescription shown") {
-        var prescription = response.prescription;
-        $("#fullNameToday").val(`${response.patientname}`);
-        $("#percerptionToday").val(`${prescription.description}`);
-        $("#genderToday").val(`${prescription.temperature}`);
-        $("#ageToday").val(`${prescription.BP}`);
-      }
+      localStorage.setItem('active_user', JSON.stringify(user))
+      getProfileDetails()
+      $("#form1").hide()
+    }
+    else {
+      alert(res.message)
     }
   });
+}
+
+function showPrescription(index) {
+  $("#fullNameToday").val(`${appo[index].patientname}`);
+  $("#percerptionToday").val(`${appo[index].prescription.description}`);
+  $("#genderToday").val(`${appo[index].prescription.temperature}`);
+  $("#ageToday").val(`${appo[index].prescription.BP}`);
+  $("#doctor_name").html(`${appo[index].doctor.username}`)
+
+  for (let i = 0; i <= 4; i++) {
+    $(`#star${i + 1}`).removeClass("bi-star-fill").addClass("bi-star");
+  }
+  //to display rating
+  var ele = appo[index]
+  var btn = $(".star>.bi");
+  if (ele.rating == 0) {
+      for (let i = 0; i < btn.length; i++) {
+        btn[i].addEventListener("mouseover", rating)
+        btn[i].addEventListener("click", () => {
+          let rate = {
+            username: ele.doctor.username,
+            ratingIndex: i,
+            rating: ele.doctor.rating,
+            appoid: ele.id,
+            userid: userobj._id,
+          };
+          $.post({
+            url: "http://localhost:3005/doctor/ratedoctor",
+            data: JSON.stringify(rate),
+            contentType: 'application/json; charset=utf-8',
+            headers: { Authorization: localStorage.getItem('token') }
+          })
+            .done((res, stat, xhr) => {
+              if (res.message = "successful") {
+                alert("thanks for giving the rating")
+                location.reload()
+                ele.rating = i
+                // $('#change_details').prop('disabled',true)
+                return
+              }
+              else {
+                alert(res.message)
+              }
+            })
+        });
+      }
+  } else {
+    for (let i = 0; i <= ele.rating; i++) {
+      $(`#star${i + 1}`).removeClass("bi-star").addClass("bi-star-fill");
+    }
+  }
 }
 
 function getMyappointmentDisplay() {
   let userDetails = document.getElementById("Render");
   $("#Render").html("");
+
+  //for my appointmens table display
   userDetails.innerHTML = `<div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 700px">
      <table class="table table-striped mb-0 bg-glass">
        <thead style="background-color: #1c5cbd;">
@@ -270,8 +304,8 @@ function getMyappointmentDisplay() {
     let td_status = $("<td></td>").text(ele.status);
     let td_status_comp = $("<td></td>").text(ele.status)
     let td_button = $("<td></td>").attr('id', `but${i}`);
-    let button_cancel = $("<button ></button>").text('Reject').addClass(`btn appointment-btn mx-0`).attr('onclick', `cancelAppointment(${i})`).css({'text-transform':'none','background-color':'red'});
-    let button_accept = $("<button></button>").html(`Pay <span>&#8377;</span>${ele.amount}`).addClass('btn appointment-btn mx-1').attr('onclick', `create_orderID(${i})`).css({'text-transform':'none','background-color':'green'});
+    let button_cancel = $("<button ></button>").text('Reject').addClass(`btn appointment-btn mx-0`).attr('onclick', `cancelAppointment(${i})`).css({ 'text-transform': 'none', 'background-color': 'red' });
+    let button_accept = $("<button></button>").html(`Pay <span>&#8377;</span>${ele.amount}`).addClass('btn appointment-btn mx-1').attr('onclick', `create_orderID(${i})`).css({ 'text-transform': 'none', 'background-color': 'green' });
     td_button.append(button_cancel);
     td_button.append(button_accept);
     if (ele.doctor.username != "Not assigned" && ele.status == "pending") {
@@ -283,7 +317,7 @@ function getMyappointmentDisplay() {
       $("#moddall").html("")
       var td = $('<td></td>')
       var mod = $(`<button>View</button>`).attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered" })
-      $('#moddall').append(` <div class="card" id='modalhide'>
+      $('#moddall').html(` <div class="card" id='modalhide'>
       <div class="card-body">
         <div class="modal fade" id="verticalycentered" tabindex="-1">
           <div class="modal-dialog modal-dialog-centered">
@@ -318,9 +352,7 @@ function getMyappointmentDisplay() {
                   </div>
                 </div>
                 <div class="row">
-                <label for="age" class="col-md-4 col-lg-4 col-form-label ">${
-                  ele.doctor.fullname
-                }</label>
+                <label for="age" class="col-md-4 col-lg-4 col-form-label " id="doctor_name"></label>
                 <div class="col-md-7 col-lg-7">
                 <div id="rating">
                 <span class="star"><i class="bi bi-star" id='star1'></i></span>
@@ -346,45 +378,6 @@ function getMyappointmentDisplay() {
       td.append(td_status_comp)
       td.append(mod);
       tr.append(td);
-      var btn = $(".star>.bi");
-
-      if (ele.rating == 0) {
-        if (btn.length == 5) {
-          for (let i = 0; i < btn.length; i++) {
-            btn[i].addEventListener("mouseover",rating)
-            btn[i].addEventListener("click", () => {
-              let rate = {
-                username: ele.doctor.username,
-                ratingIndex: i,
-                rating: ele.doctor.rating,
-                appoid: ele.id,
-                userid: userobj._id,
-              };
-
-              $.post({
-                url: "http://localhost:3005/doctor/ratedoctor",
-                data: JSON.stringify(rate),
-                contentType: 'application/json; charset=utf-8',
-               headers:{Authorization :localStorage.getItem('token')}
-              })
-                .done((res, stat, xhr) => {
-                  if (res.message ="successful") {
-                    alert("thanks for giving the rating")
-                     ele.rating=i
-                   // $('#change_details').prop('disabled',true)
-                  }
-                  else {
-                    alert(res.message)
-                  }
-                })
-            });
-          }
-        }
-      } else {
-        for (let i = 0; i <=ele.rating; i++) {
-          $(`#star${i+1}`).removeClass("bi-star").addClass("bi-star-fill");
-        }
-      }
     }
     $("#details").append(tr);
     i++;
@@ -429,7 +422,7 @@ $(document).ready(function () {
 });
 
 
-function get_data_of_appointments(){
+function get_data_of_appointments() {
   //geting appointment details
   $.get({
     url: `http://localhost:3005/appointment/appointments/${userobj.username}`,
@@ -463,8 +456,6 @@ function rating(event) {
     }
   }
 }
-
-
 
 function cancelAppointment(index) {
   let confirmation = confirm('Are You Sure?');
@@ -559,6 +550,40 @@ function accept_appointment(index, confirmation) {
     });
   }
 }
+let All_messages = [];
+
+//for chat conversation window
+function displayChat(ind) {
+  let conversation = All_messages[ind]['messages'];
+  console.log(conversation);
+  $("#conversationsWindow").html("");
+  for (let msg of conversation) {
+    if (msg.sender_id !== All_messages[ind].user.toString()) {
+      $("#conversationsWindow").append(`<div class="d-flex flex-row justify-content-start">
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+            alt="avatar 1" style="width: 45px; height: 100%;">
+          <div>
+            <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7;">${msg.message}</p>
+            <p class="small ms-3 mb-3 rounded-3 text-muted float-end">${msg.createdAt}</p>
+          </div>
+        </div>`)
+    }
+    else {
+      $("#conversationsWindow").append(`<div class="d-flex flex-row justify-content-end">
+          <div>
+            <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">${msg.message}</p>
+            <p class="small me-3 mb-3 rounded-3 text-muted">${msg.createdAt}</p>
+          </div>
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+            alt="avatar 1" style="width: 45px; height: 100%;">
+        </div>`)
+
+    }
+  }
+  $("#conversat").html('');
+  $("#conversat").append(`<a class="ms-3 btn appointment-btn" href="#!" onclick="sendMessage(${ind})"><i class="fas fa-paper-plane"></i></a>
+  `)
+}
 
 //creating order_id for payment
 function create_orderID(index) {
@@ -586,78 +611,71 @@ function create_orderID(index) {
 }
 
 //For Chat Window
+
 function getChat() {
   $("#moddall").html("")
   $('#form1').hide();
   $("#Render").hide();
   $("#Render2").show();
   if (!appo) {
-    $("#doctors_list").append(`<li style="display:flex; justify-content:center;">No Doctors</li>`)
+    $("#doctors_list").append(`<li style="display:flex; justify-content:center;">No Doctors to chat</li>`)
   }
-  const appo1 = appo.filter((value, index, self) => self.indexOf(value) === index)
   $("#doctors_list").html("")
-  for (const ele of appo1) {
-    if (ele.status == "completed") {
-      $("#doctors_list").append(`<li class="p-2 border-bottom">
-  <a href="#!" class="d-flex justify-content-between">
-    <div class="d-flex flex-row">
-      <div>
-        <img
-        class="rounded-circle img-fluid"
-          src="${ele.doctor.imgurl}"
-          alt="avatar" class="d-flex align-self-center me-3" width="60">
-        <span class="badge bg-success badge-dot"></span>
-      </div>
-      <div class="pt-1 px-2">
-        <p class="fw-bold mb-0">${ele.doctor.fullname}</p>
-        <p class="small text-muted">Just Now</p>
-      </div>
-    </div>
-    <!-- <div class="pt-1">
-      <p class="small text-muted mb-1">Just now</p>
-      <span class="badge bg-danger rounded-pill float-end">3</span>
-    </div> -->
-  </a>
-</li>`)
-    }
+  let conversationObj = {
+    user: userobj._id
   }
+  $.post({
+    url: "http://localhost:3005/chat/get-chat",
+    data: JSON.stringify(conversationObj),
+    contentType: 'application/json; charset=utf-8',
+    headers: { Authorization: localStorage.getItem("token") }
+  }).done((res, stat) => {
+    if (stat == 'success') {
+      All_messages = res.conversations;
+      for (let i = 0; i < All_messages.length; i++) {
+        $("#doctors_list").append(`<li class="p-2 border-bottom">
+                  <div onclick="displayChat(${i})">
+                    <img
+                    class="rounded-circle img-fluid"
+                      src="${All_messages[i]['doctor']['imgurl']}"
+                      alt="avatar" class="d-flex align-self-center me-3" width="60">
+                    <span class="badge bg-success badge-dot"></span>
+                  </div>
+                  <div class="pt-1 px-2">
+                    <p class="fw-bold mb-0">${All_messages[i]['doctor']['fullname']}</p>
+                    <p class="small text-muted">Just Now</p>
+                  </div>
+                </div>
+              </a>
+            </li>`)
+        if (i === 0) {
+          displayChat(0);
+          console.log("First Time call");
+        }
+      }
+    }
+  })
 }
 
 
-function getFeedback() {
-  $("#form1").hide();
-  let userDetails = document.getElementById("Render");
+function sendMessage(ind) {
+  let message = $("#sendmessage").val();
 
-  userDetails.innerHTML = `<div class="card mb-4 bg-glass">
-     <div class="card-header display-5">Feedback form</div>
-     <div class="card-body">
-         <form>
-             <div class="form-group p-2">
-               <label for="exampleFormControlTextarea1 my-1">How likely you would like to recommand us to your friends?</label>
-               <div class="rating-input-wrapper d-flex justify-content-between my-2">
-                 <label><input type="radio" name="rating" class="mx-1" /><span class="border rounded px-3 py-2">1</span></label>
-                 <label><input type="radio" name="rating" class="mx-1" /><span class="border rounded px-3 py-2">2</span></label>
-                 <label><input type="radio" name="rating" class="mx-1" /><span class="border rounded px-3 py-2">3</span></label>
-                 <label><input type="radio" name="rating" class="mx-1" /><span class="border rounded px-3 py-2">4</span></label>
-                 <label><input type="radio" name="rating" class="mx-1" /><span class="border rounded px-3 py-2">5</span></label>
-               </div>
-               <div class="rating-labels d-flex justify-content-between my-3">
-                 <label>Very unlikely</label>
-                 <label>Very likely</label>
-               </div>
-             </div>
-             <div class="form-group my-2">
-               <label for="input-one">What made you leave us so early?</label>
-               <input type="text" class="form-control" id="input-one" placeholder="">
-             </div>
-             <div class="form-group my-3">
-               <label for="input-two">Would you like to say something?</label>
-               <textarea class="form-control" id="input-two" rows="3"></textarea>
-             </div>
-           </form>
-     </div>
- 
- </div>`;
+  let messageObj = {
+    senderID: All_messages[ind].user,
+    doctor: All_messages[ind].doctor._id,
+    message: message,
+  }
+  $.post({
+    url: "http://localhost:3005/chat/send-message",
+    data: JSON.stringify(messageObj),
+    contentType: "application/json; charset=utf-8",
+    headers: { Authorization: localStorage.getItem("token") }
+  }).done((res, stat) => {
+    if (stat == 'success') {
+      $("#sendmessage").val('');
+    }
+  })
 }
 
 var login_btn = document.getElementById("login");
