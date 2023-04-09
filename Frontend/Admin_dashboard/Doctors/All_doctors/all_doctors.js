@@ -43,13 +43,22 @@ function sea(x,s,spec){
     $("#sorry").text(``)
   }
 }
-function displayDoctors(doctor){
+let all_doctors=[];
+function modalForDoctorDetails(ind){
+  console.log(all_doctors[ind])
+  $("#fullName").val(`${all_doctors[ind].fullname}`);
+  $("#email").val(`${all_doctors[ind].email}`);
+  $("#phoneno").val(`${all_doctors[ind].phonenumber}`);
+  $("#rating").val(`${all_doctors[ind].rating_avg}`);
+  $("#date").val(`${all_doctors[ind].join_date}`);
+}
 
- 
+function displayDoctors(doctor){ 
+  all_doctors=doctor;
   for(let i=0;i<doctor.length;i++){
     let div_col=$('<div></div>').addClass('col pp')
     let div_card=$('<div></div>').addClass('card').css("height","")
-    let div_card_body=$('<div></div>').addClass('card-body')
+    let div_card_body=$('<div></div>').addClass('card-body text-center')
     let user_img=$('<img />')
     //user_img.attr('width',"18rem")
     user_img.attr('src', doctor[i].imgurl);
@@ -57,7 +66,7 @@ function displayDoctors(doctor){
     let p_username=$('<p></p>').text(doctor[i].username).addClass('mt-2 text-bold card-title' ).css('margin-bottom',"-3px")
     let p_designation=$('<p </p>').text(doctor[i].specialization).css("fontStyle","italic").addClass('spec')
     let button_viewMore=$('<button></button>').text('View')
-    button_viewMore.addClass('btn btn-primary')
+    button_viewMore.addClass('btn btn-primary').attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered", "onclick": `modalForDoctorDetails(${i})` })
     div_card.append(user_img) 
     user_img.css({"width":"100%","height":"10rem"})
     div_card_info.append(p_username)
@@ -72,12 +81,13 @@ function displayDoctors(doctor){
 
 $(document).ready(function(){
   var x=`<select class="form-select" id='sel' aria-label="Default select example">
-  <option selected>specialization</option>
-  <option value="surgeory">Surgeory</option>
-  <option value="dentist">Dentist Checkup</option>
-                            <option value="bodycheckup">Body Checkup</option>
-                            <option value="gynecologist">Gynecologist Chekup</option>
-                            <option value="otherservices">General physician</option>
+  
+  <option value="surgeory" selected>Surgeory</option>
+  <option value="dentist">Dentist</option>
+  <option value="gynecologist">Gynecologist</option>
+  <option value="dermatologist">Dermatologist</option>
+  <option value="ent">ENT Specialist</option>
+  <option value="generalPhysician">General Physician</option>
 </select>`
   $('#y').append(x).hide()
     $("#myInput").on("keyup", function() {

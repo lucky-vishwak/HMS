@@ -40,6 +40,11 @@ async function allHospitals(req, res) {
 
 }
 
+async function getAllDcotors(req,res){
+    let doctors=await doctorModel.find({username:{$ne:"Not assigned"}});
+    res.send({message: "Success",doctors:doctors});
+}
+
 async function assignDoctorToAppointments(req, res) {
 
     let appointmentAssignObj = req.body;
@@ -72,4 +77,4 @@ async function assignDoctorToAppointments(req, res) {
         res.send({ message: "No doctor available!!" })
     }
 }
-module.exports = { addHospital, allHospitals, assignDoctorToAppointments }
+module.exports = { addHospital, allHospitals, assignDoctorToAppointments,getAllDcotors }
