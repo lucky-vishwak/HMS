@@ -225,9 +225,12 @@ $("#todayAppointmentButton").click(() => {
     })
         .done((response, stat) => {
             appointments = response.appointments;
+            emergency=response.emergency
+
             $("#appointmentSlots").html("")
             for (let time of timeslots) {
                 var i = appointments.findIndex(x => x.timeslot === time)
+                var y= emergency.findIndex(x => x.timeslot === time)
                 if (i != -1) {
                     let div_col = $('<div></div>').addClass('col');
                     let div_card = $('<div></div>').addClass('card text-center');
@@ -243,6 +246,22 @@ $("#todayAppointmentButton").click(() => {
                     div_card.append(div_card_body);
                     div_col.append(div_card);
                     $("#appointmentSlots").append(div_col);
+                }
+                else if(y!=-1){
+                  let div_col = $('<div></div>').addClass('col');
+                  let div_card = $('<div></div>').addClass('card text-center');
+                  let div_card_body = $('<div></div>').addClass('card-body').attr('id', 'cardTodayApp');
+                  let h5_title = $('<h5></h5>').addClass('card-title').text(`${emergency[y].timeslot}`);
+                  let p_name = $('<p></p>').addClass('card-text d-block').text(`Name:${emergency[y].patientname}`);
+                  let p_reason = $('<p></p>').addClass('card-text d-block').text('emergency').addClass('alert alert-danger');
+                  let button_view = $('<button></button>').text('View').attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered", "onclick": `model(${y})` }).addClass('btn btn-danger');
+                  div_card_body.append(h5_title);
+                  div_card_body.append(p_name);
+                  div_card_body.append(p_reason);
+                 div_card_body.append(button_view);
+                  div_card.append(div_card_body);
+                  div_col.append(div_card);
+                  $("#appointmentSlots").append(div_col);
                 }
                 else {
                     let div_col = $('<div></div>').addClass('col');
@@ -267,11 +286,20 @@ $("#todayAppointmentButton").click(() => {
 console.log(appointments)
 let x = 0;
 function model(val) {
-    console.log(appointments)
-    $("#fullNameToday").val(`${appointments[val].patientname}`)
-    $("#percerptionToday").val(`${appointments[val].prescription.description}`)
+    if(appointments[val]==undefined){
+      $("#fullNameToday").val(`${emergency[val].patientname}`)
+      $("#percerptionToday").val(`${emergency[val].prescription.description}`)
+      $("#genderToday").val(`${emergency[val].prescription.temperature}`)
+      $("#ageToday").val(`${emergency[val].prescription.BP}`)
+    }
+    else{
+      $("#fullNameToday").val(`${appointments[val].patientname}`)
+      $("#percerptionToday").val(`${appointments[val].prescription.description}`)
     $("#genderToday").val(`${appointments[val].prescription.temperature}`)
     $("#ageToday").val(`${appointments[val].prescription.BP}`)
+    }
+    
+    
     x = val;
 }
 
@@ -286,18 +314,17 @@ function model_for_history(val) {
 
 $("#updatePercerption").click(() => {
     if ($("#percerptionToday").val() == '')
-        alert("percerption is not updated!!");
+        alert("prescription is not updated!!");
     else {
         let updateAppointment = {
             description: $("#percerptionToday").val(),
             temperature: $("#genderToday").val(),
             BP: $("#ageToday").val(),
             status: "completed",
-            email:appointments[x].emailaddress,
-            patientname:appointments[x].patientname
         }
-        $.ajax({
-            url: `http://localhost:3005/appointment/update-appoint/${appointments[x]._id}`,
+        if(appointments[x]==undefined){
+          $.ajax({
+            url: `http://localhost:3005/appointment/updateappoint/${emergency[x]._id}`,
             type: 'PUT',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(updateAppointment),
@@ -312,6 +339,30 @@ $("#updatePercerption").click(() => {
                 console.log(xhr)
             }
         })
+        }
+       else{
+        updateAppointment ={...updateAppointment,
+       
+        email:appointments[x].emailaddress,
+        patientname:appointments[x].patientname}
+        $.ajax({
+          url: `http://localhost:3005/appointment/update-appoint/${appointments[x]._id}`,
+          type: 'PUT',
+          contentType: 'application/json; charset=utf-8',
+          data: JSON.stringify(updateAppointment),
+          headers:{Authorization :localStorage.getItem('token')},
+          success: function (response, stat) {
+              if (stat == "success") {
+                  alert("Prescription Updated Successfully!!");
+              }
+          },
+          error: function (xhr, textStatus, errorThrown) {
+              console.log('Error in Operation');
+              console.log(xhr)
+          }
+      })
+       }
+        
 
     }
 })

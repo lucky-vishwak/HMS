@@ -76,6 +76,7 @@ async function allusers(req,res){
 async function updateProfilepic(req,res){
     res.send({message:"image updated successfully",imgurl:req.file.path})
 }
+
   
 async function push(req,res){
     let obj=req.body;

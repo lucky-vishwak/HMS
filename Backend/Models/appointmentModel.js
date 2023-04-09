@@ -122,7 +122,8 @@ let appointmentSchema = {
     rating:{
         type:Number,
         default:0
-    }
+    },
+  
 }
 
 //importing models

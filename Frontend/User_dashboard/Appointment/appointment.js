@@ -263,6 +263,8 @@ function fixStepIndicator(n) {
   x[n].className += " active";
 }
 
+
+
 function logout() {
   console.log("hello")
   let act = !JSON.parse(localStorage.getItem("active"))
@@ -299,13 +301,52 @@ function toastFunction() {
 
 function Emergency(){
   var em=document.getElementById('sel').value
+  var nn=document.getElementById('nn').value
   if(em=='specialization'){
     alert('enter the specialization')
   }
   else{
-    $.post({url: "http://localhost:3005/",
+    y=new Date()
+    y=y.getHours()
+    x={
+      appointmentdate:appointmentobj.appointmentdate,
+      specialization:em,
+      patientname:nn,
+      _id:JSON.parse(localStorage.getItem('active_user'))._id
+    }
+   
+    if(y<10){
+      x.timeslot='10AM-11AM'
+    }
+    else if(y>=10 && y<11){
+      x.timeslot=`11AM-12PM`
+    }
+    else if(y>=11 && y<12){
+        x.timeslot=`12PM-1PM`
+    }
+    else if(y<16){
+         y-=12
+         x.timeslot=`${y+1}PM-${y+2}PM`
+    }
+    else{
+      x.timeslot=`12PM-1PM`
+        // alert('doctor not available')
+        // location.reload()
+        // return
+    }
+    console.log(x)
+    $.post({url: "http://localhost:3005/hospital/emergency",
+    data:JSON.stringify(x),
+    contentType: 'application/json; charset=utf-8',
     headers:{Authorization :localStorage.getItem('token')}}).done((response,stat)=>{
-      
+     if(stat='success'){
+      alert(response.message)
+       window.location.href="../User/User-profile/user-profile.html"
+     }
+     else{
+        alert('something went wrong')
+     }
+       
     })
   }
 }

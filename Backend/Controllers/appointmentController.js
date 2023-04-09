@@ -1,5 +1,6 @@
 //importing nodemailer
 const nodemailer = require('nodemailer');
+const { emergencyModel } = require('../Models/emergencyModel');
 //step-1 of nodemailer
 var transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -100,7 +101,8 @@ async function gettoday(req, res) {
     let objid=await doctorModel.findOne({username:name})
     objid=objid._id.toString()
     let appointments = await appointmentModel.find({ doctor: objid, appointmentdate: today })
-    res.send({ message: "successfully", appointments: appointments })
+    let emergency=await emergencyModel.find({doctor:name,appointmentdate:today})
+    res.send({ message: "successfully", appointments: appointments,emergency:emergency })
 }
 
 //total appointments for master admin 
@@ -216,5 +218,12 @@ async function showPrescription(req,res){
     res.send({message:"prescription shown",prescription:pres.prescription,patientname:pres.patientname})     
 }
 
+async function updateAppointment(req,res){
+    let id = req.params.id;
+    let updatedAppointment = req.body;
+    await emergencyModel.updateOne({ _id: id }, { $set: { 'prescription.temperature': updatedAppointment.temperature, 'prescription.description': updatedAppointment.description, 'prescription.BP': updatedAppointment.BP, "status": "completed" } })
+    await userModel.updateOne({ "emergency.id": id }, { $set: { 'emergency.$.prescription.temperature': updatedAppointment.temperature, 'emergency.$.prescription.description': updatedAppointment.description, 'emergency.$.prescription.BP': updatedAppointment.BP, "emergency.$.status": "completed" } })
+    res.send({ message: "response send successfullySuccessfully" });
+}
 
-module.exports={addApp,addappointment,cancelledAppointments,completedAppointments,allAppointments,getappointment,hospitalappointment,gettoday,showPrescription,totalappointent,updateDoctorAppointment,allAppointmentsOfDoctor}
+module.exports={addApp,addappointment,cancelledAppointments,completedAppointments,allAppointments,getappointment,hospitalappointment,gettoday,showPrescription,totalappointent,updateDoctorAppointment,allAppointmentsOfDoctor,updateAppointment}
