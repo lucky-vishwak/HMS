@@ -372,24 +372,41 @@ let All_messages=[];
 
 //for chat conversation window
 function displayChat(ind){
+  console.log(All_messages)
+  $("#profile_name").html(`
+  <div class="d-flex flex-row">
+          <div>
+            <img
+            class="rounded-circle img-fluid"
+              src="${All_messages[ind]['user']['image']}"
+              alt="avatar" class="d-flex align-self-center me-3" width=50vw style="height:9vh;">
+            <span class="badge bg-success badge-dot"></span>
+          </div>
+          <div class="pt-2 px-2">
+            <p class="fw-bold mb-0 text-light" style="font-size:1.5rem;">${All_messages[ind]['user']['fullname']}</p>
+            <p class="small text-muted">Just Now</p>
+          </div>
+        </div>`)
   let conversation=All_messages[ind]['messages'];
   $("#conversationsWindow").html("");
   for(let msg of conversation){
     if(msg.sender_id.toString()==All_messages[ind].user._id.toString()){
+      let date = new Date(msg.createdAt)
       $("#conversationsWindow").append(`<div class="d-flex flex-row justify-content-start">
           <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
             alt="avatar 1" style="width: 45px; height: 100%;">
           <div>
             <p class="small p-2 ms-3 mb-1 rounded-3" style="background-color: #f5f6f7;">${msg.message}</p>
-            <p class="small ms-3 mb-3 rounded-3 text-muted float-end">${msg.createdAt}</p>
+            <p class="small ms-3 mb-3 rounded-3 text-muted float-end">${moment(date).fromNow()}</p>
           </div>
         </div>`)
     }
     else{
+      let date = new Date(msg.createdAt)
       $("#conversationsWindow").append(`<div class="d-flex flex-row justify-content-end">
           <div>
             <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">${msg.message}</p>
-            <p class="small me-3 mb-3 rounded-3 text-muted">${msg.createdAt}</p>
+            <p class="small me-3 mb-3 rounded-3 text-muted">${moment(date).fromNow()}</p>
           </div>
           <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
             alt="avatar 1" style="width: 45px; height: 100%;">
@@ -397,14 +414,14 @@ function displayChat(ind){
 
     }
   }
-  console.log("Hello")
   $("#conversat").html('');
-  $("#conversat").append(`<a class="ms-3 btn appointment-btn" href="#!" onclick="sendMessage(${ind})"><i class="fas fa-paper-plane"></i></a>`)
+  $("#conversat").append(`<a class="ms-3 btn btn-primary" href="#!" onclick="sendMessage(${ind})">send</a>`)
+  var elem = document.getElementById('conversationsWindow');
+  elem.scrollTop = elem.scrollHeight;
 }
 
 //For Chat Window
-function getChat() {
-  $("#doctors_list").html("")
+function getChat(ind) {
   let conversationObj={
     doctor:doctorobj._id
   }
@@ -417,31 +434,40 @@ function getChat() {
      if(stat=='success')
      {
         All_messages=res.conversations;
-        for(let i=0;i<All_messages.length;i++){
-          $("#doctors_list").append(`<li class="p-2 border-bottom">
-                  <div onclick="displayChat(${i})">
-                    <img
-                    class="rounded-circle img-fluid"
-                      src="${All_messages[i]['user']['image']}"
-                      alt="avatar" class="d-flex align-self-center me-3" width="60">
-                    <span class="badge bg-success badge-dot"></span>
-                  </div>
-                  <div class="pt-1 px-2">
-                    <p class="fw-bold mb-0">${All_messages[i]['user']['fullname']}</p>
-                    <p class="small text-muted">Just Now</p>
-                  </div>
-                </div>
-              </a>
-            </li>`)
-            if(i===0){
-              displayChat(0);
-            }
+        if(ind==-1){
+          display_users()
+          displayChat(0)
+        }
+        else{
+          displayChat(ind)
         }
      }
   })  
 }
 
+//display_users
+function display_users(){
+  $("#doctors_list").html("")
+  for(let i=0;i<All_messages.length;i++){
+    $("#doctors_list").append(`<li class="p-2 border-bottom">
+    <div onclick="displayChat(${i})" class="d-flex flex-row">
+            <div>
+              <img
+              class="rounded-circle img-fluid"
+                src="${All_messages[i]['user']['image']}"
+                alt="avatar" class="d-flex align-self-center me-3" width=50vw style="height:9vh;">
+              <span class="badge bg-success badge-dot"></span>
+            </div>
+            <div class="pt-1 px-2">
+              <p class="fw-bold mb-0">${All_messages[i]['user']['fullname']}</p>
+              <p class="small text-muted">Just Now</p>
+            </div>
+          </div>
+      </li>`)
+  }
+}
 
+//for sending message
 function sendMessage(ind){
      let message=$("#sendmessage").val();
 
@@ -458,11 +484,12 @@ function sendMessage(ind){
      }).done((res,stat)=>{
       if(stat=='success'){
         $("#sendmessage").val('');
+        getChat(ind)
       }
      })
 }
 
 
 $('#chatButton').click(()=>{
-    getChat();
+    getChat(-1);
 })

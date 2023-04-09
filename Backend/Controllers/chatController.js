@@ -1,5 +1,6 @@
 const ConversationModel=require('./../Models/ChatModel').ConversationModel;
 
+const format=require("timeago.js").format
 
 async function createConversation(req,res){
     let ConversationObj=req.body;
@@ -55,7 +56,6 @@ async function getConversationParticularUser(req,res){
     let obj=req.body;
 
     let conversations=await ConversationModel.find({user:obj.user}).populate('doctor');
-
     res.send({message:"success",conversations:conversations});
 }
 

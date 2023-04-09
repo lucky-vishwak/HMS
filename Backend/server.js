@@ -10,8 +10,10 @@ const {v4:uuidv4}=require("uuid")
 const app = express()
 const path=require("path")
 
-require("dotenv").config()
+const http=require("http").createServer(app)
+const io=require("./Middleware/socket")
 
+require("dotenv").config()
 
 //import express async-handler
 const errorHandler=require('express-async-handler')
@@ -23,6 +25,7 @@ app.use(session({
     resave:false,
     saveUninitialized:true
 }))
+
 
 //connected to database
 mongoose.connect(process.env.MONGOURL).then(
@@ -58,17 +61,11 @@ app.use('/api',paymentRoute)
 
 
 
-
 //error handling for invalid path
 app.use((req,res,next)=>{
     res.send({message:`path ${req.url} is invalid`})
 })
 
-//error handling for invalid syntax
-// app.use((err,req,res,next)=>{
-//      console.log(err.message)
-//      res.send({message:`${err}`})
-// })
 port=process.env.PORT || 3005
 var server = app.listen(port,()=>{
     console.log(`listening on port ${port}`)

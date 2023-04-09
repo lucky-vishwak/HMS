@@ -102,6 +102,10 @@ function display_doctors(doctors){
 }
 
 function display_modal(index){
+    for(let i=0;i<5;i++){
+        console.log($(`#${i}`))
+        $(`#${i}`).removeClass("checked")
+    }
     let total_rating=doctor_temp[index].rating.reduce((a, b) => a + b, 0)
     let rating=doctor_temp[index].rating
     $('#modal_img').attr("src",`${doctor_temp[index].imgurl}`)
