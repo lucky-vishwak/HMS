@@ -85,7 +85,7 @@ let appointmentSchema = {
     doctor: {
         type: mongoose.Schema.Types.ObjectId,
         ref:doctorModel,
-        default: "642bd6a06f82101e24188caa",
+        default: "643317660f35b3e524e62fa0",
         require: true
     },
     problem: {
@@ -122,7 +122,8 @@ let appointmentSchema = {
     rating:{
         type:Number,
         default:0
-    }
+    },
+  
 }
 
 //importing models

@@ -11,7 +11,12 @@ hospitalRoute.use(express.json());
 
 hospitalRoute.post('/add-hospital',verifyToken,errorHandler(hospitalController.addHospital));
 
+hospitalRoute.post('/emergency',verifyToken,errorHandler(hospitalController.emergency));
+
 hospitalRoute.get('/all-hospitals',verifyToken,errorHandler(hospitalController.allHospitals));
+ 
+hospitalRoute.post('/hospital-emergency',verifyToken,errorHandler(hospitalController.emehospital));
+
 
 hospitalRoute.get('/all-doctors',verifyToken,errorHandler(hospitalController.getAllDcotors));
 

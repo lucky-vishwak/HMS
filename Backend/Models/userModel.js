@@ -1,10 +1,12 @@
 //import mongoose
 const mongoose=require('mongoose')
 const appointmentSchema=require('./../Models/appointmentModel').appointmentSchema
+const emergencySchema=require('../Models/emergencyModel').emergencySchema
 //user schema
 let userSchema =
 {
     myappointment:[appointmentSchema],
+    emergency:[emergencySchema],
     fullname:{ 
         type: String ,
         minlength:[6,"fullname must be more than 6 characters"],

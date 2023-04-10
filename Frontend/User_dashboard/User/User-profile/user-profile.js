@@ -1,6 +1,7 @@
 let appo = [];
 if (localStorage.getItem("active_user")) {
   var userobj = JSON.parse(localStorage.getItem("active_user"));
+  
 } else {
   location.href = "../../../404/404.html";
 }
@@ -222,12 +223,26 @@ function change(imgurl) {
   });
 }
 
+ function showemPrescription(index){
+
+  $("#fullNameToday").val(`${userobj.emergency[index].patientname}`);
+  $("#percerptionToday").val(`${userobj.emergency[index].prescription.description}`);
+  $("#genderToday").val(`${userobj.emergency[index].prescription.temperature}`);
+  $("#ageToday").val(`${userobj.emergency[index].prescription.BP}`);
+  $("#doctor_name").html(`${userobj.emergency[index].doctor.username}`)
+ }
+
 function showPrescription(index) {
   $("#fullNameToday").val(`${appo[index].patientname}`);
   $("#percerptionToday").val(`${appo[index].prescription.description}`);
   $("#genderToday").val(`${appo[index].prescription.temperature}`);
   $("#ageToday").val(`${appo[index].prescription.BP}`);
   $("#doctor_name").html(`${appo[index].doctor.username}`)
+
+  //for download invoice
+  $("#invoice").click(()=>{
+    download(appo[index])
+  })
 
   for (let i = 0; i <= 4; i++) {
     $(`#star${i + 1}`).removeClass("bi-star-fill").addClass("bi-star");
@@ -273,6 +288,91 @@ function showPrescription(index) {
   }
 }
 
+function emergencyappointment(){
+  let userDetails = document.getElementById("Render");
+  $("#Render").html("");
+
+  //for my appointmens table display
+  userDetails.innerHTML = `<div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 700px">
+     <table class="table table-striped mb-0 bg-glass">
+       <thead style="background-color: #1c5cbd;">
+         <tr class="text-white">
+           <th scope="col">Doctor Name</th>
+           <th scope="col">Specialization</th>
+           <th scope="col">Date</th>
+           <th scope="col">Time</th>
+           
+         </tr>
+       </thead>
+       <tbody id="detail">
+       </tbody>
+     </table>
+ </div>`; 
+  y=0
+ for(let ele of userobj.emergency){
+  let tr = $("<tr></tr>")
+  tr.append($("<td></td>").text(ele.doctor))
+  tr.append($("<td></td>").text(ele.specialization))
+  tr.append($("<td></td>").text(ele.appointmentdate))
+  td=$("<td></td>").text(ele.timeslot)
+  if (ele.status == 'completed') {
+    $("#moddall").html("")
+    var mod = $(`<button>View</button>`).attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered" }).addClass('ms-3')
+    $('#moddall').html(` <div class="card" id='modalhide'>
+    <div class="card-body">
+      <div class="modal fade" id="verticalycentered" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Prescription</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row mb-3">
+                <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Patient Name</label>
+                <div class="col-md-8 col-lg-9">
+                   <input name="fullName" type="text" class="form-control" id="fullNameToday" value="" disabled>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="percerption" class="col-md-4 col-lg-3 col-form-label">Description</label>
+                <div class="col-md-8 col-lg-9">
+                    <textarea name="percerption" class="form-control" id="percerptionToday" style="height: 100px" disabled></textarea>
+                </div>
+              </div>
+              <div class="row">
+                <label for="gender" class="col-md-4 col-lg-3 col-form-label">Temperature</label>
+                <div class="col-md-8 col-lg-9">
+                    <input type="text" name="gender" class="form-control mb-2" id="genderToday" disabled value=""/>
+                </div>
+              </div>
+              <div class="row">
+                <label for="age" class="col-md-4 col-lg-3 col-form-label ">B/P</label>
+                <div class="col-md-8 col-lg-9">
+                    <input type="text" name="age" class="form-control mb-4" id="ageToday" disabled  value=""/>
+                </div>
+              </div>
+             
+
+            <div class="modal-footer">
+              <button type="button" style="text-transform: none !important;" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" style="text-transform: none !important;" class="btn btn-primary" id="invoice"">Download</button>
+            </div>
+          </div>
+        </div>
+      </div><!-- End Vertically centered Modal-->
+    </div>
+  </div>`)
+    mod.css('text-transform', 'none').css("padding", "3%")
+    mod.attr('onclick', `showemPrescription(${y})`).addClass('btn btn-danger')
+  }
+  td.append(mod);
+  tr.append(td);
+  $("#detail").append(tr); 
+  y++  
+}
+}
+
 function getMyappointmentDisplay() {
   let userDetails = document.getElementById("Render");
   $("#Render").html("");
@@ -295,6 +395,7 @@ function getMyappointmentDisplay() {
  </div>`;
 
   let i = 0;
+
   for (let ele of appo) {
     let tr = $("<tr></tr>")
     tr.append($("<td></td>").text(ele.doctor.username))
@@ -314,6 +415,7 @@ function getMyappointmentDisplay() {
       tr.append(td_status);
     }
     else if (ele.status == 'completed') {
+      
       $("#moddall").html("")
       var td = $('<td></td>')
       var mod = $(`<button>View</button>`).attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered" })
@@ -366,7 +468,7 @@ function getMyappointmentDisplay() {
               </div>
               <div class="modal-footer">
                 <button type="button" style="text-transform: none !important;" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" style="text-transform: none !important;" class="btn btn-primary" id="updatePercerption">Visited</button>
+                <button type="button" style="text-transform: none !important;" class="btn btn-primary" id="invoice"">Download</button>
               </div>
             </div>
           </div>
@@ -384,6 +486,7 @@ function getMyappointmentDisplay() {
   }
 }
 
+
 function getMyappointment() {
   $("#Render").show()
   $("#Render2").hide()
@@ -392,8 +495,21 @@ function getMyappointment() {
   getMyappointmentDisplay(appo);
 }
 
+
 $(document).ready(function () {
+  $.get({
+    url: `http://localhost:3005/user/all-users`,
+    contentType: "application/json; charset=utf-8",
+    headers: { Authorization: localStorage.getItem("token") },
+  }).done((response, stat) => {
+     // localStorage.setItem('active_user',JSON.stringify(response.userObj))
+     var inn=response.userObj.findIndex((uobj)=>{
+         return uobj.username==userobj.username
+     })
+      userobj=response.userObj[inn]
+  })
   $(".chat").hide();
+
   $("#Render2").hide()
   $('#imgxx').attr('src', `${userobj.image}`)
   $("#form1").hide()
@@ -421,6 +537,7 @@ $(document).ready(function () {
   get_data_of_appointments()
 });
 
+
 function get_data_of_appointments() {
   //geting appointment details
   $.get({
@@ -439,6 +556,58 @@ function get_data_of_appointments() {
       alert(response);
     }
   });
+}
+
+//for invoice
+function download(ele){
+var data = {
+    //"documentTitle": "RECEIPT", //Defaults to INVOICE 
+      "customize": {
+         "template": fs.readFileSync('template.html', 'base64') // Must be base64 encoded html 
+    },
+    "marginTop": 25,
+    "marginRight": 25,
+    "marginLeft": 25,
+    "marginBottom": 25,
+    "logo": "/home/likhith.s/hms/Frontend/User_dashboard/assets/icons/heart-beat.png", //or base64
+    //"logoExtension": "png", //only when logo is base64
+    "sender": {
+      
+        "company":`${ele.hospitalName}`,
+        "address": `${ele.doctor.fullname}`,
+        "zip": `${ele.doctor.specialization}`
+        // "city": "Sampletown",
+        // "country": "Samplecountry"
+        //"custom1": "custom value 1",
+        //"custom2": "custom value 2",
+        //"custom3": "custom value 3"
+    },
+    "client": {
+        "company": `${ele.patientname}`,
+        "address": `${ele.emailaddress}`
+        // "zip": "4567 CD",
+        // "city": "Clientcity",
+        // "country": "Clientcountry"
+        //"custom1": "custom value 1",
+        //"custom2": "custom value 2",
+        //"custom3": "custom value 3"
+    },
+    "products": [
+        {
+            "quanti": "2",
+            "": "Test1",
+            "tax": 6,
+            "price": 33.87
+        },
+       
+    ],
+   
+};
+easyinvoice.createInvoice(data, async function (result) {
+    //The response will contain a base64 encoded PDF file
+    
+    easyinvoice.download("invoice.pdf")
+});
 }
 
 //For rating
@@ -536,7 +705,7 @@ function accept_appointment(index, confirmation) {
     $.ajax({
       type: "PUT",
       url: `http://localhost:3005/user/accept-appointment`,
-      data: JSON.stringify(appo[index]),
+      data: JSON.stringify({...appo[index],userid:userobj._id}),
       contentType: "application/json; charset=utf-8",
       headers: { Authorization: localStorage.getItem("token") },
     }).done((response, stat) => {
@@ -578,6 +747,7 @@ function cancelAppointment(index) {
 let All_messages = [];
 //for chat conversation window
 function displayChat(ind) {
+  console.log(All_messages)
   $("#profile_name").html(`
   <div class="d-flex flex-row">
           <div>

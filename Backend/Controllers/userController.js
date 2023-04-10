@@ -76,6 +76,7 @@ async function allusers(req,res){
 async function updateProfilepic(req,res){
     res.send({message:"image updated successfully",imgurl:req.file.path})
 }
+
   
 async function push(req,res){
     let obj=req.body;
@@ -101,6 +102,8 @@ async function accepetAppointment(req,res){
 
     await appointmentModel.updateOne({_id:appointmentAssignObj.id},{$set:{status:"accepted"}});
 
+    console.log(appointmentAssignObj)
+    console.log("assign")
     let Obj=await ConversationModel.findOne({user:appointmentAssignObj.userid,doctor:appointmentAssignObj.doctor._id});
 
     if(Obj==null){
@@ -123,7 +126,7 @@ async function cancelAppointment(req,res){
     
     await userModel.findOneAndUpdate({username:appointmentAssignObj.username},{$pull:{"myappointment":{id:appointmentAssignObj.id}}},{ safe: true, multi: false });
 
-    await appointmentModel.updateOne({_id:appointmentAssignObj.id},{$set:{status:"cancelled",doctor:"642bd6a06f82101e24188caa"}})
+    await appointmentModel.updateOne({_id:appointmentAssignObj.id},{$set:{status:"cancelled",doctor:"643317660f35b3e524e62fa0"}})
      
     await appointmentHelperModel.deleteOne({hospitalName: appointmentAssignObj.hospitalName, doctor: appointmentAssignObj.doctor.username, appointmentdate: appointmentAssignObj.appointmentdate, timeslot: appointmentAssignObj.timeslot});
 

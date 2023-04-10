@@ -30,6 +30,9 @@ userRoute.post('/edit/:username',verifyToken,errorHandler(userController.updateD
 //all user
 userRoute.get('/all-users',verifyToken,errorHandler(userController.allusers))
 
+//user
+
+
 //update user profilepic
 userRoute.post('/uploadfile',upload.single('image'),userController.updateProfilepic)
 

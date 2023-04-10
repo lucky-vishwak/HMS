@@ -255,13 +255,15 @@
     <form class="modal-content" action="/action_page.php">
       <div class="containermodel">
         <form id="formx">
+        <input type="text" placeholder="patient name" name="name" class="form-control mt-2 mb-2" id="nn">
         <select class="form-select mb-2" id='sel' aria-label="Default select example">
-          <option selected>specialization</option>
-          <option value="surgeory">Surgeory</option>
-          <option value="dentist">Dentist Checkup</option>
-                                    <option value="bodycheckup">Body Checkup</option>
-                                    <option value="gynecologist">Gynecologist Chekup</option>
-                                    <option value="otherservices">General physician</option>
+          <option selected="">Specialization</option>
+                            <option value="surgeory" selected>Surgeory</option>
+                            <option value="dentist">Dental checkup</option>
+                            <option value="gynecologist">Gynecologist checkup</option>
+                            <option value="dermatologist">Dermatologist checkup</option>
+                            <option value="ent">ENT checkup</option>
+                            <option value="generalPhysician">General Physician checkup</option>
         </select>
         <p class="alert alert-danger">If it is not an emergency appointment you will face serious consequences</p>
 
