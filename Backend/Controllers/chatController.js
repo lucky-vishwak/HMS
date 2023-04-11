@@ -5,8 +5,21 @@ const format=require("timeago.js").format
 async function createConversation(req,res){
     let ConversationObj=req.body;
     
-    let Obj=await ConversationModel.findOneAndUpdate({ user :{$in:[ConversationObj.senderId,ConversationObj.reciverId]}},{ doctor :{$in:[ConversationObj.senderId,ConversationObj.reciverId]}});
-
+    let Obj=await ConversationModel.aggregate([
+        {
+          $match: {
+            $or: [
+              { user: ConversationObj.senderId },
+              { user: ConversationObj.reciverId }
+            ],
+            $or: [
+              { doctor: ConversationObj.senderId },
+              { doctor: ConversationObj.reciverId }
+            ]
+          }
+        }
+      ]).exec();
+     
     if(Obj==null){
         await ConversationModel.create(ConversationObj);
         res.send({message:'created conversation'});
@@ -27,7 +40,7 @@ async function sendMessage(req,res){
                 message:ConversationObj.message
             }
         }
-    })
+    }).exec()
 
     res.send({message:"Success"});
 
@@ -55,7 +68,24 @@ async function getConversationParticularUser(req,res){
 
     let obj=req.body;
 
-    let conversations=await ConversationModel.find({user:obj.user}).populate('doctor');
+    let conversations=await ConversationModel.aggregate([
+        {
+          $match: {
+            user: obj.user
+          }
+        },
+        {
+          $lookup: {
+            from: "doctors",
+            localField: "doctor",
+            foreignField: "_id",
+            as: "doctor"
+          }
+        },
+        {
+          $unwind: "$doctor"
+        }
+      ]).exec();
     res.send({message:"success",conversations:conversations});
 }
 

@@ -50,8 +50,19 @@ async function assignDoctorToAppointments(req, res) {
 
     let appointmentAssignObj = req.body;
     let hospitalName = req.params.hospitalName;
-    let doctors = await doctorModel.find({ hospitalName: hospitalName, specialization: appointmentAssignObj.specialization }).sort({ rating_avg: -1 });
-    //console.log(doctors);
+    let doctors = await doctorModel.aggregate([
+        {
+          $match: {
+            hospitalName: hospitalName,
+            specialization: appointmentAssignObj.specialization
+          }
+        },
+        {
+          $sort: {
+            rating_avg: -1
+          }
+        }
+      ]).exec();
 
     if (doctors.length == 0) {
         res.send({ message: "No doctor under this specalisation" });
@@ -88,8 +99,19 @@ async function emehospital(req,res){
 async function emergency(req,res){
    let emergencyObj=req.body;
    
-   let doctors = await doctorModel.find({specialization: emergencyObj.specialization }).sort({ rating_avg: -1 });
-   if (doctors.length != 0) {
+   let doctors = await doctorModel.aggregate([
+    {
+      $match: {
+        specialization: emergencyObj.specialization
+      }
+    },
+    {
+      $sort: {
+        rating_avg: -1
+      }
+    }
+   ]).exec();
+  if (doctors.length != 0) {
     for (let i = 0; i < doctors.length; i++) {
         let amount=rating[Math.ceil(doctors[i].rating_avg)]
         let helperObj = await appointmentHelperModel.find({doctor: doctors[i].username, appointmentdate: emergencyObj.appointmentdate, timeslot: emergencyObj.timeslot });
@@ -133,8 +155,19 @@ async function emergency(req,res){
     }
     
     }
-    let doctorsww = await doctorModel.find({specialization: 'generalPhysician'}).sort({ rating_avg: -1 });
-    if (doctorsww.length != 0) {
+    let doctorsww = await ddoctorModel.aggregate([
+        {
+          $match: {
+            specialization: 'generalPhysician'
+          }
+        },
+        {
+          $sort: {
+            rating_avg: -1
+          }
+        }
+      ]).exec();
+      if (doctorsww.length != 0) {
         for (let i = 0; i < doctorsww.length; i++) {
             let amount=rating[Math.ceil(doctorsww[i].rating_avg)]
             let helperObj = await appointmentHelperModel.find({doctor: doctorsww[i].username, appointmentdate: emergencyObj.appointmentdate, timeslot: emergencyObj.timeslot });

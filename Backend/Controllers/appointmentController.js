@@ -76,7 +76,11 @@ async function allAppointments(req, res) {
 async function allAppointmentsOfDoctor(req,res){
     let doctid=req.params.id;
    
-    var pres=await appointmentModel.find({doctor:doctid})
+    //var pres=await appointmentModel.find({doctor:doctid})
+
+    let pres=await appointmentModel.aggregate([{
+        $match:{doctor:doctid}
+    }]).exec();
     res.send({message:'all prescriptions shown',hist:pres})
 }
 
@@ -98,8 +102,8 @@ async function cancelledAppointments(req, res) {
 async function gettoday(req, res) {
     const name = req.body.doctorname
     const today = req.body.date
-    let objid=await doctorModel.findOne({username:name})
-    objid=objid._id.toString()
+    //let objid=await doctorModel.findOne({username:name})
+    let objid=await doctorModel.aggregate([{$match:{username:name}},{$project:{_id: {$toString: "$_id"}}}]).exec();
     let appointments = await appointmentModel.find({ doctor: objid, appointmentdate: today })
     let emergency=await emergencyModel.find({doctor:name,appointmentdate:today})
     res.send({ message: "successfully", appointments: appointments,emergency:emergency })
