@@ -174,4 +174,4 @@ async function emergency(req,res){
     res.send({message:"no doctor available"})
 }
 
-module.exports = { addHospital, allHospitals, assignDoctorToAppointments,emergency,emehospital}
+module.exports = { addHospital, allHospitals, assignDoctorToAppointments,emergency,emehospital,getAllDcotors}

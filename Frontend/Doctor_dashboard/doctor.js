@@ -49,7 +49,7 @@ function toUpdateProfile() {
 }
 
 $(document).ready(() => {
-    
+    for_display_var=0
     toUpdateProfile();
 })
 // overview related jquery
@@ -71,12 +71,9 @@ function EditProfile() {
   $(".imageMain").attr("src",`${doctorobj.imgurl}`)
 }
 
-
-       
-
-       
         
 $("#editProfileButton").click(() => {
+  if(for_display_var==0){
     var y=`<form id="hello">
     <div class="row mb-3">
     <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
@@ -117,15 +114,16 @@ $("#editProfileButton").click(() => {
     <button type="button" class="btn btn-primary" id="updateProfile" >Save Changes</button>
     </div>
 </form>`
-$("#profile-edit").html('')
+//$("#profile-edit").html('')
 $('#profile-edit').append(y)
 
 EditProfile();
 $('#updateProfile').click(()=>{
     change(doctorobj.imgurl)
-  })
-   
+  })}
+   for_display_var++
 })
+
 function change(img){
    
     userx={}
@@ -304,12 +302,12 @@ function model(val) {
 }
 
 function model_for_history(val) {
-    console.log(patients)
-    $("#fullNameToday").val(`${patients[val].patientname}`)
-    $("#percerptionToday").val(`${patients[val].prescription.description}`)
-    $("#genderToday").val(`${patients[val].prescription.temperature}`)
-    $("#ageToday").val(`${patients[val].prescription.BP}`)
-    x = val;
+  console.log(patients[val],val)
+  $("#fullNameHistory").val(`${patients[val].patientname}`)
+  $("#percerptionHistory").val(`${patients[val].prescription.description}`)
+  $("#timeHistory").val(`${patients[val].prescription.temperature}`)
+  $("#History").val(`${patients[val].prescription.BP}`)
+  x = val;
 }
 
 $("#updatePercerption").click(() => {
@@ -367,46 +365,50 @@ $("#updatePercerption").click(() => {
     }
 })
 
-l=0
+r=0
 // Patient History related jquery
 $("#patientHistoryButton").click(() => { 
-    $(".tableBody2").html('');
-    l=0;
-    console.log(doctorobj._id)
-    $.get({
-        url: `http://localhost:3005/appointment/allAppointmentsOfDoctor/${doctorobj._id}`,
-        contentType: 'application/json; charset=utf-8',
-        headers:{Authorization :localStorage.getItem('token')}
-    }).done((response, stat) => {
-            if (stat == "success") {
-                patients = response.hist;
-                for (let obj of patients) {
-                    console.log(obj)
-                    let tr = $('<tr></tr>');
-                  if(obj.status=='completed'){
-                    let th_sno = $('<th></th>').text(`${l+ 1}`).attr('scope', 'row');
-                    let td_patientName = $('<td></td>').text(`${obj.patientname}`).attr('scope', 'row');
-                    let td_reason = $('<td></td>').text(`${obj.problem}`);
-                    let td_date = $('<td></td>').text(`${obj.appointmentdate}`);
-                    let td_date1 = $('<td></td>').text(`${obj.status}`);
+  $(".tableBody2").html('');
+  l=0;
+  console.log(doctorobj._id)
+  $.get({
+      url: `http://localhost:3005/appointment/allAppointmentsOfDoctor/${doctorobj._id}`,
+      contentType: 'application/json; charset=utf-8',
+      headers:{Authorization :localStorage.getItem('token')}
+  }).done((response, stat) => {
+          if (stat == "success") {
+
+              patients = response.hist;
+              for (let obj of patients) {
+                  console.log(r)
+                  let tr = $('<tr></tr>');
+                if(obj.status=='completed'){
+          
+                  let th_sno = $('<th></th>').text(`${l+ 1}`).attr('scope', 'row');
+                  let td_patientName = $('<td></td>').text(`${obj.patientname}`).attr('scope', 'row');
+                  let td_reason = $('<td></td>').text(`${obj.problem}`);
+                  let td_date = $('<td></td>').text(`${obj.appointmentdate}`);
+                  let td_date1 = $('<td></td>').text(`${obj.status}`);
+                  
+                  tr.append(th_sno);
+                  tr.append(td_patientName);
+                  tr.append(td_reason);
+                 // tr.append(td_age);
+                  tr.append(td_date);
+                  tr.append(td_date1);
+                 
+                  let button_view = $('<button></button>').text('View').attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered2", "onclick": `model_for_history(${r})` }).addClass('btn btn-primary');
+                  let td_button = $('<td></td>')
+                  td_button.append(button_view);
+                    tr.append(td_button);
                     
-                    tr.append(th_sno);
-                    tr.append(td_patientName);
-                    tr.append(td_reason);
-                   // tr.append(td_age);
-                    tr.append(td_date);
-                    tr.append(td_date1);
-                    console.log(appointments)
-                    let button_view = $('<button></button>').text('View').attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered2", "onclick": `model_for_history(${0})` }).addClass('btn btn-primary');
-                    let td_button = $('<td></td>')
-                    td_button.append(button_view);
-                      tr.append(td_button);
-                  }
-                    $(".tableBody2").append(tr);
-                    l+=1
                 }
-            }
-        })
+                  $(".tableBody2").append(tr);
+                 r+=1
+                  l+=1
+              }
+          }
+      })
 
 })
 

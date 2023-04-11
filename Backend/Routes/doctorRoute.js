@@ -9,7 +9,7 @@ doctorRoute.use(express.json());
 
 doctorRoute.post("/add-doctor",verifyToken,errorHandler(doctorController.addDoctor));
 
-doctorRoute.post('/all-doctors',verifyToken,(doctorController.allDoctors));
+doctorRoute.post('/all-doctors',verifyToken,errorHandler(doctorController.allDoctors));
 
 doctorRoute.put('/updateProfile/:username',verifyToken,errorHandler(doctorController.updatedDoctorObj));
 
