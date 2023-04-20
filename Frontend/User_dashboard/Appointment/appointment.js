@@ -332,14 +332,17 @@ function Emergency(){
         location.reload()
         return
     }
-    console.log(x)
+    //console.log(x)
     $.post({url: "http://localhost:3005/hospital/emergency",
     data:JSON.stringify(x),
     contentType: 'application/json; charset=utf-8',
     headers:{Authorization :localStorage.getItem('token')}}).done((response,stat)=>{
      if(stat='success'){
       alert(response.message)
-       window.location.href="../User/User-profile/user-profile.html"
+      if(response.user){
+        localStorage.setItem('active_user',`${JSON.stringify(response.user)}`)
+      }
+      window.location.href="../User/User-profile/user-profile.html"
      }
      else{
         alert('something went wrong')

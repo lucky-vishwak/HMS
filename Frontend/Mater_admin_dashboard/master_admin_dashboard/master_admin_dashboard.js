@@ -26,6 +26,14 @@ $.get({
     }
 })
 
+$.get({
+    url: "http://localhost:3005/user/all-users",
+    headers:{Authorization :localStorage.getItem('token')}
+  }).done(async (res, stat) => {
+    if (stat == "success") {
+      $("#patientcount").text(`${res.userObj.length}`)
+    }
+  })
 
 $.get({
     url: "http://localhost:3005/hospital/all-hospitals",
@@ -33,7 +41,7 @@ $.get({
 }).done(async (res, stat) => {
     let hospitals=res.hospitalsObj
     if (stat == "success") {
-        $("#patientcount").text(`${hospitals.length}`)
+        $("#hoscount").text(`${hospitals.length}`)
     }
     for( let hospital of hospitals){
         $("#compare1").append($("<option></option>").text(`${hospital.hospitalName}`))

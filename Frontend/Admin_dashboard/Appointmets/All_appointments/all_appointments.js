@@ -58,4 +58,3 @@ $("#search").on("keyup", function() {
     });
 });
 
-

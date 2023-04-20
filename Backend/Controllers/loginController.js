@@ -59,7 +59,7 @@ async function  login(req,res){
             token="Bearer"+" "+token
             res.send({message:"success",token:token,hospitalObj:hospitalObj,type:"hospital"})
              return
-    //}
+    // }
        
     }
    

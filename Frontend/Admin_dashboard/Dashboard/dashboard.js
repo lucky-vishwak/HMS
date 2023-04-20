@@ -29,6 +29,7 @@ $.post({
     $("#doctorcount").text(`${res.doctorObj.length}`)
   }
 })
+
 $.get({
   url: "http://localhost:3005/user/all-users",
   headers:{Authorization :localStorage.getItem('token')}
@@ -38,7 +39,26 @@ $.get({
   }
 })
 
-$("#emergencycount").text("0")
+let hospitalObj={name:JSON.parse(localStorage.getItem("active_user")).hospitalName};
+$.post({
+    url:"http://localhost:3005/hospital/hospital-emergency",
+    data:JSON.stringify(hospitalObj),
+    contentType:'application/json; charset=utf-8',
+    headers:{Authorization :localStorage.getItem('token')}
+})
+.done((response,stat)=>{
+    $("#title").hide();
+    if(stat=='success'){
+        let appointments=response.appointments;
+        if(appointments.length==0){
+          $("#emergencycount").text("0")
+        }
+        else{
+          $("#emergencycount").text(`${appointments.length}`)
+        }
+    }
+})
+
 
 function Today() {
   var now = new Date();

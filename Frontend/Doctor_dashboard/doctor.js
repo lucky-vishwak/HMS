@@ -10,11 +10,14 @@ if (JSON.parse(localStorage.getItem("active_user"))) {
 else {
     location.href = "../404/404.html"
 }
+
 $("#logout").click(() => {
     localStorage.clear()
     location.href = "../User_dashboard/Login/login.html"
 })
 
+const socket=io("ws://localhost:8900")
+socket.emit("adduser",JSON.parse(localStorage.getItem("active_user"))._id)
 
 //on load related jquery
 $("#username").text(JSON.parse(localStorage.getItem("active_user")).username)
@@ -523,7 +526,6 @@ function display_users(){
 //for sending message
 function sendMessage(ind){
      let message=$("#sendmessage").val();
-
      let messageObj={
         senderID:doctorobj._id ,
         user:All_messages[ind].user._id,
@@ -537,10 +539,21 @@ function sendMessage(ind){
      }).done((res,stat)=>{
       if(stat=='success'){
         $("#sendmessage").val('');
+        socket.emit("sendmessage",[messageObj.user])
         getChat(ind)
       }
      })
 }
+
+socket.on("getmessage",data=>{
+  oppositeid=data[0]
+  console.log(data)
+  console.log(All_messages)
+  i=All_messages.findIndex(item=>item.user._id==oppositeid)
+  console.log(i)
+  getChat(i)
+  displayChat(i)
+  })
 
 
 $('#chatButton').click(()=>{

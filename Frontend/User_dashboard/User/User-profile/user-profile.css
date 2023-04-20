@@ -25,7 +25,9 @@
       height:500px;
   }
 
-
+  ::-webkit-scrollbar{
+    display: none;
+  }
   .form-control:focus{
     border: 1px solid #1977cc !important;
     outline: 0;

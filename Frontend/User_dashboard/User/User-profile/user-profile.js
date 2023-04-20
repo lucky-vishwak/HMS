@@ -1,7 +1,9 @@
+const socket = io("ws://localhost:8900")
+socket.emit("adduser", JSON.parse(localStorage.getItem("active_user"))._id)
 let appo = [];
 if (localStorage.getItem("active_user")) {
   var userobj = JSON.parse(localStorage.getItem("active_user"));
-  
+
 } else {
   location.href = "../../../404/404.html";
 }
@@ -223,14 +225,14 @@ function change(imgurl) {
   });
 }
 
- function showemPrescription(index){
+function showemPrescription(index) {
 
   $("#fullNameToday").val(`${userobj.emergency[index].patientname}`);
   $("#percerptionToday").val(`${userobj.emergency[index].prescription.description}`);
   $("#genderToday").val(`${userobj.emergency[index].prescription.temperature}`);
   $("#ageToday").val(`${userobj.emergency[index].prescription.BP}`);
   $("#doctor_name").html(`${userobj.emergency[index].doctor.username}`)
- }
+}
 
 function showPrescription(index) {
   $("#fullNameToday").val(`${appo[index].patientname}`);
@@ -240,7 +242,7 @@ function showPrescription(index) {
   $("#doctor_name").html(`${appo[index].doctor.username}`)
 
   //for download invoice
-  $("#invoice").click(()=>{
+  $("#invoice").click(() => {
     download(appo[index])
   })
 
@@ -288,7 +290,7 @@ function showPrescription(index) {
   }
 }
 
-function emergencyappointment(){
+function emergencyappointment() {
   let userDetails = document.getElementById("Render");
   $("#Render").html("");
 
@@ -307,18 +309,18 @@ function emergencyappointment(){
        <tbody id="detail">
        </tbody>
      </table>
- </div>`; 
-  y=0
- for(let ele of userobj.emergency){
-  let tr = $("<tr></tr>")
-  tr.append($("<td></td>").text(ele.doctor))
-  tr.append($("<td></td>").text(ele.specialization))
-  tr.append($("<td></td>").text(ele.appointmentdate))
-  td=$("<td></td>").text(ele.timeslot)
-  if (ele.status == 'completed') {
-    $("#moddall").html("")
-    var mod = $(`<button>View</button>`).attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered" }).addClass('ms-3')
-    $('#moddall').html(` <div class="card" id='modalhide'>
+ </div>`;
+  y = 0
+  for (let ele of userobj.emergency) {
+    let tr = $("<tr></tr>")
+    tr.append($("<td></td>").text(ele.doctor))
+    tr.append($("<td></td>").text(ele.specialization))
+    tr.append($("<td></td>").text(ele.appointmentdate))
+    td = $("<td></td>").text(ele.timeslot)
+    if (ele.status == 'completed') {
+      $("#moddall").html("")
+      var mod = $(`<button>View</button>`).attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered" }).addClass('ms-3')
+      $('#moddall').html(` <div class="card" id='modalhide'>
     <div class="card-body">
       <div class="modal fade" id="verticalycentered" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -363,14 +365,15 @@ function emergencyappointment(){
       </div><!-- End Vertically centered Modal-->
     </div>
   </div>`)
-    mod.css('text-transform', 'none').css("padding", "3%")
-    mod.attr('onclick', `showemPrescription(${y})`).addClass('btn btn-danger')
+      mod.css('text-transform', 'none').css("padding", "3%")
+      mod.attr('onclick', `showemPrescription(${y})`).addClass('btn btn-danger')
+      td.append(mod);
+    }
+    
+    tr.append(td);
+    $("#detail").append(tr);
+    y++
   }
-  td.append(mod);
-  tr.append(td);
-  $("#detail").append(tr); 
-  y++  
-}
 }
 
 function getMyappointmentDisplay() {
@@ -415,7 +418,7 @@ function getMyappointmentDisplay() {
       tr.append(td_status);
     }
     else if (ele.status == 'completed') {
-      
+
       $("#moddall").html("")
       var td = $('<td></td>')
       var mod = $(`<button>View</button>`).attr({ "data-bs-toggle": "modal", "data-bs-target": "#verticalycentered" })
@@ -497,19 +500,7 @@ function getMyappointment() {
 
 
 $(document).ready(function () {
-  $.get({
-    url: `http://localhost:3005/user/all-users`,
-    contentType: "application/json; charset=utf-8",
-    headers: { Authorization: localStorage.getItem("token") },
-  }).done((response, stat) => {
-     // localStorage.setItem('active_user',JSON.stringify(response.userObj))
-     var inn=response.userObj.findIndex((uobj)=>{
-         return uobj.username==userobj.username
-     })
-      userobj=response.userObj[inn]
-  })
   $(".chat").hide();
-
   $("#Render2").hide()
   $('#imgxx').attr('src', `${userobj.image}`)
   $("#form1").hide()
@@ -559,11 +550,11 @@ function get_data_of_appointments() {
 }
 
 //for invoice
-function download(ele){
-var data = {
+function download(ele) {
+  var data = {
     //"documentTitle": "RECEIPT", //Defaults to INVOICE 
-      "customize": {
-         "template": fs.readFileSync('template.html', 'base64') // Must be base64 encoded html 
+    "customize": {
+      "template": fs.readFileSync('template.html', 'base64') // Must be base64 encoded html 
     },
     "marginTop": 25,
     "marginRight": 25,
@@ -572,42 +563,42 @@ var data = {
     "logo": "/home/likhith.s/hms/Frontend/User_dashboard/assets/icons/heart-beat.png", //or base64
     //"logoExtension": "png", //only when logo is base64
     "sender": {
-      
-        "company":`${ele.hospitalName}`,
-        "address": `${ele.doctor.fullname}`,
-        "zip": `${ele.doctor.specialization}`
-        // "city": "Sampletown",
-        // "country": "Samplecountry"
-        //"custom1": "custom value 1",
-        //"custom2": "custom value 2",
-        //"custom3": "custom value 3"
+
+      "company": `${ele.hospitalName}`,
+      "address": `${ele.doctor.fullname}`,
+      "zip": `${ele.doctor.specialization}`
+      // "city": "Sampletown",
+      // "country": "Samplecountry"
+      //"custom1": "custom value 1",
+      //"custom2": "custom value 2",
+      //"custom3": "custom value 3"
     },
     "client": {
-        "company": `${ele.patientname}`,
-        "address": `${ele.emailaddress}`
-        // "zip": "4567 CD",
-        // "city": "Clientcity",
-        // "country": "Clientcountry"
-        //"custom1": "custom value 1",
-        //"custom2": "custom value 2",
-        //"custom3": "custom value 3"
+      "company": `${ele.patientname}`,
+      "address": `${ele.emailaddress}`
+      // "zip": "4567 CD",
+      // "city": "Clientcity",
+      // "country": "Clientcountry"
+      //"custom1": "custom value 1",
+      //"custom2": "custom value 2",
+      //"custom3": "custom value 3"
     },
     "products": [
-        {
-            "quanti": "2",
-            "": "Test1",
-            "tax": 6,
-            "price": 33.87
-        },
-       
+      {
+        "quanti": "2",
+        "": "Test1",
+        "tax": 6,
+        "price": 33.87
+      },
+
     ],
-   
-};
-easyinvoice.createInvoice(data, async function (result) {
+
+  };
+  easyinvoice.createInvoice(data, async function (result) {
     //The response will contain a base64 encoded PDF file
-    
+
     easyinvoice.download("invoice.pdf")
-});
+  });
 }
 
 //For rating
@@ -705,7 +696,7 @@ function accept_appointment(index, confirmation) {
     $.ajax({
       type: "PUT",
       url: `http://localhost:3005/user/accept-appointment`,
-      data: JSON.stringify({...appo[index],userid:userobj._id}),
+      data: JSON.stringify({ ...appo[index], userid: userobj._id }),
       contentType: "application/json; charset=utf-8",
       headers: { Authorization: localStorage.getItem("token") },
     }).done((response, stat) => {
@@ -793,7 +784,7 @@ function displayChat(ind) {
 }
 
 //For Chat Window
-function getChat(ind){
+function getChat(ind) {
   if (!appo) {
     $("#doctors_list").append(`<li style="display:flex; justify-content:center;">No Doctors to chat</li>`)
   }
@@ -808,11 +799,11 @@ function getChat(ind){
   }).done((res, stat) => {
     if (stat == 'success') {
       All_messages = res.conversations;
-      if(ind==-1){
+      if (ind == -1) {
         display_doctors()
         displayChat(0)
       }
-      else{
+      else {
         displayChat(ind)
       }
     }
@@ -854,6 +845,7 @@ function sendMessage(ind) {
     doctor: All_messages[ind].doctor._id,
     message: message,
   }
+
   $.post({
     url: "http://localhost:3005/chat/send-message",
     data: JSON.stringify(messageObj),
@@ -861,6 +853,7 @@ function sendMessage(ind) {
     headers: { Authorization: localStorage.getItem("token") }
   }).done((res, stat) => {
     if (stat == 'success') {
+      socket.emit("sendmessage", [messageObj.doctor])
       $("#sendmessage").val('');
       getChat(ind);
     }
@@ -887,4 +880,11 @@ function logout() {
   localStorage.clear();
 }
 
-const socket=io("ws://localhost:8900")
+
+socket.on("getmessage", data => {
+  oppositeid = data[0]
+  console.log(data)
+  i = All_messages.findIndex(item => item.doctor._id == oppositeid)
+  getChat(i)
+  displayChat(i)
+})

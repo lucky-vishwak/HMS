@@ -63,6 +63,8 @@ $(document).ready(() => {
 
 $("#notAssign").click(() => {
   $("#tbody").html('');
+  $("#notAssign").addClass("btn-primary");
+  $("#assign").removeClass("btn-primary");
   notAssignOnLoadAndOnClick();
 })
 
@@ -89,8 +91,8 @@ function assignedAppointmentsDisplay() {
 
 $("#assign").click(() => {
   $("#tbody").html('');
-  $("#notAssign").addClass("btn btn-primary");
-  $("#assign").addClass("btn btn-success");
+  $("#notAssign").removeClass("btn-primary");
+  $("#assign").addClass("btn-primary");
   assignedAppointmentsDisplay();
 })
 

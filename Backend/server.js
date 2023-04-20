@@ -10,8 +10,8 @@ const {v4:uuidv4}=require("uuid")
 const app = express()
 const path=require("path")
 
-const http=require("http").createServer(app)
-const io=require("./Middleware/socket")
+// const http=require("http").createServer(app)
+// const io=require("./Middleware/socket")
 
 require("dotenv").config()
 
@@ -58,6 +58,9 @@ app.use('/contact',contactRoute);
 app.use('/chat',chatRoute);
 app.use('/create',paymentRoute)
 app.use('/api',paymentRoute)
+app.get("/",(req,res)=>{
+    res.send({message:"hello this is aarogya backend"})
+})
 
 
 
