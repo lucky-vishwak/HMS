@@ -48,6 +48,7 @@ async function addappointment(req, res) {
 async function getappointment(req, res) {
     const name = req.params.username
     let result = await userModel.findOne({ username: `${name}` }).populate("myappointment.doctor");
+    // console.log(result)
     res.send({ message: "Success", appointments: result.myappointment })
 }
 

@@ -28,7 +28,10 @@ app.use(session({
 
 
 //connected to database
-mongoose.connect(process.env.MONGOURL).then(
+mongoose.connect(process.env.MONGOURL,{
+    useNewUrlParser:true,
+    useUnifiedTopology:true
+}).then(
     console.log('connected to database')
 )
 
@@ -71,7 +74,7 @@ app.use((req,res,next)=>{
 
 port=process.env.PORT || 3005
 var server = app.listen(port,()=>{
-    console.log(`listening on port ${port}`)
+    console.log(`listening on port http://localhost:${port}`)
 })
 
 module.exports = {server}
